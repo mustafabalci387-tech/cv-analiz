@@ -55,6 +55,10 @@ const cvSemasiTanimi = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  silindiMi: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const CvModel = mongoose.model("Cv", cvSemasiTanimi);
@@ -113,7 +117,7 @@ app.post("/api/basvuru", async (req, res) => {
 
 app.get("/api/basvurular", async (req, res) => {
   try {
-    const basvurular = await CvModel.find().sort({ uygunlukSkoru: -1 });
+    const basvurular = await CvModel.find({ silindiMi: false }).sort({ uygunlukSkoru: -1 });
     return res.status(200).json(basvurular);
   } catch (hata) {
     return res.status(500).json({ hata: "Sunucu hatası: " + hata.message });
@@ -136,7 +140,11 @@ app.get("/api/basvurular/:id", async (req, res) => {
 
 app.delete("/api/basvurular/:id", async (req, res) => {
   try {
-    const silinenAday = await CvModel.findByIdAndDelete(req.params.id);
+    const silinenAday = await CvModel.findByIdAndUpdate(
+      req.params.id,
+      { silindiMi: true },
+      { new: true }
+    );
 
     if (!silinenAday) {
       return res.status(404).json({ hata: "Aday bulunamadı." });

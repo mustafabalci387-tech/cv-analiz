@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="tr" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CV Analiz Platformu | Yapay Zeka Destekli Aday Değerlendirme</title>
-  <meta name="description" content="Yapay zeka destekli CV analiz platformu. CV'nizi yükleyin, güçlü ve zayıf yönlerinizi keşfedin." />
+  <meta name="description"
+    content="Yapay zeka destekli CV analiz platformu. CV'nizi yükleyin, güçlü ve zayıf yönlerinizi keşfedin." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -27,7 +31,9 @@
     };
   </script>
   <style>
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -41,8 +47,8 @@
 
     .gradient-bg {
       background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
-                  radial-gradient(ellipse 60% 50% at 80% 50%, rgba(168, 85, 247, 0.08), transparent),
-                  radial-gradient(ellipse 60% 50% at 20% 80%, rgba(59, 130, 246, 0.06), transparent);
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(168, 85, 247, 0.08), transparent),
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(59, 130, 246, 0.06), transparent);
     }
 
     .glass-card {
@@ -81,9 +87,17 @@
     }
 
     @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     @keyframes fadeInUp {
@@ -91,6 +105,7 @@
         opacity: 0;
         transform: translateY(30px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -102,6 +117,7 @@
         opacity: 0;
         transform: translateY(-20px) scale(0.95);
       }
+
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -109,19 +125,42 @@
     }
 
     @keyframes pulse-ring {
-      0% { transform: scale(0.9); opacity: 1; }
-      50% { transform: scale(1.1); opacity: 0.6; }
-      100% { transform: scale(0.9); opacity: 1; }
+      0% {
+        transform: scale(0.9);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.1);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: scale(0.9);
+        opacity: 1;
+      }
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
     }
 
     @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
     }
 
     @keyframes cardAppear {
@@ -129,6 +168,7 @@
         opacity: 0;
         transform: translateY(20px) scale(0.97);
       }
+
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -151,9 +191,17 @@
       animation: cardAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    .delay-100 { animation-delay: 0.1s; }
-    .delay-200 { animation-delay: 0.2s; }
-    .delay-300 { animation-delay: 0.3s; }
+    .delay-100 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-300 {
+      animation-delay: 0.3s;
+    }
 
     .orb {
       position: absolute;
@@ -172,7 +220,9 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .success-card {
@@ -299,6 +349,7 @@
         margin-bottom: 12px;
         padding: 20px;
       }
+
       to {
         opacity: 0;
         transform: translateX(40px) scale(0.95);
@@ -314,6 +365,7 @@
     }
   </style>
 </head>
+
 <body class="gradient-bg text-slate-200 font-inter antialiased relative overflow-x-hidden">
   <div class="orb w-96 h-96 bg-indigo-600/20 top-[-10%] left-[-10%]"></div>
   <div class="orb w-80 h-80 bg-purple-600/15 top-[20%] right-[-8%] animate-float"></div>
@@ -322,9 +374,11 @@
   <nav class="relative z-10 border-b border-white/5">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
       <a href="/" id="nav-logo" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow duration-300">
+        <div
+          class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow duration-300">
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611l-.573.097a9.59 9.59 0 0 1-3.124 0l-.573-.097c-1.717-.293-2.3-2.379-1.067-3.61L16 15.3M5 14.5l-1.402 1.402c-1.232 1.232-.65 3.318 1.067 3.611l.573.097a9.59 9.59 0 0 0 3.124 0l.573-.097c1.717-.293 2.3-2.379 1.067-3.61L8.2 15.3" />
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611l-.573.097a9.59 9.59 0 0 1-3.124 0l-.573-.097c-1.717-.293-2.3-2.379-1.067-3.61L16 15.3M5 14.5l-1.402 1.402c-1.232 1.232-.65 3.318 1.067 3.611l.573.097a9.59 9.59 0 0 0 3.124 0l.573-.097c1.717-.293 2.3-2.379 1.067-3.61L8.2 15.3" />
           </svg>
         </div>
         <div>
@@ -333,7 +387,8 @@
         </div>
       </a>
       <div class="flex items-center gap-2">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+        <span
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           Sistem Aktif
         </span>
@@ -343,19 +398,24 @@
 
   <main class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
     <div class="text-center mb-12 sm:mb-16 animate-fade-in-up" style="opacity: 0;">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-sm font-medium mb-6">
+      <div
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-sm font-medium mb-6">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456Z" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456Z" />
         </svg>
-        Gemini 2.0 Flash ile Güçlendirildi
+        Multimodal Vision & PDF Analiz Destekli
       </div>
       <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
         CV'nizi Analiz Edin,
         <br />
-        <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Potansiyelinizi Keşfedin</span>
+        <span
+          class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Potansiyelinizi
+          Keşfedin</span>
       </h2>
       <p class="mt-5 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-        Yapay zeka destekli platformumuz CV'nizi saniyeler içinde analiz eder, güçlü ve zayıf yönlerinizi belirler, size kapsamlı bir uygunluk skoru sunar.
+        Yapay zeka destekli platformumuz metin, PDF veya fotoğraf CV'nizi saniyeler içinde analiz eder, aranan
+        kriterlere uygunluk skorunuzu hesaplar.
       </p>
     </div>
 
@@ -364,7 +424,8 @@
         <div class="flex items-center gap-3 mb-8">
           <div class="w-8 h-8 rounded-lg bg-indigo-500/15 flex items-center justify-center">
             <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21c-2.676 0-5.216-.584-7.499-1.632Z" />
             </svg>
           </div>
           <h3 class="text-xl font-semibold text-white">Başvuru Formu</h3>
@@ -373,57 +434,58 @@
         <form id="cv-form" class="space-y-6" novalidate>
           <div>
             <label for="isim" class="block text-sm font-medium text-slate-300 mb-2">İsim Soyisim</label>
-            <input
-              type="text"
-              id="isim"
-              name="isim"
-              required
-              placeholder="Adınızı ve soyadınızı girin"
-              class="input-glow w-full px-4 py-3.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-all duration-300 text-sm"
-            />
+            <input type="text" id="isim" name="isim" required placeholder="Adınızı ve soyadınızı girin"
+              class="input-glow w-full px-4 py-3.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-all duration-300 text-sm" />
           </div>
 
           <div>
             <label for="eposta" class="block text-sm font-medium text-slate-300 mb-2">E-posta Adresi</label>
-            <input
-              type="email"
-              id="eposta"
-              name="eposta"
-              required
-              placeholder="ornek@email.com"
-              class="input-glow w-full px-4 py-3.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-all duration-300 text-sm"
-            />
+            <input type="email" id="eposta" name="eposta" required placeholder="ornek@email.com"
+              class="input-glow w-full px-4 py-3.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-all duration-300 text-sm" />
           </div>
 
           <div>
-            <label for="arananKriter" class="block text-sm font-medium text-slate-300 mb-2">Aranan Pozisyon / İş Kriteri</label>
-            <textarea
-              id="arananKriter"
-              name="arananKriter"
-              required
-              rows="3"
+            <label for="arananKriter" class="block text-sm font-medium text-slate-300 mb-2">Aranan Pozisyon / İş
+              Kriteri</label>
+            <textarea id="arananKriter" name="arananKriter" required rows="3"
               placeholder="Örn: Restorana en az 2 yıl deneyimli, İngilizce bilen resepsiyonist arıyoruz..."
-              class="input-glow w-full px-4 py-3.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-all duration-300 text-sm resize-y min-h-[80px]"
-            ></textarea>
+              class="input-glow w-full px-4 py-3.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-all duration-300 text-sm resize-y min-h-[80px]"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">CV Dosyası veya Görsel Yükle (PDF / TXT / JPG /
+              PNG)</label>
+            <div id="drop-zone"
+              class="border-2 border-dashed border-indigo-500/30 hover:border-indigo-500/60 rounded-xl p-6 text-center bg-slate-800/40 hover:bg-slate-800/70 transition-all cursor-pointer group">
+              <input type="file" id="cv-file-input" accept=".txt,.pdf,.doc,.docx,image/*" class="hidden" />
+              <div class="flex flex-col items-center justify-center gap-2">
+                <div
+                  class="w-12 h-12 rounded-full bg-indigo-500/10 group-hover:bg-indigo-500/20 text-indigo-400 flex items-center justify-center transition-colors">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                  </svg>
+                </div>
+                <p class="text-sm font-semibold text-slate-300">CV Dosyanızı / Görselinizi sürükleyip bırakın veya <span
+                    class="text-indigo-400 underline">dosya seçin</span></p>
+                <p class="text-xs text-slate-500">PDF, TXT ve Görsel dosyaları doğrudan yapay zeka ile analiz edilir</p>
+                <div id="image-preview-box" class="hidden mt-3">
+                  <img id="image-preview" class="max-h-36 rounded-lg border border-indigo-500/30 mx-auto shadow-md" />
+                </div>
+                <p id="file-status" class="text-xs text-emerald-400 font-semibold hidden mt-1"></p>
+              </div>
+            </div>
           </div>
 
           <div>
             <label for="cvMetni" class="block text-sm font-medium text-slate-300 mb-2">CV Metni</label>
-            <textarea
-              id="cvMetni"
-              name="cvMetni"
-              required
-              rows="8"
-              placeholder="CV içeriğinizi buraya yapıştırın... (Deneyim, eğitim, yetenekler vb.)"
-              class="input-glow w-full px-4 py-3.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-all duration-300 text-sm resize-y min-h-[120px]"
-            ></textarea>
+            <textarea id="cvMetni" name="cvMetni" rows="8"
+              placeholder="CV içeriğinizi buraya yapıştırın veya yukarıdan Görsel / PDF dosyası yükleyin..."
+              class="input-glow w-full px-4 py-3.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 transition-all duration-300 text-sm resize-y min-h-[120px]"></textarea>
           </div>
 
-          <button
-            type="submit"
-            id="submit-btn"
-            class="btn-gradient w-full py-4 rounded-xl text-white font-semibold text-sm tracking-wide flex items-center justify-center gap-3 transition-all duration-300 cursor-pointer"
-          >
+          <button type="submit" id="submit-btn"
+            class="btn-gradient w-full py-4 rounded-xl text-white font-semibold text-sm tracking-wide flex items-center justify-center gap-3 transition-all duration-300 cursor-pointer">
             <span id="btn-text">Yapay Zeka ile Analiz Et</span>
             <span id="btn-spinner" class="hidden">
               <span class="spinner"></span>
@@ -434,7 +496,9 @@
           </button>
         </form>
 
-        <div id="error-msg" class="hidden mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-sm animate-slide-down"></div>
+        <div id="error-msg"
+          class="hidden mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-sm animate-slide-down">
+        </div>
       </div>
     </div>
 
@@ -442,8 +506,10 @@
       <div class="success-card rounded-2xl p-6 sm:p-10 shadow-2xl">
         <div class="flex items-center gap-3 mb-8">
           <div class="w-10 h-10 rounded-full bg-emerald-500/15 flex items-center justify-center">
-            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
           </div>
           <div>
@@ -464,7 +530,9 @@
           <div class="text-center sm:text-left">
             <p id="candidate-name" class="text-2xl font-extrabold text-white"></p>
             <p id="candidate-email" class="text-indigo-300 text-sm font-semibold mt-1"></p>
-            <p id="candidate-kriter" class="text-slate-300 text-sm font-medium mt-2 bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-600/40 inline-block"></p>
+            <p id="candidate-kriter"
+              class="text-slate-300 text-sm font-medium mt-2 bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-600/40 inline-block">
+            </p>
             <p id="score-label" class="mt-3 text-sm font-bold px-4 py-1.5 rounded-full inline-block"></p>
           </div>
         </div>
@@ -472,7 +540,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <div class="flex items-center gap-2 mb-4">
-              <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
               </svg>
               <h4 class="text-base font-extrabold text-emerald-400 uppercase tracking-wider">Güçlü Yönler</h4>
@@ -481,8 +550,10 @@
           </div>
           <div>
             <div class="flex items-center gap-2 mb-4">
-              <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+              <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
               </svg>
               <h4 class="text-base font-extrabold text-amber-400 uppercase tracking-wider">Zayıf Yönler</h4>
             </div>
@@ -490,13 +561,11 @@
           </div>
         </div>
 
-        <button
-          id="new-analysis-btn"
-          type="button"
-          class="mt-10 w-full py-3.5 rounded-xl border border-indigo-500/30 text-indigo-300 font-medium text-sm hover:bg-indigo-500/10 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2"
-        >
+        <button id="new-analysis-btn" type="button"
+          class="mt-10 w-full py-3.5 rounded-xl border border-indigo-500/30 text-indigo-300 font-medium text-sm hover:bg-indigo-500/10 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
           </svg>
           Yeni Analiz Başlat
         </button>
@@ -507,9 +576,11 @@
       <div class="glass-card rounded-2xl p-6 sm:p-10 shadow-2xl shadow-indigo-950/30">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-500/20">
+            <div
+              class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-500/20">
               <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
               </svg>
             </div>
             <div>
@@ -518,14 +589,13 @@
             </div>
           </div>
           <div class="flex items-center gap-3">
-            <span id="panel-count" class="px-3 py-1.5 rounded-full text-xs font-bold bg-indigo-500/15 text-indigo-300 border border-indigo-500/25"></span>
-            <button
-              id="panel-refresh-btn"
-              type="button"
-              class="px-4 py-2 rounded-xl bg-slate-800/60 border border-slate-700/50 text-slate-300 text-xs font-semibold hover:bg-slate-700/60 hover:border-indigo-500/30 hover:text-indigo-300 transition-all duration-300 flex items-center gap-2 cursor-pointer"
-            >
+            <span id="panel-count"
+              class="px-3 py-1.5 rounded-full text-xs font-bold bg-indigo-500/15 text-indigo-300 border border-indigo-500/25"></span>
+            <button id="panel-refresh-btn" type="button"
+              class="px-4 py-2 rounded-xl bg-slate-800/60 border border-slate-700/50 text-slate-300 text-xs font-semibold hover:bg-slate-700/60 hover:border-indigo-500/30 hover:text-indigo-300 transition-all duration-300 flex items-center gap-2 cursor-pointer">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
               </svg>
               Yenile
             </button>
@@ -539,9 +609,12 @@
         </div>
 
         <div id="panel-empty" class="hidden text-center py-16">
-          <div class="w-16 h-16 rounded-2xl bg-slate-800/60 border border-slate-700/30 flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+          <div
+            class="w-16 h-16 rounded-2xl bg-slate-800/60 border border-slate-700/30 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
             </svg>
           </div>
           <p class="text-slate-500 font-semibold text-sm">Henüz kayıtlı başvuru bulunmuyor</p>
@@ -549,18 +622,17 @@
         </div>
 
         <div id="panel-error" class="hidden text-center py-12">
-          <div class="w-14 h-14 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto mb-4">
+          <div
+            class="w-14 h-14 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto mb-4">
             <svg class="w-7 h-7 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
             </svg>
           </div>
           <p class="text-red-400 font-semibold text-sm">Başvurular yüklenemedi</p>
           <p id="panel-error-detail" class="text-red-500/60 text-xs mt-1"></p>
-          <button
-            id="panel-retry-btn"
-            type="button"
-            class="mt-4 px-5 py-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-300 text-xs font-semibold hover:bg-red-500/20 transition-all duration-200 cursor-pointer"
-          >
+          <button id="panel-retry-btn" type="button"
+            class="mt-4 px-5 py-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-300 text-xs font-semibold hover:bg-red-500/20 transition-all duration-200 cursor-pointer">
             Tekrar Dene
           </button>
         </div>
@@ -570,14 +642,88 @@
     </section>
   </main>
 
+  <div id="detail-modal"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+    <div
+      class="glass-card max-w-2xl w-full rounded-2xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto panel-scrollbar border border-indigo-500/20 animate-card-appear">
+      <button id="modal-close-btn" type="button"
+        class="absolute top-5 right-5 text-slate-400 hover:text-white w-9 h-9 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center justify-center transition-colors cursor-pointer">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21c-2.676 0-5.216-.584-7.499-1.632Z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-white">Aday Detay Raporu</h3>
+          <p class="text-xs text-slate-400">Adayın Tüm Analiz Bilgileri</p>
+        </div>
+      </div>
+      <div class="space-y-6">
+        <div
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-800/40 border border-slate-700/40">
+          <div>
+            <h4 id="modal-name" class="text-lg font-extrabold text-white"></h4>
+            <p id="modal-email" class="text-indigo-400 text-sm font-medium mt-0.5"></p>
+            <p id="modal-date" class="text-slate-500 text-xs mt-1"></p>
+          </div>
+          <div id="modal-score-badge" class="px-4 py-2 rounded-xl text-center font-bold text-sm"></div>
+        </div>
+        <div>
+          <h5 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Aranan Pozisyon / Kriter</h5>
+          <div id="modal-kriter"
+            class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/40 text-slate-200 text-sm"></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <h5 class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">Güçlü Yönler</h5>
+            <ul id="modal-strong-list" class="space-y-2"></ul>
+          </div>
+          <div>
+            <h5 class="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-2">Zayıf Yönler</h5>
+            <ul id="modal-weak-list" class="space-y-2"></ul>
+          </div>
+        </div>
+        <div id="modal-gorsel-box" class="hidden">
+          <h5 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Yüklenen Görsel CV</h5>
+          <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-center">
+            <img id="modal-gorsel-img" class="max-h-60 rounded-lg mx-auto shadow-md" />
+          </div>
+        </div>
+        <div>
+          <h5 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">CV Metni</h5>
+          <div id="modal-cv-text"
+            class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300 text-xs font-mono max-h-48 overflow-y-auto panel-scrollbar whitespace-pre-wrap">
+          </div>
+        </div>
+      </div>
+      <div class="mt-6 flex justify-end">
+        <button id="modal-close-btn-bottom" type="button"
+          class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition-colors cursor-pointer">
+          Kapat
+        </button>
+      </div>
+    </div>
+  </div>
+
   <footer class="relative z-10 border-t border-white/5 mt-12">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div
+      class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-xs text-slate-500">2026 CV Analiz Platformu. Tüm hakları saklıdır.</p>
-      <p class="text-xs text-slate-600">Gemini 2.0 Flash tarafından desteklenmektedir</p>
+      <p class="text-xs text-slate-600">Gemini Multimodal Vision API tarafından desteklenmektedir</p>
     </div>
   </footer>
 
   <script>
+    if (typeof pdfjsLib !== "undefined") {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    }
+
     var form = document.getElementById("cv-form");
     var submitBtn = document.getElementById("submit-btn");
     var btnText = document.getElementById("btn-text");
@@ -604,6 +750,178 @@
     var panelCount = document.getElementById("panel-count");
     var panelRefreshBtn = document.getElementById("panel-refresh-btn");
     var panelRetryBtn = document.getElementById("panel-retry-btn");
+    var dropZone = document.getElementById("drop-zone");
+    var cvFileInput = document.getElementById("cv-file-input");
+    var fileStatus = document.getElementById("file-status");
+    var cvMetniArea = document.getElementById("cvMetni");
+    var imagePreviewBox = document.getElementById("image-preview-box");
+    var imagePreview = document.getElementById("image-preview");
+    var detailModal = document.getElementById("detail-modal");
+    var modalCloseBtn = document.getElementById("modal-close-btn");
+    var modalCloseBtnBottom = document.getElementById("modal-close-btn-bottom");
+    var modalGorselBox = document.getElementById("modal-gorsel-box");
+    var modalGorselImg = document.getElementById("modal-gorsel-img");
+    var isimInput = document.getElementById("isim");
+    var epostaInput = document.getElementById("eposta");
+
+    var yuklenenGorselBase64 = "";
+
+    dropZone.addEventListener("click", function () {
+      cvFileInput.click();
+    });
+
+    dropZone.addEventListener("dragover", function (e) {
+      e.preventDefault();
+      dropZone.classList.add("border-indigo-500", "bg-indigo-500/10");
+    });
+
+    dropZone.addEventListener("dragleave", function (e) {
+      e.preventDefault();
+      dropZone.classList.remove("border-indigo-500", "bg-indigo-500/10");
+    });
+
+    dropZone.addEventListener("drop", function (e) {
+      e.preventDefault();
+      dropZone.classList.remove("border-indigo-500", "bg-indigo-500/10");
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        dosyaOku(e.dataTransfer.files[0]);
+      }
+    });
+
+    cvFileInput.addEventListener("change", function (e) {
+      if (e.target.files && e.target.files.length > 0) {
+        dosyaOku(e.target.files[0]);
+      }
+    });
+
+    function pdfMetniAyikla(file) {
+      var reader = new FileReader();
+      cvMetniArea.value = "PDF okunuyor, lütfen bekleyin...";
+
+      reader.onload = function (evt) {
+        var typedarray = new Uint8Array(evt.target.result);
+        pdfjsLib.getDocument(typedarray).promise.then(function (pdf) {
+          var toplamSayfa = pdf.numPages;
+          var sayfaMetinleri = [];
+          var tamamlananSayfa = 0;
+
+          for (var pageNum = 1; pageNum <= toplamSayfa; pageNum++) {
+            (function (pNum) {
+              pdf.getPage(pNum).then(function (page) {
+                page.getTextContent().then(function (textContent) {
+                  var sayfaMetni = textContent.items.map(function (item) {
+                    return item.str;
+                  }).join(" ");
+                  sayfaMetinleri[pNum - 1] = sayfaMetni;
+                  tamamlananSayfa++;
+
+                  if (tamamlananSayfa === toplamSayfa) {
+                    var tumMetin = sayfaMetinleri.join("\n\n");
+                    cvMetniArea.value = tumMetin.trim();
+                    fileStatus.textContent = file.name + " (" + Math.round(file.size / 1024) + " KB) PDF metni başarıyla okundu!";
+                    fileStatus.classList.remove("hidden");
+                  }
+                });
+              });
+            })(pageNum);
+          }
+        }).catch(function (err) {
+          cvMetniArea.value = "";
+          fileStatus.textContent = file.name + " okunamadı.";
+          fileStatus.classList.remove("hidden");
+        });
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+
+    function dosyaOku(file) {
+      if (file.type.startsWith("image/")) {
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+          yuklenenGorselBase64 = evt.target.result;
+          imagePreview.src = yuklenenGorselBase64;
+          imagePreviewBox.classList.remove("hidden");
+          if (!cvMetniArea.value.trim()) {
+            cvMetniArea.value = "[Görsel CV Yüklendi: " + file.name + "]";
+          }
+          fileStatus.textContent = file.name + " (" + Math.round(file.size / 1024) + " KB) Görsel CV olarak yüklendi!";
+          fileStatus.classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
+      } else if (file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")) {
+        yuklenenGorselBase64 = "";
+        imagePreviewBox.classList.add("hidden");
+        pdfMetniAyikla(file);
+      } else {
+        var readerMetin = new FileReader();
+        readerMetin.onload = function (evt) {
+          yuklenenGorselBase64 = "";
+          imagePreviewBox.classList.add("hidden");
+          cvMetniArea.value = evt.target.result;
+          fileStatus.textContent = file.name + " (" + Math.round(file.size / 1024) + " KB) metin belgesi olarak okundu!";
+          fileStatus.classList.remove("hidden");
+        };
+        readerMetin.readAsText(file);
+      }
+    }
+
+    function detayModalAc(aday) {
+      var colors = getScoreColor(aday.uygunlukSkoru || 0);
+      document.getElementById("modal-name").textContent = aday.isim || "-";
+      document.getElementById("modal-email").textContent = aday.eposta || "-";
+      document.getElementById("modal-date").textContent = aday.tarih ? ("Başvuru Tarihi: " + formatTarih(aday.tarih)) : "";
+      document.getElementById("modal-kriter").textContent = aday.arananKriter || "-";
+      document.getElementById("modal-cv-text").textContent = aday.cvMetni || "CV metni bulunmuyor.";
+
+      if (aday.gorselVerisi) {
+        modalGorselImg.src = aday.gorselVerisi;
+        modalGorselBox.classList.remove("hidden");
+      } else {
+        modalGorselBox.classList.add("hidden");
+      }
+
+      var scoreBadge = document.getElementById("modal-score-badge");
+      scoreBadge.className = "px-4 py-2 rounded-xl text-center font-bold text-sm " + colors.labelBg;
+      scoreBadge.textContent = "Skor: " + (aday.uygunlukSkoru || 0) + "/100 (" + colors.label + ")";
+
+      var strongUl = document.getElementById("modal-strong-list");
+      strongUl.innerHTML = "";
+      (aday.gucluYonler || []).forEach(function (item) {
+        var li = document.createElement("li");
+        li.className = "tag rounded-lg px-3 py-2 text-xs font-semibold text-emerald-300";
+        li.textContent = item;
+        strongUl.appendChild(li);
+      });
+
+      var weakUl = document.getElementById("modal-weak-list");
+      weakUl.innerHTML = "";
+      (aday.zayifYonler || []).forEach(function (item) {
+        var li = document.createElement("li");
+        li.className = "tag-weak rounded-lg px-3 py-2 text-xs font-semibold text-amber-300";
+        li.textContent = item;
+        weakUl.appendChild(li);
+      });
+
+      detailModal.classList.remove("hidden");
+    }
+
+    function detayModalKapat() {
+      detailModal.classList.add("hidden");
+    }
+
+    modalCloseBtn.addEventListener("click", detayModalKapat);
+    modalCloseBtnBottom.addEventListener("click", detayModalKapat);
+    detailModal.addEventListener("click", function (e) {
+      if (e.target === detailModal) {
+        detayModalKapat();
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        detayModalKapat();
+      }
+    });
 
     function setLoading(active) {
       submitBtn.disabled = active;
@@ -626,7 +944,7 @@
     }
 
     function getScoreColor(score) {
-      if (score >= 80) return { bg: "rgba(16, 185, 129, 0.3)", border: "rgba(16, 185, 129, 0.7)", text: "text-emerald-400", label: "⭐ Mükemmel Aday", labelBg: "bg-emerald-600/30 text-emerald-300 border-2 border-emerald-400/50" };
+      if (score >= 80) return { bg: "rgba(16, 185, 129, 0.3)", border: "rgba(16, 185, 129, 0.7)", text: "text-emerald-400", label: "Mükemmel Aday", labelBg: "bg-emerald-600/30 text-emerald-300 border-2 border-emerald-400/50" };
       if (score >= 60) return { bg: "rgba(59, 130, 246, 0.3)", border: "rgba(59, 130, 246, 0.7)", text: "text-blue-400", label: "İyi Aday", labelBg: "bg-blue-600/30 text-blue-300 border-2 border-blue-400/50" };
       if (score >= 40) return { bg: "rgba(251, 191, 36, 0.3)", border: "rgba(251, 191, 36, 0.7)", text: "text-amber-400", label: "Gelişime Açık", labelBg: "bg-amber-600/30 text-amber-300 border-2 border-amber-400/50" };
       return { bg: "rgba(239, 68, 68, 0.3)", border: "rgba(239, 68, 68, 0.7)", text: "text-red-400", label: "Yetersiz", labelBg: "bg-red-600/30 text-red-300 border-2 border-red-400/50" };
@@ -744,7 +1062,7 @@
 
       var html = "";
       html += '<div class="flex flex-col sm:flex-row sm:items-center gap-4">';
-      html += '<div class="flex items-center gap-4 flex-1 min-w-0">';
+      html += '<div class="flex items-center gap-4 flex-1 min-w-0 cursor-pointer btn-detail-trigger">';
       html += '<div class="w-11 h-11 rounded-xl bg-gradient-to-br ' + gradientClass + ' flex items-center justify-center flex-shrink-0 shadow-lg">';
       html += '<span class="text-white font-bold text-sm">' + basHarfi + '</span>';
       html += '</div>';
@@ -752,6 +1070,9 @@
       html += '<div class="flex items-center gap-2 flex-wrap">';
       html += '<h4 class="text-sm font-bold text-white truncate">' + (aday.isim || "-") + '</h4>';
       html += '<span class="px-2 py-0.5 rounded-md text-[10px] font-bold ' + badge.className + '">' + skor + '/100</span>';
+      if (aday.gorselVerisi) {
+        html += '<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">Görsel CV</span>';
+      }
       html += '</div>';
       html += '<p class="text-xs text-slate-400 mt-0.5 truncate">' + (aday.eposta || "-") + '</p>';
       html += '</div>';
@@ -767,6 +1088,10 @@
       html += '<span class="text-[11px] text-slate-500 font-medium">' + tarih + '</span>';
       html += '</div>';
       html += '</div>';
+      html += '<button type="button" class="btn-detail px-3 py-1.5 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">';
+      html += '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.573 16.49 16.638 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>';
+      html += 'Detaylar';
+      html += '</button>';
       html += '<button type="button" data-id="' + aday._id + '" class="btn-delete w-9 h-9 rounded-lg flex items-center justify-center cursor-pointer flex-shrink-0" title="Adayı Sil">';
       html += '<svg class="delete-icon w-4 h-4 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>';
       html += '<span class="delete-spinner-el hidden"><span class="delete-spinner"></span></span>';
@@ -776,8 +1101,19 @@
 
       div.innerHTML = html;
 
+      var detailBtn = div.querySelector(".btn-detail");
+      detailBtn.addEventListener("click", function () {
+        detayModalAc(aday);
+      });
+
+      var detailTrigger = div.querySelector(".btn-detail-trigger");
+      detailTrigger.addEventListener("click", function () {
+        detayModalAc(aday);
+      });
+
       var silBtn = div.querySelector(".btn-delete");
-      silBtn.addEventListener("click", function () {
+      silBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
         adaySil(aday._id, silBtn, div);
       });
 
@@ -845,13 +1181,13 @@
       e.preventDefault();
       errorMsg.classList.add("hidden");
 
-      var isim = document.getElementById("isim").value.trim();
-      var eposta = document.getElementById("eposta").value.trim();
+      var isim = isimInput.value.trim();
+      var eposta = epostaInput.value.trim();
       var arananKriter = arananKriterInput.value.trim();
-      var cvMetni = document.getElementById("cvMetni").value.trim();
+      var cvMetni = cvMetniArea.value.trim();
 
-      if (!isim || !eposta || !arananKriter || !cvMetni) {
-        showError("Lütfen tüm alanları doldurunuz.");
+      if (!isim || !eposta || !arananKriter || (!cvMetni && !yuklenenGorselBase64)) {
+        showError("Lütfen tüm zorunlu alanları doldurunuz veya CV dosyası/görseli yükleyiniz.");
         return;
       }
 
@@ -866,7 +1202,13 @@
       fetch("/api/basvuru", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isim: isim, eposta: eposta, arananKriter: arananKriter, cvMetni: cvMetni }),
+        body: JSON.stringify({
+          isim: isim,
+          eposta: eposta,
+          arananKriter: arananKriter,
+          cvMetni: cvMetni,
+          gorselVerisi: yuklenenGorselBase64
+        }),
       })
         .then(function (response) {
           return response.json().then(function (data) {
@@ -891,6 +1233,9 @@
       resultSection.classList.add("hidden");
       formSection.classList.remove("hidden");
       form.reset();
+      yuklenenGorselBase64 = "";
+      imagePreviewBox.classList.add("hidden");
+      fileStatus.classList.add("hidden");
       basvurulariYukle();
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
@@ -908,4 +1253,5 @@
     });
   </script>
 </body>
+
 </html>

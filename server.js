@@ -6,14 +6,15 @@ require("dotenv").config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const birincilModel = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const yedekModel = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 const cvSemasiTanimi = new mongoose.Schema({
@@ -51,6 +52,10 @@ const cvSemasiTanimi = new mongoose.Schema({
     min: 0,
     max: 100,
   },
+  gorselVerisi: {
+    type: String,
+    default: "",
+  },
   tarih: {
     type: Date,
     default: Date.now,
@@ -63,42 +68,123 @@ const cvSemasiTanimi = new mongoose.Schema({
 
 const CvModel = mongoose.model("Cv", cvSemasiTanimi);
 
+async function icerikUretModelAgnostik(icerikler) {
+  try {
+    return await birincilModel.generateContent(icerikler);
+  } catch (birincilHata) {
+    return await yedekModel.generateContent(icerikler);
+  }
+}
+
+function akilliYedekAnaliz(cvMetni, arananKriter) {
+  var cvAlt = (cvMetni || "").toLowerCase();
+  var kriterAlt = (arananKriter || "").toLowerCase();
+
+  var kriterKelimeler = kriterAlt.match(/[a-zA-ZçğıöşüÇĞİÖŞÜ0-9]+/g) || [];
+  var durakKelimeler = ["ve", "veya", "ile", "bir", "en", "az", "için", "olan", "şarttır", "önemli", "aranıyor", "istenen", "gibi", "yıl"];
+  var filtrelenmisKriterler = kriterKelimeler.filter(function (k) {
+    return k.length > 2 && durakKelimeler.indexOf(k) === -1;
+  });
+
+  var eslesenKelimeler = [];
+  var eksikKelimeler = [];
+
+  filtrelenmisKriterler.forEach(function (kelime) {
+    if (cvAlt.includes(kelime)) {
+      if (eslesenKelimeler.indexOf(kelime) === -1) eslesenKelimeler.push(kelime);
+    } else {
+      if (eksikKelimeler.indexOf(kelime) === -1) eksikKelimeler.push(kelime);
+    }
+  });
+
+  var toplamKriter = filtrelenmisKriterler.length || 1;
+  var eslesmeOrani = eslesenKelimeler.length / toplamKriter;
+
+  var hesaplananSkor = Math.round(eslesmeOrani * 100);
+
+  if (hesaplananSkor > 100) hesaplananSkor = 100;
+  if (hesaplananSkor < 0) hesaplananSkor = 0;
+
+  var gucluYonler = [];
+  var zayifYonler = [];
+
+  if (eslesenKelimeler.length > 0) {
+    gucluYonler.push("İlanda aranan '" + eslesenKelimeler.slice(0, 3).join(", ") + "' kriterleri CV'de tespit edildi.");
+    gucluYonler.push("Pozisyon gereksinimlerine kısmen/tamamen uyum sağlıyor.");
+  } else {
+    gucluYonler.push("Temel aday bilgileri veritabanına kaydedildi.");
+  }
+
+  if (eksikKelimeler.length > 0) {
+    zayifYonler.push("İş ilanı için kritik olan '" + eksikKelimeler.slice(0, 3).join(", ") + "' yetkinlikleri CV'de bulunamadı.");
+  } else {
+    zayifYonler.push("Aday ilan gereksinimlerini yüksek oranda karşılıyor.");
+  }
+
+  return {
+    gucluYonler: gucluYonler,
+    zayifYonler: zayifYonler,
+    uygunlukSkoru: hesaplananSkor
+  };
+}
+
 app.post("/api/basvuru", async (req, res) => {
   try {
-    const { isim, eposta, cvMetni, arananKriter } = req.body;
+    const { isim, eposta, cvMetni, arananKriter, gorselVerisi } = req.body;
 
-    if (!isim || !eposta || !cvMetni || !arananKriter) {
-      return res.status(400).json({ hata: "isim, eposta, cvMetni ve arananKriter alanları zorunludur." });
+    if (!isim || !eposta || (!cvMetni && !gorselVerisi) || !arananKriter) {
+      return res.status(400).json({ hata: "isim, eposta, arananKriter ve CV içeriği alanları zorunludur." });
+    }
+
+    const prompt = `Sen tarafsız bir İK uzmanısın. Aşağıdaki CV'yi iş verenin şu aradığı kriterlere göre detaylıca analiz et: "${arananKriter}".
+Adayın niteliklerini kriterle karşılaştır ve sadece şu JSON formatında yanıt ver:
+{
+  "gucluYonler": ["Kriterle birebir uyuşan 2-4 adet somut güçlü yön"],
+  "zayifYonler": ["Kriterde istenen ama CV'de eksik olan 1-3 adet yön"],
+  "uygunlukSkoru": 0
+}
+Not: uygunlukSkoru 0 ile 100 arasında gerçekçi bir sayı olmalıdır. Açıklama veya markdown ekleme.
+
+CV İÇERİĞİ:
+${cvMetni || "Görsel CV ekte sunulmuştur."}`;
+
+    const icerikler = [prompt];
+
+    if (gorselVerisi && typeof gorselVerisi === "string" && gorselVerisi.startsWith("data:") && (!cvMetni || cvMetni.includes("[Görsel CV Yüklendi"))) {
+      const match = gorselVerisi.match(/^data:(image\/[a-zA-Z+]+);base64,(.+)$/);
+      if (match) {
+        icerikler.push({
+          inlineData: {
+            mimeType: match[1],
+            data: match[2],
+          },
+        });
+      }
     }
 
     let analizSonucu;
 
     try {
-      const prompt = `Bu CV'yi iş verenin şu aradığı kriterlere göre incele: "${arananKriter}". Sonucu sadece şu JSON formatında döndür: { "gucluYonler": [], "zayifYonler": [], "uygunlukSkoru": 0 }\n\nCV Metni:\n${cvMetni}`;
-
-      const sonuc = await model.generateContent(prompt);
+      const sonuc = await icerikUretModelAgnostik(icerikler);
       const yapiZekaCevabi = sonuc.response.text();
 
       const jsonEslesmesi = yapiZekaCevabi.match(/\{[\s\S]*\}/);
       if (!jsonEslesmesi) {
-        throw new Error("JSON ayrıştırılamadı.");
+        throw new Error("JSON çıkarılamadı");
       }
 
       analizSonucu = JSON.parse(jsonEslesmesi[0]);
     } catch (apiHatasi) {
-      console.log("Gemini API hatası, yedek veri kullanılıyor:", apiHatasi.message);
-      analizSonucu = {
-        gucluYonler: ["Teknik Bilgi Yeterliliği", "Proje Deneyimi", "Problem Çözme Becerisi"],
-        zayifYonler: ["Liderlik Deneyimi Eksikliği", "İleri Seviye Araç Bilgisi"],
-        uygunlukSkoru: 75,
-      };
+      console.warn("Gemini API kotasına takılındı, Akıllı Kural Motoru devreye girdi.");
+      analizSonucu = akilliYedekAnaliz(cvMetni, arananKriter);
     }
 
     const yeniBasvuru = new CvModel({
       isim,
       eposta,
-      cvMetni,
+      cvMetni: cvMetni || "[Görsel CV Yüklendi]",
       arananKriter,
+      gorselVerisi: gorselVerisi || "",
       gucluYonler: analizSonucu.gucluYonler || [],
       zayifYonler: analizSonucu.zayifYonler || [],
       uygunlukSkoru: analizSonucu.uygunlukSkoru || 0,
@@ -117,7 +203,7 @@ app.post("/api/basvuru", async (req, res) => {
 
 app.get("/api/basvurular", async (req, res) => {
   try {
-    const basvurular = await CvModel.find({ silindiMi: false }).sort({ uygunlukSkoru: -1 });
+    const basvurular = await CvModel.find({ silindiMi: false }).sort({ tarih: -1 });
     return res.status(200).json(basvurular);
   } catch (hata) {
     return res.status(500).json({ hata: "Sunucu hatası: " + hata.message });
@@ -170,4 +256,4 @@ baslat().catch((hata) => {
   process.exit(1);
 });
 
-module.exports = { app, CvModel, model };
+module.exports = { app, CvModel };

@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const Analysis = require("./models/Analysis");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const birincilModel = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
@@ -192,6 +193,19 @@ ${cvMetni || "Görsel CV ekte sunulmuştur."}`;
 
     await yeniBasvuru.save();
 
+    const yeniAnaliz = new Analysis({
+      fullName: isim,
+      email: eposta,
+      cvText: cvMetni || "[Görsel CV Yüklendi]",
+      jobCriteria: arananKriter,
+      strengths: analizSonucu.gucluYonler || [],
+      weaknesses: analizSonucu.zayifYonler || [],
+      matchScore: analizSonucu.uygunlukSkoru || 0,
+      imageData: gorselVerisi || "",
+    });
+
+    await yeniAnaliz.save();
+
     return res.status(201).json({
       mesaj: "Başvuru başarıyla kaydedildi.",
       veri: yeniBasvuru,
@@ -203,8 +217,37 @@ ${cvMetni || "Görsel CV ekte sunulmuştur."}`;
 
 app.get("/api/basvurular", async (req, res) => {
   try {
-    const basvurular = await CvModel.find({ silindiMi: false }).sort({ tarih: -1 });
-    return res.status(200).json(basvurular);
+    const page = parseInt(req.query.page, 10) > 0 ? parseInt(req.query.page, 10) : 1;
+    const limit = parseInt(req.query.limit, 10) > 0 ? parseInt(req.query.limit, 10) : 6;
+    const skip = (page - 1) * limit;
+
+    const filter = { silindiMi: false };
+    if (req.query.search) {
+      filter.$or = [
+        { isim: { $regex: req.query.search, $options: "i" } },
+        { eposta: { $regex: req.query.search, $options: "i" } },
+        { arananKriter: { $regex: req.query.search, $options: "i" } },
+      ];
+    }
+
+    const total = await CvModel.countDocuments(filter);
+    const totalPages = Math.ceil(total / limit) || 1;
+
+    const data = await CvModel.find(filter)
+      .sort({ tarih: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      data,
+      pagination: {
+        total,
+        page,
+        totalPages,
+      },
+    });
   } catch (hata) {
     return res.status(500).json({ hata: "Sunucu hatası: " + hata.message });
   }
@@ -219,6 +262,16 @@ app.get("/api/basvurular/:id", async (req, res) => {
     }
 
     return res.json(aday);
+  } catch (hata) {
+    return res.status(500).json({ hata: "Sunucu hatası: " + hata.message });
+  }
+});
+
+app.delete("/api/basvurular", async (req, res) => {
+  try {
+    await CvModel.updateMany({ silindiMi: false }, { silindiMi: true });
+    await Analysis.deleteMany({});
+    return res.json({ mesaj: "Tüm başvurular başarıyla silindi." });
   } catch (hata) {
     return res.status(500).json({ hata: "Sunucu hatası: " + hata.message });
   }
@@ -242,6 +295,67 @@ app.delete("/api/basvurular/:id", async (req, res) => {
   }
 });
 
+app.get("/api/analizler", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page, 10) > 0 ? parseInt(req.query.page, 10) : 1;
+    const limit = parseInt(req.query.limit, 10) > 0 ? parseInt(req.query.limit, 10) : 10;
+    const skip = (page - 1) * limit;
+
+    const filter = {};
+    if (req.query.search) {
+      filter.$or = [
+        { fullName: { $regex: req.query.search, $options: "i" } },
+        { jobCriteria: { $regex: req.query.search, $options: "i" } },
+      ];
+    }
+
+    const total = await Analysis.countDocuments(filter);
+    const totalPages = Math.ceil(total / limit) || 0;
+
+    const data = await Analysis.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      data,
+      pagination: {
+        total,
+        page,
+        totalPages,
+      },
+    });
+  } catch (hata) {
+    return res.status(500).json({
+      success: false,
+      error: "Sunucu hatası: " + hata.message,
+    });
+  }
+});
+
+app.delete("/api/analizler", async (req, res) => {
+  try {
+    await Analysis.deleteMany({});
+    return res.status(200).json({ success: true, mesaj: "Tüm analizler başarıyla silindi." });
+  } catch (hata) {
+    return res.status(500).json({ success: false, error: "Sunucu hatası: " + hata.message });
+  }
+});
+
+app.delete("/api/analizler/:id", async (req, res) => {
+  try {
+    const silinen = await Analysis.findByIdAndDelete(req.params.id);
+    if (!silinen) {
+      return res.status(404).json({ success: false, error: "Analiz bulunamadı." });
+    }
+    return res.status(200).json({ success: true, mesaj: "Analiz başarıyla silindi." });
+  } catch (hata) {
+    return res.status(500).json({ success: false, error: "Sunucu hatası: " + hata.message });
+  }
+});
+
 async function baslat() {
   await mongoose.connect("mongodb://localhost:27017/cv_analiz_db");
   console.log("MongoDB yerel veritabanı bağlantısı başarılı.");
@@ -256,4 +370,4 @@ baslat().catch((hata) => {
   process.exit(1);
 });
 
-module.exports = { app, CvModel };
+module.exports = { app, CvModel, Analysis };

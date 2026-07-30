@@ -17,6 +17,20 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/playwright-report", express.static(path.join(__dirname, "playwright-report")));
+
+app.get("/api/test-results", (req, res) => {
+  const jsonPath = path.join(__dirname, "public", "test-results.json");
+  if (require("fs").existsSync(jsonPath)) {
+    try {
+      const data = JSON.parse(require("fs").readFileSync(jsonPath, "utf8"));
+      return res.json({ success: true, data });
+    } catch (e) {
+      return res.status(500).json({ success: false, error: "Test raporu okunamadı." });
+    }
+  }
+  return res.status(404).json({ success: false, error: "Henüz kaydedilmiş test sonucu bulunmuyor." });
+});
 
 const cvSemasiTanimi = new mongoose.Schema({
   isim: {
@@ -357,8 +371,16 @@ app.delete("/api/analizler/:id", async (req, res) => {
 });
 
 async function baslat() {
-  await mongoose.connect("mongodb://localhost:27017/cv_analiz_db");
-  console.log("MongoDB yerel veritabanı bağlantısı başarılı.");
+  try {
+    await mongoose.connect("mongodb://localhost:27017/cv_analiz_db", { serverSelectionTimeoutMS: 2000 });
+    console.log("MongoDB yerel veritabanı bağlantısı başarılı.");
+  } catch (err) {
+    console.log("Yerel MongoDB servisine bağlanılamadı, MongoMemoryServer başlatılıyor...");
+    const { MongoMemoryServer } = require("mongodb-memory-server");
+    const mongoMemory = await MongoMemoryServer.create();
+    await mongoose.connect(mongoMemory.getUri());
+    console.log("MongoMemoryServer geçici veritabanı bağlantısı başarılı.");
+  }
 
   app.listen(PORT, () => {
     console.log(`Sunucu ${PORT} portunda çalışıyor.`);

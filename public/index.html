@@ -39,10 +39,17 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+      text-rendering: optimizeSpeed;
+    }
+
     body {
       font-family: "Inter", system-ui, sans-serif;
       background: #0a0f1a;
       min-height: 100vh;
+      overflow-x: hidden;
+      contain: layout style;
     }
 
     .gradient-bg {
@@ -52,10 +59,13 @@
     }
 
     .glass-card {
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(99, 102, 241, 0.12);
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(99, 102, 241, 0.15);
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     .input-glow:focus {
@@ -65,18 +75,19 @@
     .btn-gradient {
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
       background-size: 200% 200%;
-      animation: gradientShift 3s ease infinite;
+      will-change: transform, box-shadow;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .btn-gradient:hover {
-      background-size: 200% 200%;
-      animation: gradientShift 1s ease infinite;
-      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.35), 0 0 60px rgba(139, 92, 246, 0.15);
-      transform: translateY(-1px);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.35), 0 0 40px rgba(139, 92, 246, 0.15);
+      transform: translateY(-1px) translateZ(0);
     }
 
     .btn-gradient:active {
-      transform: translateY(0);
+      transform: translateY(0) translateZ(0);
     }
 
     .btn-gradient:disabled {
@@ -103,53 +114,51 @@
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px) translateZ(0);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) translateZ(0);
       }
     }
 
     @keyframes slideDown {
       from {
         opacity: 0;
-        transform: translateY(-20px) scale(0.95);
+        transform: translateY(-15px) scale(0.97) translateZ(0);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0) scale(1) translateZ(0);
       }
     }
 
     @keyframes pulse-ring {
       0% {
-        transform: scale(0.9);
+        transform: scale(0.95) translateZ(0);
         opacity: 1;
       }
 
       50% {
-        transform: scale(1.1);
-        opacity: 0.6;
+        transform: scale(1.05) translateZ(0);
+        opacity: 0.7;
       }
 
       100% {
-        transform: scale(0.9);
+        transform: scale(0.95) translateZ(0);
         opacity: 1;
       }
     }
 
     @keyframes float {
-
-      0%,
-      100% {
-        transform: translateY(0px);
+      0%, 100% {
+        transform: translateY(0px) translateZ(0);
       }
 
       50% {
-        transform: translateY(-8px);
+        transform: translateY(-8px) translateZ(0);
       }
     }
 
@@ -166,29 +175,33 @@
     @keyframes cardAppear {
       from {
         opacity: 0;
-        transform: translateY(20px) scale(0.97);
+        transform: translateY(15px) scale(0.98) translateZ(0);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0) scale(1) translateZ(0);
       }
     }
 
     .animate-fade-in-up {
-      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity;
     }
 
     .animate-slide-down {
-      animation: slideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity;
     }
 
     .animate-float {
-      animation: float 4s ease-in-out infinite;
+      animation: float 6s ease-in-out infinite;
+      will-change: transform;
     }
 
     .animate-card-appear {
-      animation: cardAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: cardAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity;
     }
 
     .delay-100 {
@@ -196,18 +209,22 @@
     }
 
     .delay-200 {
-      animation-delay: 0.2s;
+      animation-delay: 0.15s;
     }
 
     .delay-300 {
-      animation-delay: 0.3s;
+      animation-delay: 0.2s;
     }
 
     .orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
+      filter: blur(48px);
+      -webkit-filter: blur(48px);
       pointer-events: none;
+      will-change: transform;
+      transform: translateZ(0);
+      contain: layout style paint;
     }
 
     .spinner {
@@ -228,11 +245,14 @@
     .success-card {
       background: rgba(15, 23, 42, 0.85);
       border: 2px solid rgba(16, 185, 129, 0.5);
-      box-shadow: 0 0 40px rgba(16, 185, 129, 0.08);
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.08);
+      will-change: transform;
+      transform: translateZ(0);
     }
 
     .score-ring {
       animation: pulse-ring 2s ease-in-out infinite;
+      will-change: transform;
     }
 
     .tag {
@@ -273,17 +293,20 @@
     }
 
     .panel-card {
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(99, 102, 241, 0.1);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(99, 102, 241, 0.12);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     .panel-card:hover {
-      border-color: rgba(99, 102, 241, 0.3);
-      box-shadow: 0 8px 32px rgba(99, 102, 241, 0.08), 0 0 0 1px rgba(99, 102, 241, 0.15);
-      transform: translateY(-2px);
+      border-color: rgba(99, 102, 241, 0.35);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.1);
+      transform: translateY(-2px) translateZ(0);
     }
 
     .skeleton-pulse {
@@ -313,18 +336,20 @@
     .btn-delete {
       background: rgba(239, 68, 68, 0.1);
       border: 1px solid rgba(239, 68, 68, 0.25);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      will-change: transform;
+      transform: translateZ(0);
     }
 
     .btn-delete:hover {
       background: rgba(239, 68, 68, 0.25);
       border-color: rgba(239, 68, 68, 0.5);
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
-      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
+      transform: scale(1.05) translateZ(0);
     }
 
     .btn-delete:active {
-      transform: scale(0.95);
+      transform: scale(0.95) translateZ(0);
     }
 
     .btn-delete:disabled {
@@ -345,7 +370,7 @@
     @keyframes cardRemove {
       from {
         opacity: 1;
-        transform: translateX(0) scale(1);
+        transform: translateX(0) scale(1) translateZ(0);
         max-height: 200px;
         margin-bottom: 12px;
         padding: 20px;
@@ -353,7 +378,7 @@
 
       to {
         opacity: 0;
-        transform: translateX(40px) scale(0.95);
+        transform: translateX(40px) scale(0.95) translateZ(0);
         max-height: 0;
         margin-bottom: 0;
         padding: 0;
@@ -361,8 +386,16 @@
     }
 
     .animate-card-remove {
-      animation: cardRemove 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: cardRemove 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       overflow: hidden;
+      will-change: transform, opacity, max-height;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-float, .btn-gradient, .score-ring, .animate-fade-in-up, .animate-slide-down {
+        animation: none !important;
+        transition: none !important;
+      }
     }
   </style>
 </head>

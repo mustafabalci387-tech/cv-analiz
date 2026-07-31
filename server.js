@@ -371,10 +371,15 @@ app.delete("/api/analizler/:id", async (req, res) => {
 });
 
 async function baslat() {
+  const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/cv_analiz_db";
   try {
-    await mongoose.connect("mongodb://localhost:27017/cv_analiz_db", { serverSelectionTimeoutMS: 2000 });
-    console.log("MongoDB yerel veritabanı bağlantısı başarılı.");
+    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 2000 });
+    console.log("MongoDB veritabanı bağlantısı başarılı.");
   } catch (err) {
+    if (process.env.MONGODB_URI) {
+      console.error("MONGODB_URI ile veritabanı bağlantı hatası:", err.message);
+      throw err;
+    }
     console.log("Yerel MongoDB servisine bağlanılamadı, MongoMemoryServer başlatılıyor...");
     const { MongoMemoryServer } = require("mongodb-memory-server");
     const mongoMemory = await MongoMemoryServer.create();

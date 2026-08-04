@@ -17,7 +17,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 9
+      "actualWorkers": 10
     },
     "preserveOutput": "always",
     "projects": [
@@ -26,7 +26,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 9
+          "actualWorkers": 10
         },
         "id": "chromium",
         "name": "chromium",
@@ -42,7 +42,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 9
+          "actualWorkers": 10
         },
         "id": "firefox",
         "name": "firefox",
@@ -58,7 +58,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 9
+          "actualWorkers": 10
         },
         "id": "webkit",
         "name": "webkit",
@@ -138,12 +138,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 5373,
+                          "duration": 10947,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-07-31T20:18:03.175Z",
+                          "startTime": "2026-08-04T13:58:28.787Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -158,15 +158,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 3,
-                          "parallelIndex": 3,
+                          "workerIndex": 4,
+                          "parallelIndex": 4,
                           "status": "passed",
-                          "duration": 3717,
+                          "duration": 4471,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-07-31T20:18:03.194Z",
+                          "startTime": "2026-08-04T13:58:28.787Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -181,15 +181,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 6,
-                          "parallelIndex": 6,
+                          "workerIndex": 8,
+                          "parallelIndex": 8,
                           "status": "passed",
-                          "duration": 4643,
+                          "duration": 5750,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-07-31T20:18:03.205Z",
+                          "startTime": "2026-08-04T13:58:28.818Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -226,12 +226,12 @@
                           "workerIndex": 1,
                           "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 4520,
+                          "duration": 15127,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-07-31T20:18:03.149Z",
+                          "startTime": "2026-08-04T13:58:28.767Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -246,15 +246,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 4,
-                          "parallelIndex": 4,
+                          "workerIndex": 5,
+                          "parallelIndex": 5,
                           "status": "passed",
-                          "duration": 3167,
+                          "duration": 3083,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-07-31T20:18:03.207Z",
+                          "startTime": "2026-08-04T13:58:28.787Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -269,15 +269,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 7,
-                          "parallelIndex": 7,
+                          "workerIndex": 9,
+                          "parallelIndex": 9,
                           "status": "passed",
-                          "duration": 3819,
+                          "duration": 3695,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-07-31T20:18:03.209Z",
+                          "startTime": "2026-08-04T13:58:28.875Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -314,12 +314,12 @@
                           "workerIndex": 2,
                           "parallelIndex": 2,
                           "status": "passed",
-                          "duration": 6546,
+                          "duration": 9733,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-07-31T20:18:03.111Z",
+                          "startTime": "2026-08-04T13:58:28.780Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -334,15 +334,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 5,
-                          "parallelIndex": 5,
+                          "workerIndex": 6,
+                          "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 5408,
+                          "duration": 8164,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-07-31T20:18:03.186Z",
+                          "startTime": "2026-08-04T13:58:28.785Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -357,15 +357,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 8,
-                          "parallelIndex": 8,
+                          "workerIndex": 9,
+                          "parallelIndex": 9,
                           "status": "passed",
-                          "duration": 7247,
+                          "duration": 5887,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-07-31T20:18:03.228Z",
+                          "startTime": "2026-08-04T13:58:32.744Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -379,6 +379,94 @@
                   "column": 5
                 }
               ]
+            },
+            {
+              "title": "PDF Raporu İndirme Butonları Testi",
+              "file": "tests/app.spec.js",
+              "line": 90,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Sonuç kartı ve aday detay modalındaki PDF İndir butonlarının görünürlüğünü ve etkileşimini doğrulama",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 17686,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-04T13:58:28.780Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 7,
+                          "status": "passed",
+                          "duration": 5600,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-04T13:58:28.839Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 10,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 4770,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-04T13:58:34.017Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "358bbd3632d8bf4e407c-4ea6288f4e498e765f84",
+                  "file": "tests/app.spec.js",
+                  "line": 91,
+                  "column": 5
+                }
+              ]
             }
           ]
         }
@@ -387,9 +475,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-07-31T20:18:01.558Z",
-    "duration": 9578.755000000001,
-    "expected": 9,
+    "startTime": "2026-08-04T13:58:24.712Z",
+    "duration": 22638.399,
+    "expected": 12,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

@@ -13,6 +13,7 @@
     rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -595,14 +596,24 @@
           </div>
         </div>
 
-        <button id="new-analysis-btn" type="button"
-          class="mt-10 w-full py-3.5 rounded-xl border border-indigo-500/30 text-indigo-300 font-medium text-sm hover:bg-indigo-500/10 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
-          </svg>
-          Yeni Analiz Başlat
-        </button>
+        <div class="flex flex-col sm:flex-row gap-3 mt-10" id="result-action-buttons">
+          <button id="download-pdf-btn" type="button"
+            class="flex-1 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/25">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            PDF Raporu İndir
+          </button>
+          <button id="new-analysis-btn" type="button"
+            class="flex-1 py-3.5 rounded-xl border border-indigo-500/30 text-indigo-300 font-medium text-sm hover:bg-indigo-500/10 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
+            </svg>
+            Yeni Analiz Başlat
+          </button>
+        </div>
       </div>
     </div>
 
@@ -786,7 +797,15 @@
           </div>
         </div>
       </div>
-      <div class="mt-6 flex justify-end">
+      <div class="mt-6 flex flex-wrap items-center justify-between gap-3" id="modal-action-buttons">
+        <button id="modal-download-pdf-btn" type="button"
+          class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition-all duration-300 cursor-pointer flex items-center gap-2 shadow-md shadow-indigo-600/20">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+          </svg>
+          PDF Raporu İndir
+        </button>
         <button id="modal-close-btn-bottom" type="button"
           class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition-colors cursor-pointer">
           Kapat
@@ -1479,6 +1498,58 @@
           showError(err.message || "Sunucuya bağlanılamadı. Lütfen tekrar deneyin.");
         });
     });
+
+    function pdfRaporuIndir(targetElementId, dosyaAdi) {
+      var container = document.getElementById(targetElementId);
+      if (!container) return;
+
+      if (typeof html2pdf === "undefined") {
+        alert("PDF oluşturma kütüphanesi yüklenemedi. Lütfen internet bağlantınızı kontrol ediniz.");
+        return;
+      }
+
+      var targetNode = container.querySelector(".success-card") || container.querySelector(".glass-card") || container;
+
+      var hiddenElements = targetNode.querySelectorAll("button, #result-action-buttons, #modal-action-buttons, #modal-close-btn");
+      hiddenElements.forEach(function (el) {
+        el.style.visibility = "hidden";
+      });
+
+      var filename = dosyaAdi || "Aday_Analiz_Raporu.pdf";
+
+      var opt = {
+        margin: [10, 10, 10, 10],
+        filename: filename,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false, backgroundColor: "#0a0f1a" },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+      };
+
+      html2pdf().set(opt).from(targetNode).save().then(function () {
+        hiddenElements.forEach(function (el) {
+          el.style.visibility = "";
+        });
+      }).catch(function (err) {
+        hiddenElements.forEach(function (el) {
+          el.style.visibility = "";
+        });
+        console.error("PDF raporu indirme hatası:", err);
+      });
+    }
+
+    var downloadPdfBtn = document.getElementById("download-pdf-btn");
+    if (downloadPdfBtn) {
+      downloadPdfBtn.addEventListener("click", function () {
+        pdfRaporuIndir("result-section", "Aday_Analiz_Raporu.pdf");
+      });
+    }
+
+    var modalDownloadPdfBtn = document.getElementById("modal-download-pdf-btn");
+    if (modalDownloadPdfBtn) {
+      modalDownloadPdfBtn.addEventListener("click", function () {
+        pdfRaporuIndir("detail-modal", "Aday_Analiz_Raporu.pdf");
+      });
+    }
 
     newAnalysisBtn.addEventListener("click", function () {
       resultSection.classList.add("hidden");

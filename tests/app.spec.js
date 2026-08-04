@@ -87,4 +87,41 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
     });
   });
 
+  test.describe('PDF Raporu İndirme Butonları Testi', () => {
+    test('Sonuç kartı ve aday detay modalındaki PDF İndir butonlarının görünürlüğünü ve etkileşimini doğrulama', async ({ page }) => {
+      // 1. Formu doldur ve analiz yap
+      await page.locator('#isim').fill('Zeynep Demir');
+      await page.locator('#eposta').fill('zeynep@test.com');
+      await page.locator('#arananKriter').fill('Full Stack Developer');
+      await page.locator('#cvMetni').fill('JavaScript, Node.js, Express, MongoDB ve Tailwind CSS deneyimine sahip yazılım uzmanı.');
+
+      const submitBtn = page.locator('#submit-btn');
+      await expect(submitBtn).toBeVisible();
+      await submitBtn.click();
+
+      // 2. Analiz sonuç kartının göründüğünü doğrula
+      const resultSection = page.locator('#result-section');
+      await expect(resultSection).toBeVisible({ timeout: 15000 });
+
+      // 3. Sonuç kartındaki #download-pdf-btn butonunun görünür ve tıklanabilir olduğunu doğrula
+      const downloadPdfBtn = page.locator('#download-pdf-btn');
+      await expect(downloadPdfBtn).toBeVisible();
+      await expect(downloadPdfBtn).toBeEnabled();
+
+      // 4. Aday yönetim panelindeki ilk aday detayını aç
+      const detayButonlari = page.locator('.btn-detail');
+      await expect(detayButonlari.first()).toBeVisible();
+      await detayButonlari.first().click();
+
+      // 5. Modalın açıldığını ve modal içerisindeki #modal-download-pdf-btn butonunun görünür olduğunu doğrula
+      const detailModal = page.locator('#detail-modal');
+      await expect(detailModal).toBeVisible();
+
+      const modalDownloadPdfBtn = page.locator('#modal-download-pdf-btn');
+      await expect(modalDownloadPdfBtn).toBeVisible();
+      await expect(modalDownloadPdfBtn).toBeEnabled();
+    });
+  });
+
 });
+

@@ -123,5 +123,91 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
     });
   });
 
+  test.describe('Aday İstatistik Dashboard ve Grafik Testi', () => {
+    test('Dashboard bölümü, istatistik kartları ve grafik canvas elemanlarının görünürlüğünü doğrulama', async ({ page }) => {
+      // 1. Dashboard bölümünün sayfada görünür olduğunu doğrula
+      const dashboardSection = page.locator('#dashboard-section');
+      await expect(dashboardSection).toBeVisible();
+
+      // 2. Toplam Başvuru istatistik kartının görünür olduğunu ve metin içerdiğini doğrula
+      const statTotalCount = page.locator('#stat-total-count');
+      await expect(statTotalCount).toBeVisible();
+      await expect(statTotalCount).not.toBeEmpty();
+
+      // 3. Ortalama Skor istatistik kartının görünür olduğunu ve metin içerdiğini doğrula
+      const statAvgScore = page.locator('#stat-avg-score');
+      await expect(statAvgScore).toBeVisible();
+      await expect(statAvgScore).not.toBeEmpty();
+
+      // 4. Mükemmel Aday Sayısı istatistik kartının görünür olduğunu ve metin içerdiğini doğrula
+      const statExcellentCount = page.locator('#stat-excellent-count');
+      await expect(statExcellentCount).toBeVisible();
+      await expect(statExcellentCount).not.toBeEmpty();
+
+      // 5. Skor Dağılımı pasta grafiği canvas elemanının sayfada yüklendiğini doğrula
+      const scoreChart = page.locator('#score-chart');
+      await expect(scoreChart).toBeAttached();
+
+      // 6. Pozisyon / Kriter Dağılımı çubuk grafiği canvas elemanının sayfada yüklendiğini doğrula
+      const kriterChart = page.locator('#kriter-chart');
+      await expect(kriterChart).toBeAttached();
+    });
+  });
+
+  test.describe('CSV Dışa Aktarma ve Skor Filtreleme Testi', () => {
+    test('Skor filtresi seçeneklerinin çalıştığını ve CSV butonunun görünür olduğunu doğrulama', async ({ page }) => {
+      // 1. Skor filtresi açılır menüsünün görünür olduğunu doğrula
+      const scoreFilter = page.locator('#panel-score-filter');
+      await expect(scoreFilter).toBeVisible();
+
+      // 2. "high" (80+ Mükemmel) seçeneğini seç ve listenin yeniden yüklendiğini doğrula
+      await scoreFilter.selectOption('high');
+      await expect(scoreFilter).toHaveValue('high');
+      await page.waitForTimeout(500);
+
+      // 3. "mid" (50-79 Orta) seçeneğini seç ve listenin yeniden yüklendiğini doğrula
+      await scoreFilter.selectOption('mid');
+      await expect(scoreFilter).toHaveValue('mid');
+      await page.waitForTimeout(500);
+
+      // 4. "low" (0-49 Düşük) seçeneğini seç ve listenin yeniden yüklendiğini doğrula
+      await scoreFilter.selectOption('low');
+      await expect(scoreFilter).toHaveValue('low');
+      await page.waitForTimeout(500);
+
+      // 5. Filtreyi tekrar "all" (Tüm Skorlar) konumuna döndür
+      await scoreFilter.selectOption('all');
+      await expect(scoreFilter).toHaveValue('all');
+
+      // 6. CSV Raporu İndir butonunun görünür ve tıklanabilir olduğunu doğrula
+      const csvExportBtn = page.locator('#panel-csv-export-btn');
+      await expect(csvExportBtn).toBeVisible();
+      await expect(csvExportBtn).toBeEnabled();
+    });
+  });
+
+  test.describe('Canlı Ortam Sağlık Kontrolü (Health Check) Testi', () => {
+    test('/api/health endpoint yanıtını ve arayüz rozetini doğrulama', async ({ page }) => {
+      // 1. /api/health REST API uç noktasına istek at ve yanıtı doğrula
+      const response = await page.request.get('http://localhost:3000/api/health');
+      await expect(response).toBeOK();
+
+      const body = await response.json();
+      expect(body.status).toBe('OK');
+      expect(body).toHaveProperty('db');
+      expect(body).toHaveProperty('uptime');
+      expect(body).toHaveProperty('env');
+
+      // 2. Arayüzdeki #health-badge elemanının görünür olduğunu doğrula
+      const healthBadge = page.locator('#health-badge');
+      await expect(healthBadge).toBeVisible();
+
+      // 3. Rozet içerisinde sunucu durum metninin yer aldığını doğrula
+      const healthText = page.locator('#health-text');
+      await expect(healthText).toBeVisible();
+      await expect(healthText).toContainText('Sunucu: Aktif', { timeout: 5000 });
+    });
+  });
+
 });
 

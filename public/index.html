@@ -14,6 +14,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -617,7 +618,77 @@
       </div>
     </div>
 
-    <section id="panel-section" class="max-w-5xl mx-auto mt-20 animate-fade-in-up delay-300">
+    <section id="dashboard-section" class="max-w-5xl mx-auto mt-16 animate-fade-in-up">
+      <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-2xl shadow-indigo-950/30">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 flex-shrink-0">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white">Aday İstatistikleri & Analiz Dashboard'u</h3>
+            <p class="text-xs text-slate-400 font-medium mt-0.5">Başvuru Skorları, Ortalama Başarı ve Pozisyon İstatistikleri</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6 0 3.375 3.375 0 016 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400 font-medium">Toplam Başvuru</p>
+              <h4 id="stat-total-count" class="text-2xl font-extrabold text-white mt-0.5">0</h4>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400 font-medium">Ortalama Skor</p>
+              <h4 id="stat-avg-score" class="text-2xl font-extrabold text-white mt-0.5">0 / 100</h4>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.504-1.125-1.125-1.125h-6.75a1.125 1.125 0 01-1.125 1.125v3.375m9 0h-9m4.5-12a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0z" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400 font-medium">Mükemmel Aday Sayısı</p>
+              <h4 id="stat-excellent-count" class="text-2xl font-extrabold text-white mt-0.5">0</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center">
+            <h5 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-4 w-full text-left">Skor Dağılımı (Pasta Grafiği)</h5>
+            <div class="relative w-full max-h-64 flex justify-center">
+              <canvas id="score-chart"></canvas>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center">
+            <h5 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-4 w-full text-left">Pozisyon / Kriter Dağılımı (Çubuk Grafiği)</h5>
+            <div class="relative w-full max-h-64 flex justify-center">
+              <canvas id="kriter-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-section" class="max-w-5xl mx-auto mt-16 animate-fade-in-up delay-300">
       <div class="glass-card rounded-2xl p-6 sm:p-10 shadow-2xl shadow-indigo-950/30">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
           <div class="flex items-center gap-3">
@@ -674,6 +745,22 @@
               </svg>
               Test Raporu
             </a>
+            <select id="panel-score-filter"
+              class="px-3 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-white text-xs font-semibold focus:outline-none focus:border-indigo-500 transition-all cursor-pointer appearance-none"
+              title="Skor Filtresi">
+              <option value="all">Tüm Skorlar</option>
+              <option value="high">80+ Mükemmel</option>
+              <option value="mid">50-79 Orta</option>
+              <option value="low">0-49 Düşük</option>
+            </select>
+            <button id="panel-csv-export-btn" type="button"
+              class="px-3.5 py-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold hover:bg-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300 flex items-center gap-1.5 cursor-pointer" title="CSV Raporu İndir">
+              <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+              CSV Raporu İndir
+            </button>
           </form>
         </div>
 
@@ -818,6 +905,10 @@
     <div
       class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-xs text-slate-500">2026 CV Analiz Platformu. Tüm hakları saklıdır.</p>
+      <div id="health-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/40 cursor-default" title="Sunucu Sağlık Durumu">
+        <span id="health-dot" class="w-2 h-2 rounded-full bg-slate-600 animate-pulse"></span>
+        <span id="health-text" class="text-xs font-semibold text-slate-500">Kontrol ediliyor...</span>
+      </div>
       <p class="text-xs text-slate-600">Gemini Multimodal Vision API tarafından desteklenmektedir</p>
     </div>
   </footer>
@@ -1387,6 +1478,19 @@
           var pagination = resData.pagination || { total: data.length, page: 1, totalPages: 1 };
           mevcutturToplamSayfa = pagination.totalPages || 1;
 
+          // Skor filtresi uygula
+          var scoreFilter = document.getElementById("panel-score-filter");
+          var filterValue = scoreFilter ? scoreFilter.value : "all";
+          if (filterValue !== "all") {
+            data = data.filter(function (aday) {
+              var skor = aday.uygunlukSkoru || 0;
+              if (filterValue === "high") return skor >= 80;
+              if (filterValue === "mid") return skor >= 50 && skor <= 79;
+              if (filterValue === "low") return skor <= 49;
+              return true;
+            });
+          }
+
           if (!data || data.length === 0) {
             panelCount.textContent = "0 kayıt";
             if (panelPageInfo) panelPageInfo.textContent = "Sayfa 1 / 1";
@@ -1396,7 +1500,7 @@
             return;
           }
 
-          panelCount.textContent = (pagination.total || data.length) + " kayıt";
+          panelCount.textContent = (filterValue !== "all" ? data.length : (pagination.total || data.length)) + " kayıt";
           if (panelPageInfo) {
             panelPageInfo.textContent = "Sayfa " + (pagination.page || mevcutturPanelSayfasi) + " / " + mevcutturToplamSayfa;
           }
@@ -1447,6 +1551,64 @@
       panelDeleteAllBtn.addEventListener("click", tumunuSil);
     }
 
+    var panelScoreFilter = document.getElementById("panel-score-filter");
+    if (panelScoreFilter) {
+      panelScoreFilter.addEventListener("change", function () {
+        basvurulariYukle(1, mevcutturPanelArama);
+      });
+    }
+
+    var panelCsvExportBtn = document.getElementById("panel-csv-export-btn");
+    if (panelCsvExportBtn) {
+      panelCsvExportBtn.addEventListener("click", function () {
+        panelCsvExportBtn.disabled = true;
+        panelCsvExportBtn.textContent = "İndiriliyor...";
+
+        fetch("/api/basvurular?limit=1000")
+          .then(function (res) { return res.json(); })
+          .then(function (resData) {
+            var data = resData.data || [];
+            if (data.length === 0) {
+              alert("Dışa aktarılacak aday verisi bulunmuyor.");
+              return;
+            }
+
+            var satirlar = [];
+            satirlar.push("Ad Soyad,E-posta,Aranan Kriter,Uygunluk Skoru,Güçlü Yönler,Zayıf Yönler,Başvuru Tarihi");
+
+            data.forEach(function (aday) {
+              var isim = '"' + (aday.isim || "").replace(/"/g, '""') + '"';
+              var eposta = '"' + (aday.eposta || "").replace(/"/g, '""') + '"';
+              var kriter = '"' + (aday.arananKriter || "").replace(/"/g, '""') + '"';
+              var skor = aday.uygunlukSkoru || 0;
+              var guclu = '"' + (aday.gucluYonler || []).join("; ").replace(/"/g, '""') + '"';
+              var zayif = '"' + (aday.zayifYonler || []).join("; ").replace(/"/g, '""') + '"';
+              var tarih = aday.tarih ? new Date(aday.tarih).toLocaleDateString("tr-TR") : "-";
+              satirlar.push(isim + "," + eposta + "," + kriter + "," + skor + "," + guclu + "," + zayif + "," + tarih);
+            });
+
+            var csvIcerik = "\uFEFF" + satirlar.join("\n");
+            var blob = new Blob([csvIcerik], { type: "text/csv;charset=utf-8;" });
+            var url = URL.createObjectURL(blob);
+
+            var link = document.createElement("a");
+            link.href = url;
+            link.download = "Aday_Listesi.csv";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+          })
+          .catch(function (err) {
+            alert("CSV dışa aktarma hatası: " + err.message);
+          })
+          .finally(function () {
+            panelCsvExportBtn.disabled = false;
+            panelCsvExportBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg> CSV Raporu İndir';
+          });
+      });
+    }
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       errorMsg.classList.add("hidden");
@@ -1492,6 +1654,7 @@
           setLoading(false);
           renderResult(data);
           basvurulariYukle(1, "");
+          dashboardGuncelle();
         })
         .catch(function (err) {
           setLoading(false);
@@ -1571,8 +1734,151 @@
       basvurulariYukle(mevcutturPanelSayfasi, mevcutturPanelArama);
     });
 
+    var scoreChartInstance = null;
+    var kriterChartInstance = null;
+
+    function dashboardGuncelle() {
+      fetch("/api/basvurular?limit=100")
+        .then(function (res) { return res.json(); })
+        .then(function (resData) {
+          if (!resData || !resData.success || !resData.data) return;
+          var basvurular = resData.data;
+
+          var toplam = resData.pagination ? resData.pagination.total : basvurular.length;
+          var toplamSkor = 0;
+          var mukemmelSayisi = 0;
+
+          var dusukSkor = 0;  // 0 - 49
+          var ortaSkor = 0;   // 50 - 74
+          var yuksekSkor = 0; // 75 - 100
+
+          var kriterSayilari = {};
+
+          basvurular.forEach(function (b) {
+            var skor = b.uygunlukSkoru || 0;
+            toplamSkor += skor;
+            if (skor >= 80) mukemmelSayisi++;
+
+            if (skor < 50) dusukSkor++;
+            else if (skor < 75) ortaSkor++;
+            else yuksekSkor++;
+
+            var kr = b.arananKriter ? b.arananKriter.trim() : "Diğer";
+            if (kr.length > 20) kr = kr.substring(0, 18) + "...";
+            kriterSayilari[kr] = (kriterSayilari[kr] || 0) + 1;
+          });
+
+          var ortalamaSkor = basvurular.length > 0 ? Math.round(toplamSkor / basvurular.length) : 0;
+
+          var statTotal = document.getElementById("stat-total-count");
+          var statAvg = document.getElementById("stat-avg-score");
+          var statExc = document.getElementById("stat-excellent-count");
+
+          if (statTotal) statTotal.textContent = toplam;
+          if (statAvg) statAvg.textContent = ortalamaSkor + " / 100";
+          if (statExc) statExc.textContent = mukemmelSayisi;
+
+          if (typeof Chart !== "undefined") {
+            var scoreCtx = document.getElementById("score-chart");
+            if (scoreCtx) {
+              if (scoreChartInstance) scoreChartInstance.destroy();
+              scoreChartInstance = new Chart(scoreCtx, {
+                type: "doughnut",
+                data: {
+                  labels: ["Yüksek Uygunluk (75-100)", "Orta Uygunluk (50-74)", "Düşük Uygunluk (0-49)"],
+                  datasets: [{
+                    data: [yuksekSkor, ortaSkor, dusukSkor],
+                    backgroundColor: ["#10b981", "#6366f1", "#f59e0b"],
+                    borderWidth: 0
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: {
+                      position: "bottom",
+                      labels: { color: "#cbd5e1", font: { family: "Inter", size: 11 } }
+                    }
+                  }
+                }
+              });
+            }
+
+            var kriterCtx = document.getElementById("kriter-chart");
+            if (kriterCtx) {
+              if (kriterChartInstance) kriterChartInstance.destroy();
+              var labels = Object.keys(kriterSayilari).slice(0, 5);
+              var dataValues = labels.map(function (k) { return kriterSayilari[k]; });
+
+              kriterChartInstance = new Chart(kriterCtx, {
+                type: "bar",
+                data: {
+                  labels: labels.length > 0 ? labels : ["Veri Yok"],
+                  datasets: [{
+                    label: "Başvuru Sayısı",
+                    data: dataValues.length > 0 ? dataValues : [0],
+                    backgroundColor: "#8b5cf6",
+                    borderRadius: 6
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  scales: {
+                    x: {
+                      ticks: { color: "#94a3b8", font: { family: "Inter", size: 10 } },
+                      grid: { display: false }
+                    },
+                    y: {
+                      ticks: { color: "#94a3b8", font: { family: "Inter", size: 10 }, stepSize: 1 },
+                      grid: { color: "rgba(255, 255, 255, 0.05)" },
+                      beginAtZero: true
+                    }
+                  },
+                  plugins: {
+                    legend: { display: false }
+                  }
+                }
+              });
+            }
+          }
+        })
+        .catch(function (err) {
+          console.error("Dashboard istatistik hatası:", err);
+        });
+    }
+
+    function saglikKontroliYap() {
+      var healthDot = document.getElementById("health-dot");
+      var healthText = document.getElementById("health-text");
+      if (!healthDot || !healthText) return;
+
+      fetch("/api/health")
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.status === "OK" && data.db === "Connected") {
+            healthDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
+            healthText.className = "text-xs font-semibold text-emerald-400";
+            healthText.textContent = "Sunucu: Aktif | DB: Ba\u011Fl\u0131 | " + data.uptime;
+          } else {
+            healthDot.className = "w-2 h-2 rounded-full bg-amber-400 animate-pulse";
+            healthText.className = "text-xs font-semibold text-amber-400";
+            healthText.textContent = "Sunucu: Aktif | DB: " + (data.db || "Bilinmiyor");
+          }
+        })
+        .catch(function () {
+          healthDot.className = "w-2 h-2 rounded-full bg-red-500 animate-pulse";
+          healthText.className = "text-xs font-semibold text-red-400";
+          healthText.textContent = "Sunucu: Eri\u015Filemiyor";
+        });
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
       basvurulariYukle(1, "");
+      dashboardGuncelle();
+      saglikKontroliYap();
+      setInterval(saglikKontroliYap, 30000);
     });
   </script>
 </body>

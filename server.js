@@ -32,6 +32,20 @@ app.get("/api/test-results", (req, res) => {
   return res.status(404).json({ success: false, error: "Henüz kaydedilmiş test sonucu bulunmuyor." });
 });
 
+app.get("/api/health", (req, res) => {
+  var dbDurumlari = ["disconnected", "connected", "connecting", "disconnecting"];
+  var dbDurumu = dbDurumlari[mongoose.connection.readyState] || "unknown";
+
+  return res.json({
+    status: "OK",
+    db: dbDurumu === "connected" ? "Connected" : "Disconnected",
+    dbState: dbDurumu,
+    uptime: Math.floor(process.uptime()) + " saniye",
+    env: process.env.NODE_ENV || "development",
+    timestamp: new Date().toISOString()
+  });
+});
+
 const cvSemasiTanimi = new mongoose.Schema({
   isim: {
     type: String,

@@ -13,6 +13,17 @@ const yedekModel = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+var memoryCache = {};
+var CACHE_SURESI_MS = 30000;
+
+function onbellekTemizle() {
+  memoryCache = {};
+}
+
+function onbellekAnahtariOlustur(req) {
+  return req.originalUrl || req.url;
+}
+
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
@@ -234,6 +245,8 @@ ${cvMetni || "Görsel CV ekte sunulmuştur."}`;
 
     await yeniAnaliz.save();
 
+    onbellekTemizle();
+
     return res.status(201).json({
       mesaj: "Başvuru başarıyla kaydedildi.",
       veri: yeniBasvuru,
@@ -245,6 +258,14 @@ ${cvMetni || "Görsel CV ekte sunulmuştur."}`;
 
 app.get("/api/basvurular", async (req, res) => {
   try {
+    var cacheKey = onbellekAnahtariOlustur(req);
+    var cachedEntry = memoryCache[cacheKey];
+
+    if (cachedEntry && (Date.now() - cachedEntry.timestamp < CACHE_SURESI_MS)) {
+      res.setHeader("X-Cache", "HIT");
+      return res.status(200).json(cachedEntry.data);
+    }
+
     const page = parseInt(req.query.page, 10) > 0 ? parseInt(req.query.page, 10) : 1;
     const limit = parseInt(req.query.limit, 10) > 0 ? parseInt(req.query.limit, 10) : 6;
     const skip = (page - 1) * limit;
@@ -267,7 +288,7 @@ app.get("/api/basvurular", async (req, res) => {
       .limit(limit)
       .lean();
 
-    return res.status(200).json({
+    var responseData = {
       success: true,
       data,
       pagination: {
@@ -275,7 +296,12 @@ app.get("/api/basvurular", async (req, res) => {
         page,
         totalPages,
       },
-    });
+    };
+
+    memoryCache[cacheKey] = { data: responseData, timestamp: Date.now() };
+
+    res.setHeader("X-Cache", "MISS");
+    return res.status(200).json(responseData);
   } catch (hata) {
     return res.status(500).json({ hata: "Sunucu hatası: " + hata.message });
   }
@@ -299,6 +325,7 @@ app.delete("/api/basvurular", async (req, res) => {
   try {
     await CvModel.updateMany({ silindiMi: false }, { silindiMi: true });
     await Analysis.deleteMany({});
+    onbellekTemizle();
     return res.json({ mesaj: "Tüm başvurular başarıyla silindi." });
   } catch (hata) {
     return res.status(500).json({ hata: "Sunucu hatası: " + hata.message });
@@ -317,6 +344,7 @@ app.delete("/api/basvurular/:id", async (req, res) => {
       return res.status(404).json({ hata: "Aday bulunamadı." });
     }
 
+    onbellekTemizle();
     return res.json({ mesaj: "Aday başarıyla silindi." });
   } catch (hata) {
     return res.status(500).json({ hata: "Sunucu hatası: " + hata.message });

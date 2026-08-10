@@ -209,5 +209,25 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
     });
   });
 
+  test.describe('In-Memory Caching (Bellek İçi Önbellekleme) Testi', () => {
+    test('İlk istekte X-Cache MISS, ikinci istekte X-Cache HIT döndüğünü doğrulama', async ({ page }) => {
+      // Benzersiz bir arama parametresi oluştur (önbelleğe daha önce düşmemiş olacak)
+      var uniqueParam = 'cacheTest_' + Date.now();
+      var testUrl = 'http://localhost:3000/api/basvurular?page=1&limit=6&search=' + uniqueParam;
+
+      // 1. İlk istek: Benzersiz sorgu ile önbellekte veri yok, X-Cache: MISS bekleniyor
+      const firstResponse = await page.request.get(testUrl);
+      await expect(firstResponse).toBeOK();
+      const firstCacheHeader = firstResponse.headers()['x-cache'];
+      expect(firstCacheHeader).toBe('MISS');
+
+      // 2. İkinci istek: Aynı benzersiz sorgu ile önbellekte veri var, X-Cache: HIT bekleniyor
+      const secondResponse = await page.request.get(testUrl);
+      await expect(secondResponse).toBeOK();
+      const secondCacheHeader = secondResponse.headers()['x-cache'];
+      expect(secondCacheHeader).toBe('HIT');
+    });
+  });
+
 });
 

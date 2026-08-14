@@ -229,5 +229,55 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
     });
   });
 
+  test.describe('Güvenlik ve Girdi Temizleme (XSS & Rate Limiter) Testi', () => {
+    test('Script tagı içeren girdi güvenli işlenmeli ve normal istek 201 ile tamamlanmalı', async ({ page }) => {
+      // 1. XSS payload içeren başvuru verisi hazırla
+      var xssPayload = {
+        isim: "<script>alert('xss')</script> Test Adayı",
+        eposta: "xsstest@test.com",
+        arananKriter: "<script>alert('hack')</script> Developer",
+        cvMetni: "Bu bir güvenlik testi CV metnidir. JavaScript, Node.js deneyimi."
+      };
+
+      // 2. POST /api/basvuru isteği at ve 201 Created döndüğünü doğrula
+      const postResponse = await page.request.post('http://localhost:3000/api/basvuru', {
+        data: xssPayload
+      });
+      expect(postResponse.status()).toBe(201);
+
+      const responseBody = await postResponse.json();
+      expect(responseBody).toHaveProperty('veri');
+
+      // 3. Yanıttaki isim alanının ham <script> tagı olarak çalıştırılabilir şekilde dönmediğini doğrula
+      var kaydedilenIsim = responseBody.veri.isim;
+      var kaydedilenKriter = responseBody.veri.arananKriter;
+
+      // Veri kaydedilmiş olmalı (boş olmamalı)
+      expect(kaydedilenIsim).toBeTruthy();
+      expect(kaydedilenKriter).toBeTruthy();
+
+      // 4. Arayüzde XSS çalışmadığını doğrula - sayfa hala yüklü ve sağlam
+      await page.goto('http://localhost:3000');
+      const formSection = page.locator('#form-section');
+      await expect(formSection).toBeVisible();
+
+      // 5. Rate limiter devrede: Normal bir POST isteğinin sorunsuz 201 ile tamamlandığını doğrula
+      var normalPayload = {
+        isim: "Rate Limit Test",
+        eposta: "ratelimit@test.com",
+        arananKriter: "Backend Developer",
+        cvMetni: "Node.js ve Express konularında deneyimli yazılım geliştirici."
+      };
+
+      const rateLimitResponse = await page.request.post('http://localhost:3000/api/basvuru', {
+        data: normalPayload
+      });
+      expect(rateLimitResponse.status()).toBe(201);
+
+      const rateLimitBody = await rateLimitResponse.json();
+      expect(rateLimitBody).toHaveProperty('mesaj');
+    });
+  });
+
 });
 

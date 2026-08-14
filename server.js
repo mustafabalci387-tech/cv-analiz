@@ -24,6 +24,43 @@ function onbellekAnahtariOlustur(req) {
   return req.originalUrl || req.url;
 }
 
+// 27. Gün Güvenlik: In-Memory Rate Limiter
+var rateLimitDeposu = {};
+var RATE_LIMIT_PENCERE_MS = 15 * 60 * 1000; // 15 dakika
+var MAKS_BASVURU_SAYISI = 20;
+
+function rateLimiterMiddleware(req, res, next) {
+  var ip = req.ip || req.connection.remoteAddress || "127.0.0.1";
+  var suan = Date.now();
+
+  if (!rateLimitDeposu[ip] || suan - rateLimitDeposu[ip].baslangicZamani > RATE_LIMIT_PENCERE_MS) {
+    rateLimitDeposu[ip] = { sayac: 1, baslangicZamani: suan };
+    return next();
+  }
+
+  rateLimitDeposu[ip].sayac++;
+
+  if (rateLimitDeposu[ip].sayac > MAKS_BASVURU_SAYISI) {
+    return res.status(429).json({
+      hata: "Çok fazla başvuru yapıldı. Lütfen bir süre sonra tekrar deneyiniz."
+    });
+  }
+
+  next();
+}
+
+// 27. Gün Güvenlik: XSS & Input Sanitization
+function metniGuvenliYap(metin) {
+  if (!metin || typeof metin !== "string") return metin;
+  return metin
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;")
+    .replace(/\//g, "&#x2F;");
+}
+
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
@@ -168,13 +205,17 @@ function akilliYedekAnaliz(cvMetni, arananKriter) {
   };
 }
 
-app.post("/api/basvuru", async (req, res) => {
+app.post("/api/basvuru", rateLimiterMiddleware, async (req, res) => {
   try {
-    const { isim, eposta, cvMetni, arananKriter, gorselVerisi } = req.body;
+    let { isim, eposta, cvMetni, arananKriter, gorselVerisi } = req.body;
 
     if (!isim || !eposta || (!cvMetni && !gorselVerisi) || !arananKriter) {
       return res.status(400).json({ hata: "isim, eposta, arananKriter ve CV içeriği alanları zorunludur." });
     }
+
+    isim = metniGuvenliYap(isim);
+    eposta = metniGuvenliYap(eposta);
+    arananKriter = metniGuvenliYap(arananKriter);
 
     const prompt = `Sen tarafsız bir İK uzmanısın. Aşağıdaki CV'yi iş verenin şu aradığı kriterlere göre detaylıca analiz et: "${arananKriter}".
 Adayın niteliklerini kriterle karşılaştır ve sadece şu JSON formatında yanıt ver:

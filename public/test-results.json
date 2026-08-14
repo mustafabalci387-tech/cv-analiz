@@ -119,7 +119,7 @@
             {
               "title": "Uçtan Uca CV Analizi ve Form Testi",
               "file": "tests/app.spec.js",
-              "line": 10,
+              "line": 17,
               "column": 8,
               "specs": [
                 {
@@ -138,12 +138,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 6525,
+                          "duration": 3516,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:33.758Z",
+                          "startTime": "2026-08-14T20:56:48.055Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -158,15 +158,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 9,
-                          "parallelIndex": 9,
+                          "workerIndex": 11,
+                          "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 4340,
+                          "duration": 2746,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:33.804Z",
+                          "startTime": "2026-08-14T20:56:51.834Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -181,15 +181,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 18,
-                          "parallelIndex": 9,
+                          "workerIndex": 20,
+                          "parallelIndex": 4,
                           "status": "passed",
-                          "duration": 10060,
+                          "duration": 4114,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:43.119Z",
+                          "startTime": "2026-08-14T20:56:58.846Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -199,7 +199,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-805021ec4c2632a7627e",
                   "file": "tests/app.spec.js",
-                  "line": 11,
+                  "line": 18,
                   "column": 5
                 }
               ]
@@ -207,7 +207,7 @@
             {
               "title": "Geçmiş Analizler ve Arama Testi",
               "file": "tests/app.spec.js",
-              "line": 33,
+              "line": 40,
               "column": 8,
               "specs": [
                 {
@@ -226,12 +226,12 @@
                           "workerIndex": 1,
                           "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 5798,
+                          "duration": 4345,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:33.735Z",
+                          "startTime": "2026-08-14T20:56:48.077Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -246,15 +246,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 9,
-                          "parallelIndex": 9,
+                          "workerIndex": 10,
+                          "parallelIndex": 4,
                           "status": "passed",
-                          "duration": 2503,
+                          "duration": 3856,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:39.235Z",
+                          "startTime": "2026-08-14T20:56:51.860Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -269,15 +269,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 17,
-                          "parallelIndex": 3,
+                          "workerIndex": 22,
+                          "parallelIndex": 8,
                           "status": "passed",
-                          "duration": 10563,
+                          "duration": 5511,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:42.938Z",
+                          "startTime": "2026-08-14T20:56:59.718Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -287,7 +287,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-2843e2d5e0a4bc6df6ca",
                   "file": "tests/app.spec.js",
-                  "line": 34,
+                  "line": 41,
                   "column": 5
                 }
               ]
@@ -295,7 +295,7 @@
             {
               "title": "Aday Detay Modalı Testi",
               "file": "tests/app.spec.js",
-              "line": 56,
+              "line": 66,
               "column": 8,
               "specs": [
                 {
@@ -314,12 +314,12 @@
                           "workerIndex": 2,
                           "parallelIndex": 2,
                           "status": "passed",
-                          "duration": 8696,
+                          "duration": 4038,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:33.757Z",
+                          "startTime": "2026-08-14T20:56:48.071Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -334,15 +334,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 10,
-                          "parallelIndex": 7,
+                          "workerIndex": 13,
+                          "parallelIndex": 8,
                           "status": "passed",
-                          "duration": 10640,
+                          "duration": 4357,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:40.387Z",
+                          "startTime": "2026-08-14T20:56:52.745Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -357,15 +357,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 19,
-                          "parallelIndex": 2,
+                          "workerIndex": 21,
+                          "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 12860,
+                          "duration": 8084,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:43.632Z",
+                          "startTime": "2026-08-14T20:56:59.758Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -375,7 +375,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-b6a442087aab1029af0e",
                   "file": "tests/app.spec.js",
-                  "line": 57,
+                  "line": 67,
                   "column": 5
                 }
               ]
@@ -383,7 +383,7 @@
             {
               "title": "PDF Raporu İndirme Butonları Testi",
               "file": "tests/app.spec.js",
-              "line": 90,
+              "line": 103,
               "column": 8,
               "specs": [
                 {
@@ -402,12 +402,12 @@
                           "workerIndex": 3,
                           "parallelIndex": 3,
                           "status": "passed",
-                          "duration": 8147,
+                          "duration": 3752,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:33.743Z",
+                          "startTime": "2026-08-14T20:56:48.045Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -422,15 +422,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 11,
-                          "parallelIndex": 4,
+                          "workerIndex": 14,
+                          "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 10795,
+                          "duration": 6348,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:40.411Z",
+                          "startTime": "2026-08-14T20:56:52.758Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -445,15 +445,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 20,
-                          "parallelIndex": 6,
+                          "workerIndex": 23,
+                          "parallelIndex": 3,
                           "status": "passed",
-                          "duration": 6178,
+                          "duration": 6670,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:50.509Z",
+                          "startTime": "2026-08-14T20:57:00.206Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -463,7 +463,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-4ea6288f4e498e765f84",
                   "file": "tests/app.spec.js",
-                  "line": 91,
+                  "line": 104,
                   "column": 5
                 }
               ]
@@ -471,7 +471,7 @@
             {
               "title": "Aday İstatistik Dashboard ve Grafik Testi",
               "file": "tests/app.spec.js",
-              "line": 126,
+              "line": 142,
               "column": 8,
               "specs": [
                 {
@@ -490,12 +490,12 @@
                           "workerIndex": 4,
                           "parallelIndex": 4,
                           "status": "passed",
-                          "duration": 5384,
+                          "duration": 2529,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:33.748Z",
+                          "startTime": "2026-08-14T20:56:48.101Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -511,14 +511,14 @@
                       "results": [
                         {
                           "workerIndex": 12,
-                          "parallelIndex": 6,
+                          "parallelIndex": 3,
                           "status": "passed",
-                          "duration": 7419,
+                          "duration": 4259,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:40.548Z",
+                          "startTime": "2026-08-14T20:56:52.737Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -533,15 +533,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 21,
-                          "parallelIndex": 8,
+                          "workerIndex": 24,
+                          "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 2047,
+                          "duration": 2853,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:50.775Z",
+                          "startTime": "2026-08-14T20:57:00.728Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -551,7 +551,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-89e44d46f7c125154e12",
                   "file": "tests/app.spec.js",
-                  "line": 127,
+                  "line": 143,
                   "column": 5
                 }
               ]
@@ -559,7 +559,7 @@
             {
               "title": "CSV Dışa Aktarma ve Skor Filtreleme Testi",
               "file": "tests/app.spec.js",
-              "line": 157,
+              "line": 176,
               "column": 8,
               "specs": [
                 {
@@ -578,12 +578,12 @@
                           "workerIndex": 5,
                           "parallelIndex": 5,
                           "status": "passed",
-                          "duration": 7422,
+                          "duration": 4893,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:33.773Z",
+                          "startTime": "2026-08-14T20:56:48.132Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -598,15 +598,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 13,
-                          "parallelIndex": 1,
+                          "workerIndex": 15,
+                          "parallelIndex": 2,
                           "status": "passed",
-                          "duration": 8377,
+                          "duration": 6681,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:40.674Z",
+                          "startTime": "2026-08-14T20:56:52.769Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -621,15 +621,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 22,
-                          "parallelIndex": 5,
+                          "workerIndex": 25,
+                          "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 3610,
+                          "duration": 4134,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:50.991Z",
+                          "startTime": "2026-08-14T20:57:01.845Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -639,7 +639,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-b175787268983103e35d",
                   "file": "tests/app.spec.js",
-                  "line": 158,
+                  "line": 177,
                   "column": 5
                 }
               ]
@@ -647,7 +647,7 @@
             {
               "title": "Canlı Ortam Sağlık Kontrolü (Health Check) Testi",
               "file": "tests/app.spec.js",
-              "line": 189,
+              "line": 211,
               "column": 8,
               "specs": [
                 {
@@ -666,12 +666,12 @@
                           "workerIndex": 6,
                           "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 5495,
+                          "duration": 2310,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:33.798Z",
+                          "startTime": "2026-08-14T20:56:48.118Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -686,15 +686,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 14,
-                          "parallelIndex": 8,
+                          "workerIndex": 17,
+                          "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 5750,
+                          "duration": 3575,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:41.104Z",
+                          "startTime": "2026-08-14T20:56:53.707Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -709,15 +709,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 23,
-                          "parallelIndex": 1,
+                          "workerIndex": 26,
+                          "parallelIndex": 5,
                           "status": "passed",
-                          "duration": 1741,
+                          "duration": 1656,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:52.708Z",
+                          "startTime": "2026-08-14T20:57:03.019Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -727,7 +727,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-8cde8163fbb723107fef",
                   "file": "tests/app.spec.js",
-                  "line": 190,
+                  "line": 212,
                   "column": 5
                 }
               ]
@@ -735,7 +735,7 @@
             {
               "title": "In-Memory Caching (Bellek İçi Önbellekleme) Testi",
               "file": "tests/app.spec.js",
-              "line": 212,
+              "line": 234,
               "column": 8,
               "specs": [
                 {
@@ -754,12 +754,12 @@
                           "workerIndex": 7,
                           "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 5406,
+                          "duration": 2088,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:33.762Z",
+                          "startTime": "2026-08-14T20:56:48.136Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -774,15 +774,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 15,
-                          "parallelIndex": 0,
+                          "workerIndex": 16,
+                          "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 7872,
+                          "duration": 3074,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:41.293Z",
+                          "startTime": "2026-08-14T20:56:53.728Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -797,15 +797,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 24,
-                          "parallelIndex": 7,
+                          "workerIndex": 27,
+                          "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 1463,
+                          "duration": 1565,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:53.204Z",
+                          "startTime": "2026-08-14T20:57:03.201Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -815,7 +815,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-5e03ce0a54bd408e1eb2",
                   "file": "tests/app.spec.js",
-                  "line": 213,
+                  "line": 235,
                   "column": 5
                 }
               ]
@@ -823,7 +823,7 @@
             {
               "title": "Güvenlik ve Girdi Temizleme (XSS & Rate Limiter) Testi",
               "file": "tests/app.spec.js",
-              "line": 232,
+              "line": 254,
               "column": 8,
               "specs": [
                 {
@@ -842,12 +842,12 @@
                           "workerIndex": 8,
                           "parallelIndex": 8,
                           "status": "passed",
-                          "duration": 6288,
+                          "duration": 3357,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:33.775Z",
+                          "startTime": "2026-08-14T20:56:48.125Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -862,15 +862,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 16,
+                          "workerIndex": 18,
                           "parallelIndex": 5,
                           "status": "passed",
-                          "duration": 4675,
+                          "duration": 4380,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:42.137Z",
+                          "startTime": "2026-08-14T20:56:53.837Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -885,15 +885,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 25,
-                          "parallelIndex": 0,
+                          "workerIndex": 28,
+                          "parallelIndex": 9,
                           "status": "passed",
-                          "duration": 2380,
+                          "duration": 2349,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-14T14:06:53.546Z",
+                          "startTime": "2026-08-14T20:57:03.519Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -903,7 +903,183 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-75b6d4c1375e76beab9b",
                   "file": "tests/app.spec.js",
-                  "line": 233,
+                  "line": 255,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "Yönetici Girişi (Admin Auth) ve Panel Kilitleme Testi",
+              "file": "tests/app.spec.js",
+              "line": 304,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Giriş yapılmadan paneller gizli, giriş sonrası görünür, çıkış sonrası tekrar gizli olmalı",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 9,
+                          "status": "passed",
+                          "duration": 7326,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-14T20:56:48.106Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 11,
+                          "parallelIndex": 6,
+                          "status": "passed",
+                          "duration": 7020,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-14T20:56:55.132Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 20,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 7632,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-14T20:57:03.224Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "358bbd3632d8bf4e407c-dc4f42f245ef8da76e68",
+                  "file": "tests/app.spec.js",
+                  "line": 305,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "UI/UX Toast Bildirimleri ve Mobil Düzen Testi",
+              "file": "tests/app.spec.js",
+              "line": 362,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Hata ve başarı toast bildirimlerinin görünürlüğünü, renklerini ve kapatma butonunu doğrulama",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 7,
+                          "status": "passed",
+                          "duration": 2645,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-14T20:56:50.464Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 19,
+                          "parallelIndex": 9,
+                          "status": "passed",
+                          "duration": 3842,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-14T20:56:57.218Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 29,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 4243,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-14T20:57:04.322Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "358bbd3632d8bf4e407c-e9816b21bc6d3ca3a3b3",
+                  "file": "tests/app.spec.js",
+                  "line": 363,
                   "column": 5
                 }
               ]
@@ -915,9 +1091,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-08-14T14:06:16.412Z",
-    "duration": 40830.58500000001,
-    "expected": 27,
+    "startTime": "2026-08-14T20:56:44.107Z",
+    "duration": 27035.363,
+    "expected": 33,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

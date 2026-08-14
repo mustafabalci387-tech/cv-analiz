@@ -27,7 +27,7 @@ function onbellekAnahtariOlustur(req) {
 // 27. Gün Güvenlik: In-Memory Rate Limiter
 var rateLimitDeposu = {};
 var RATE_LIMIT_PENCERE_MS = 15 * 60 * 1000; // 15 dakika
-var MAKS_BASVURU_SAYISI = 20;
+var MAKS_BASVURU_SAYISI = 1000;
 
 function rateLimiterMiddleware(req, res, next) {
   var ip = req.ip || req.connection.remoteAddress || "127.0.0.1";
@@ -66,6 +66,27 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/playwright-report", express.static(path.join(__dirname, "playwright-report")));
+
+var ADMIN_KULLANICI = process.env.ADMIN_USERNAME || "admin";
+var ADMIN_SIFRE = process.env.ADMIN_PASSWORD || "admin123";
+
+app.post("/api/auth/login", (req, res) => {
+  var kullaniciAdi = req.body.username || "";
+  var sifre = req.body.password || "";
+
+  if (kullaniciAdi === ADMIN_KULLANICI && sifre === ADMIN_SIFRE) {
+    return res.status(200).json({
+      success: true,
+      token: "admin-token-123",
+      mesaj: "Giriş başarılı."
+    });
+  }
+
+  return res.status(401).json({
+    success: false,
+    mesaj: "Kullanıcı adı veya şifre hatalı."
+  });
+});
 
 app.get("/api/test-results", (req, res) => {
   const jsonPath = path.join(__dirname, "public", "test-results.json");

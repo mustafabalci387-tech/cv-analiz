@@ -61,11 +61,8 @@
     }
 
     .glass-card {
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(99, 102, 241, 0.15);
-      will-change: transform;
+      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid rgba(99, 102, 241, 0.18);
       transform: translateZ(0);
       backface-visibility: hidden;
     }
@@ -403,9 +400,12 @@
 </head>
 
 <body class="gradient-bg text-slate-200 font-inter antialiased relative overflow-x-hidden">
-  <div class="orb w-96 h-96 bg-indigo-600/20 top-[-10%] left-[-10%]"></div>
-  <div class="orb w-80 h-80 bg-purple-600/15 top-[20%] right-[-8%] animate-float"></div>
-  <div class="orb w-72 h-72 bg-blue-600/10 bottom-[10%] left-[10%] animate-float delay-200"></div>
+  <div class="orb w-96 h-96 bg-indigo-600/20 top-[-10%] left-[-10%]" style="contain:strict;pointer-events:none;"></div>
+  <div class="orb w-80 h-80 bg-purple-600/15 top-[20%] right-[-8%] animate-float" style="contain:strict;pointer-events:none;"></div>
+  <div class="orb w-72 h-72 bg-blue-600/10 bottom-[10%] left-[10%] animate-float delay-200" style="contain:strict;pointer-events:none;"></div>
+
+  <!-- Toast Bildirim Konteyneri -->
+  <div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
   <nav class="relative z-10 border-b border-white/5">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
@@ -428,9 +428,63 @@
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           Sistem Aktif
         </span>
+        <button id="admin-login-btn" type="button"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 hover:bg-indigo-500/20 hover:border-indigo-500/40 transition-all duration-300 cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>
+          Yönetici Girişi
+        </button>
+        <button id="admin-logout-btn" type="button" style="display:none;"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-300 border border-red-500/20 hover:bg-red-500/20 hover:border-red-500/40 transition-all duration-300 cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+          </svg>
+          Çıkış Yap
+        </button>
       </div>
     </div>
   </nav>
+
+  <!-- Admin Giriş Modalı -->
+  <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70" style="display:none;">
+    <div class="rounded-2xl p-8 w-full max-w-sm shadow-2xl shadow-indigo-950/50 border border-indigo-500/15" style="background:rgba(15,23,42,0.97);">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-white">Yönetici Girişi</h3>
+          <p class="text-xs text-slate-400">Admin paneline erişmek için giriş yapın</p>
+        </div>
+      </div>
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="login-username" class="block text-xs font-semibold text-slate-300 mb-1.5">Kullanıcı Adı</label>
+          <input type="text" id="login-username" placeholder="admin" required
+            class="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow" />
+        </div>
+        <div>
+          <label for="login-password" class="block text-xs font-semibold text-slate-300 mb-1.5">Şifre</label>
+          <input type="password" id="login-password" placeholder="••••••••" required
+            class="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow" />
+        </div>
+        <p id="login-error" class="text-xs text-red-400 font-medium hidden"></p>
+        <div class="flex items-center gap-3 pt-2">
+          <button type="submit" id="login-submit-btn"
+            class="flex-1 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-semibold transition-all cursor-pointer shadow-lg shadow-indigo-600/20">
+            Giriş Yap
+          </button>
+          <button type="button" id="login-cancel-btn"
+            class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-semibold transition-colors cursor-pointer">
+            İptal
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <main class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
     <div class="text-center mb-12 sm:mb-16 animate-fade-in-up" style="opacity: 0;">
@@ -618,7 +672,7 @@
       </div>
     </div>
 
-    <section id="dashboard-section" class="max-w-5xl mx-auto mt-16 animate-fade-in-up">
+    <section id="dashboard-section" class="max-w-5xl mx-auto mt-16 animate-fade-in-up" style="display:none;">
       <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-2xl shadow-indigo-950/30">
         <div class="flex items-center gap-3 mb-6">
           <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 flex-shrink-0">
@@ -688,9 +742,9 @@
       </div>
     </section>
 
-    <section id="panel-section" class="max-w-5xl mx-auto mt-16 animate-fade-in-up delay-300">
+    <section id="panel-section" class="max-w-5xl mx-auto mt-16 animate-fade-in-up delay-300" style="display:none;">
       <div class="glass-card rounded-2xl p-6 sm:p-10 shadow-2xl shadow-indigo-950/30">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
           <div class="flex items-center gap-3">
             <div
               class="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-500/20 flex-shrink-0">
@@ -701,7 +755,7 @@
             </div>
             <div>
               <div class="flex items-center gap-2.5 flex-wrap">
-                <h3 class="text-xl font-bold text-white">Aday Yönetim Paneli ve Analiz Arşivi</h3>
+                <h3 class="text-lg sm:text-xl font-bold text-white">Aday Yönetim Paneli ve Analiz Arşivi</h3>
                 <span id="panel-count"
                   class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/15 text-indigo-300 border border-indigo-500/25"></span>
               </div>
@@ -709,58 +763,60 @@
             </div>
           </div>
 
-          <form id="panel-search-form" class="flex flex-wrap items-center gap-2 w-full md:w-auto">
-            <div class="relative flex-1 md:w-64">
+          <form id="panel-search-form" class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 w-full lg:w-auto">
+            <div class="relative w-full sm:w-64">
               <input type="text" id="panel-search-input" placeholder="Aday adı veya iş kriteri ara..."
                 class="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow" />
             </div>
-            <button type="submit" id="panel-search-btn"
-              class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer shadow-lg shadow-indigo-600/20">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>
-              Ara
-            </button>
-            <button id="panel-refresh-btn" type="button"
-              class="px-3.5 py-2.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-slate-300 text-xs font-semibold hover:bg-slate-700/60 hover:border-indigo-500/30 hover:text-indigo-300 transition-all duration-300 flex items-center gap-1.5 cursor-pointer">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
-              </svg>
-              Yenile
-            </button>
-            <button id="panel-delete-all-btn" type="button"
-              class="px-3.5 py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-xs font-semibold hover:bg-red-500/20 hover:border-red-500/40 transition-all duration-300 flex items-center gap-1.5 cursor-pointer">
-              <svg class="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-              </svg>
-              Tümünü Sil
-            </button>
-            <a href="/playwright-report" target="_blank"
-              class="px-3.5 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold hover:bg-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300 flex items-center gap-1.5 cursor-pointer" title="E2E Test Raporunu Aç">
-              <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Test Raporu
-            </a>
-            <select id="panel-score-filter"
-              class="px-3 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-white text-xs font-semibold focus:outline-none focus:border-indigo-500 transition-all cursor-pointer appearance-none"
-              title="Skor Filtresi">
-              <option value="all">Tüm Skorlar</option>
-              <option value="high">80+ Mükemmel</option>
-              <option value="mid">50-79 Orta</option>
-              <option value="low">0-49 Düşük</option>
-            </select>
-            <button id="panel-csv-export-btn" type="button"
-              class="px-3.5 py-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold hover:bg-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300 flex items-center gap-1.5 cursor-pointer" title="CSV Raporu İndir">
-              <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-              CSV Raporu İndir
-            </button>
+            <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+              <button type="submit" id="panel-search-btn"
+                class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-lg shadow-indigo-600/20">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                Ara
+              </button>
+              <button id="panel-refresh-btn" type="button"
+                class="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-slate-800/60 border border-slate-700/50 text-slate-300 text-xs font-semibold hover:bg-slate-700/60 hover:border-indigo-500/30 hover:text-indigo-300 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
+                </svg>
+                Yenile
+              </button>
+              <button id="panel-delete-all-btn" type="button"
+                class="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-xs font-semibold hover:bg-red-500/20 hover:border-red-500/40 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer">
+                <svg class="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                </svg>
+                Tümünü Sil
+              </button>
+              <a href="/playwright-report" target="_blank"
+                class="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold hover:bg-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer" title="E2E Test Raporunu Aç">
+                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Test Raporu
+              </a>
+              <select id="panel-score-filter"
+                class="flex-1 sm:flex-none px-3 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-white text-xs font-semibold focus:outline-none focus:border-indigo-500 transition-all cursor-pointer appearance-none"
+                title="Skor Filtresi">
+                <option value="all">Tüm Skorlar</option>
+                <option value="high">80+ Mükemmel</option>
+                <option value="mid">50-79 Orta</option>
+                <option value="low">0-49 Düşük</option>
+              </select>
+              <button id="panel-csv-export-btn" type="button"
+                class="w-full sm:w-auto px-3.5 py-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold hover:bg-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer" title="CSV Raporu İndir">
+                <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                CSV Raporu İndir
+              </button>
+            </div>
           </form>
         </div>
 
@@ -825,41 +881,41 @@
   </main>
 
   <div id="detail-modal"
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+    class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 hidden">
     <div
-      class="glass-card max-w-2xl w-full rounded-2xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto panel-scrollbar border border-indigo-500/20 animate-card-appear">
+      class="bg-slate-900/95 max-w-2xl w-full rounded-2xl p-5 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto panel-scrollbar border border-indigo-500/30">
       <button id="modal-close-btn" type="button"
-        class="absolute top-5 right-5 text-slate-400 hover:text-white w-9 h-9 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center justify-center transition-colors cursor-pointer">
+        class="absolute top-4 right-4 sm:top-5 sm:right-5 text-slate-400 hover:text-white w-9 h-9 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center justify-center transition-colors cursor-pointer">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
-      <div class="flex items-center gap-3 mb-6">
-        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+      <div class="flex items-center gap-3 mb-6 pr-10 sm:pr-0">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 flex-shrink-0">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21c-2.676 0-5.216-.584-7.499-1.632Z" />
           </svg>
         </div>
         <div>
-          <h3 class="text-xl font-bold text-white">Aday Detay Raporu</h3>
+          <h3 class="text-lg sm:text-xl font-bold text-white">Aday Detay Raporu</h3>
           <p class="text-xs text-slate-400">Adayın Tüm Analiz Bilgileri</p>
         </div>
       </div>
-      <div class="space-y-6">
+      <div class="space-y-5 sm:space-y-6">
         <div
-          class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-800/40 border border-slate-700/40">
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-4 rounded-xl bg-slate-800/40 border border-slate-700/40">
           <div>
-            <h4 id="modal-name" class="text-lg font-extrabold text-white"></h4>
-            <p id="modal-email" class="text-indigo-400 text-sm font-medium mt-0.5"></p>
+            <h4 id="modal-name" class="text-base sm:text-lg font-extrabold text-white"></h4>
+            <p id="modal-email" class="text-indigo-400 text-xs sm:text-sm font-medium mt-0.5"></p>
             <p id="modal-date" class="text-slate-500 text-xs mt-1"></p>
           </div>
-          <div id="modal-score-badge" class="px-4 py-2 rounded-xl text-center font-bold text-sm"></div>
+          <div id="modal-score-badge" class="px-4 py-2 rounded-xl text-center font-bold text-xs sm:text-sm self-start sm:self-auto"></div>
         </div>
         <div>
           <h5 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Aranan Pozisyon / Kriter</h5>
           <div id="modal-kriter"
-            class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/40 text-slate-200 text-sm"></div>
+            class="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/40 text-slate-200 text-xs sm:text-sm"></div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -884,9 +940,9 @@
           </div>
         </div>
       </div>
-      <div class="mt-6 flex flex-wrap items-center justify-between gap-3" id="modal-action-buttons">
+      <div class="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3" id="modal-action-buttons">
         <button id="modal-download-pdf-btn" type="button"
-          class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition-all duration-300 cursor-pointer flex items-center gap-2 shadow-md shadow-indigo-600/20">
+          class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-md shadow-indigo-600/20">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -894,7 +950,7 @@
           PDF Raporu İndir
         </button>
         <button id="modal-close-btn-bottom" type="button"
-          class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition-colors cursor-pointer">
+          class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition-colors cursor-pointer text-center">
           Kapat
         </button>
       </div>
@@ -1098,6 +1154,8 @@
       });
 
       detailModal.classList.remove("hidden");
+      var modalScrollArea = detailModal.querySelector(".overflow-y-auto");
+      if (modalScrollArea) modalScrollArea.scrollTop = 0;
     }
 
     function detayModalKapat() {
@@ -1129,12 +1187,64 @@
       }
     }
 
-    function showError(message) {
-      errorMsg.textContent = message;
-      errorMsg.classList.remove("hidden");
+    // ====== Toast Bildirim Sistemi ======
+    function showToast(mesaj, tip) {
+      var container = document.getElementById("toast-container");
+      if (!container) {
+        container = document.createElement("div");
+        container.id = "toast-container";
+        container.className = "fixed top-5 right-5 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none px-4 sm:px-0";
+        document.body.appendChild(container);
+      }
+
+      var toastType = tip || "info";
+      var toast = document.createElement("div");
+      toast.className = "pointer-events-auto flex items-center gap-3 p-4 rounded-xl shadow-2xl border transition-all duration-300 transform translate-x-full opacity-0 ";
+
+      var iconHtml = "";
+      if (toastType === "success") {
+        toast.className += "bg-slate-900/95 border-emerald-500/40 text-emerald-300 shadow-emerald-950/40";
+        iconHtml = '<svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
+      } else if (toastType === "error") {
+        toast.className += "bg-slate-900/95 border-red-500/40 text-red-300 shadow-red-950/40";
+        iconHtml = '<svg class="w-5 h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" /></svg>';
+      } else {
+        toast.className += "bg-slate-900/95 border-indigo-500/40 text-indigo-300 shadow-indigo-950/40";
+        iconHtml = '<svg class="w-5 h-5 text-indigo-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>';
+      }
+
+      toast.innerHTML = iconHtml + '<div class="text-xs font-semibold flex-1 leading-snug">' + (mesaj || "") + '</div><button type="button" class="text-slate-400 hover:text-white transition-colors cursor-pointer p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>';
+
+      var closeBtn = toast.querySelector("button");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", function () {
+          toast.classList.add("translate-x-full", "opacity-0");
+          setTimeout(function () { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+        });
+      }
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(function () {
+        toast.classList.remove("translate-x-full", "opacity-0");
+        toast.classList.add("translate-x-0", "opacity-100");
+      });
+
       setTimeout(function () {
-        errorMsg.classList.add("hidden");
-      }, 6000);
+        if (toast.parentNode) {
+          toast.classList.remove("translate-x-0", "opacity-100");
+          toast.classList.add("translate-x-full", "opacity-0");
+          setTimeout(function () {
+            if (toast.parentNode) {
+              toast.parentNode.removeChild(toast);
+            }
+          }, 300);
+        }
+      }, 3500);
+    }
+
+    function showError(message) {
+      showToast(message, "error");
     }
 
     function getScoreColor(score) {
@@ -1216,6 +1326,7 @@
       resultSection.style.opacity = "0";
       requestAnimationFrame(function () {
         resultSection.style.opacity = "1";
+        resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
       });
 
       animateScore(score);
@@ -1401,6 +1512,7 @@
           return response.json();
         })
         .then(function () {
+          showToast("Aday kaydı başarıyla silindi.", "success");
           if (kartDiv) {
             kartDiv.classList.add("animate-card-remove");
             kartDiv.addEventListener("animationend", function () {
@@ -1411,7 +1523,7 @@
           }
         })
         .catch(function (err) {
-          alert("Silme hatası: " + err.message);
+          showToast("Silme hatası: " + err.message, "error");
           if (buton) {
             buton.disabled = false;
             var icon = buton.querySelector(".delete-icon");
@@ -1440,6 +1552,7 @@
           return response.json();
         })
         .then(function () {
+          showToast("Tüm başvurular başarıyla silindi.", "success");
           if (panelDeleteAllBtn) {
             panelDeleteAllBtn.disabled = false;
             panelDeleteAllBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg> Tümünü Sil';
@@ -1447,7 +1560,7 @@
           basvurulariYukle(1, "");
         })
         .catch(function (err) {
-          alert(err.message || "Silme işlemi sırasında hata oluştu");
+          showToast(err.message || "Silme işlemi sırasında hata oluştu", "error");
           if (panelDeleteAllBtn) {
             panelDeleteAllBtn.disabled = false;
             panelDeleteAllBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg> Tümünü Sil';
@@ -1569,7 +1682,7 @@
           .then(function (resData) {
             var data = resData.data || [];
             if (data.length === 0) {
-              alert("Dışa aktarılacak aday verisi bulunmuyor.");
+              showToast("Dışa aktarılacak aday verisi bulunmuyor.", "info");
               return;
             }
 
@@ -1598,9 +1711,10 @@
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
+            showToast("Aday listesi CSV olarak indirildi.", "success");
           })
           .catch(function (err) {
-            alert("CSV dışa aktarma hatası: " + err.message);
+            showToast("CSV dışa aktarma hatası: " + err.message, "error");
           })
           .finally(function () {
             panelCsvExportBtn.disabled = false;
@@ -1619,13 +1733,13 @@
       var cvMetni = cvMetniArea.value.trim();
 
       if (!isim || !eposta || !arananKriter || (!cvMetni && !yuklenenGorselBase64)) {
-        showError("Lütfen tüm zorunlu alanları doldurunuz veya CV dosyası/görseli yükleyiniz.");
+        showToast("Lütfen tüm zorunlu alanları doldurunuz veya CV dosyası/görseli yükleyiniz.", "error");
         return;
       }
 
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(eposta)) {
-        showError("Lütfen geçerli bir e-posta adresi giriniz.");
+        showToast("Lütfen geçerli bir e-posta adresi giriniz.", "error");
         return;
       }
 
@@ -1653,12 +1767,13 @@
         .then(function (data) {
           setLoading(false);
           renderResult(data);
+          showToast("CV analizi başarıyla tamamlandı!", "success");
           basvurulariYukle(1, "");
           dashboardGuncelle();
         })
         .catch(function (err) {
           setLoading(false);
-          showError(err.message || "Sunucuya bağlanılamadı. Lütfen tekrar deneyin.");
+          showToast(err.message || "Sunucuya bağlanılamadı. Lütfen tekrar deneyin.", "error");
         });
     });
 
@@ -1667,7 +1782,7 @@
       if (!container) return;
 
       if (typeof html2pdf === "undefined") {
-        alert("PDF oluşturma kütüphanesi yüklenemedi. Lütfen internet bağlantınızı kontrol ediniz.");
+        showToast("PDF oluşturma kütüphanesi yüklenemedi. Lütfen internet bağlantınızı kontrol ediniz.", "error");
         return;
       }
 
@@ -1874,9 +1989,117 @@
         });
     }
 
+    // ====== Admin Auth (Oturum Yönetimi) ======
+    function oturumKontrol() {
+      var token = localStorage.getItem("adminToken");
+      var panelSection = document.getElementById("panel-section");
+      var dashboardSection = document.getElementById("dashboard-section");
+      var loginBtn = document.getElementById("admin-login-btn");
+      var logoutBtn = document.getElementById("admin-logout-btn");
+
+      if (token) {
+        if (panelSection) panelSection.style.display = "";
+        if (dashboardSection) dashboardSection.style.display = "";
+        if (loginBtn) loginBtn.style.display = "none";
+        if (logoutBtn) logoutBtn.style.display = "";
+        return true;
+      } else {
+        if (panelSection) panelSection.style.display = "none";
+        if (dashboardSection) dashboardSection.style.display = "none";
+        if (loginBtn) loginBtn.style.display = "";
+        if (logoutBtn) logoutBtn.style.display = "none";
+        return false;
+      }
+    }
+
+    var loginModal = document.getElementById("login-modal");
+    var loginForm = document.getElementById("login-form");
+    var loginError = document.getElementById("login-error");
+    var loginBtn = document.getElementById("admin-login-btn");
+    var logoutBtn = document.getElementById("admin-logout-btn");
+    var loginCancelBtn = document.getElementById("login-cancel-btn");
+
+    if (loginBtn) {
+      loginBtn.addEventListener("click", function () {
+        if (loginModal) loginModal.style.display = "flex";
+        if (loginError) { loginError.textContent = ""; loginError.classList.add("hidden"); }
+      });
+    }
+
+    if (loginCancelBtn) {
+      loginCancelBtn.addEventListener("click", function () {
+        if (loginModal) loginModal.style.display = "none";
+      });
+    }
+
+    if (loginModal) {
+      loginModal.addEventListener("click", function (e) {
+        if (e.target === loginModal) loginModal.style.display = "none";
+      });
+    }
+
+    if (loginForm) {
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var username = document.getElementById("login-username").value.trim();
+        var password = document.getElementById("login-password").value.trim();
+
+        fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: username, password: password })
+        })
+          .then(function (res) { return res.json().then(function (data) { return { status: res.status, data: data }; }); })
+          .then(function (result) {
+            if (result.data.success) {
+              localStorage.setItem("adminToken", result.data.token);
+              if (loginModal) loginModal.style.display = "none";
+              loginForm.reset();
+              oturumKontrol();
+              basvurulariYukle(1, "");
+              dashboardGuncelle();
+              showToast("Yönetici girişi başarılı!", "success");
+
+              // Giriş başarılı olunca sayfayı kaydırmadan direkt Dashboard alanına odakla
+              setTimeout(function () {
+                var dashSection = document.getElementById("dashboard-section");
+                if (dashSection) {
+                  dashSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }, 150);
+            } else {
+              if (loginError) {
+                loginError.textContent = result.data.mesaj || "Giriş başarısız.";
+                loginError.classList.remove("hidden");
+              }
+              showToast(result.data.mesaj || "Giriş başarısız.", "error");
+            }
+          })
+          .catch(function () {
+            if (loginError) {
+              loginError.textContent = "Sunucuya bağlanılamadı.";
+              loginError.classList.remove("hidden");
+            }
+            showToast("Sunucuya bağlanılamadı.", "error");
+          });
+      });
+    }
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", function () {
+        localStorage.removeItem("adminToken");
+        oturumKontrol();
+        showToast("Yönetici oturumu kapatıldı.", "info");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
-      basvurulariYukle(1, "");
-      dashboardGuncelle();
+      var oturumVar = oturumKontrol();
+      if (oturumVar) {
+        basvurulariYukle(1, "");
+        dashboardGuncelle();
+      }
       saglikKontroliYap();
       setInterval(saglikKontroliYap, 30000);
     });

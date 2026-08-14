@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cv_analiz_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/cv_analiz_db
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    container_name: cv_analiz_mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
+    driver: local

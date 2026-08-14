@@ -3,9 +3,16 @@ const { test, expect } = require('@playwright/test');
 test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
 
   test.beforeEach(async ({ page }) => {
-    // Her test öncesi uygulamaya git
+    // Her test öncesi uygulamaya git (admin oturumu açılmadan)
     await page.goto('http://localhost:3000');
   });
+
+  // Yardımcı: Admin oturumu açıp panelleri görünür kılan fonksiyon
+  async function adminGirisYap(page) {
+    await page.evaluate(() => localStorage.setItem('adminToken', 'admin-token-123'));
+    await page.reload();
+    await page.waitForTimeout(500);
+  }
 
   test.describe('Uçtan Uca CV Analizi ve Form Testi', () => {
     test('Formu doldurma, gönderme ve sonuç ekranının açıldığını doğrulama', async ({ page }) => {
@@ -32,6 +39,9 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
 
   test.describe('Geçmiş Analizler ve Arama Testi', () => {
     test('Arama kutusuna metin yazma, filtreleme ve sayfalama kontrolleri', async ({ page }) => {
+      // Admin girişi yap (panel erişimi için)
+      await adminGirisYap(page);
+
       // Arama input'unun varlığını teyit et
       const searchInput = page.locator('#panel-search-input');
       await expect(searchInput).toBeVisible();
@@ -55,6 +65,9 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
 
   test.describe('Aday Detay Modalı Testi', () => {
     test('Detaylar butonuna basma, modalın açıldığını ve kapat butonuna basıldığında kapandığını doğrulama', async ({ page }) => {
+      // Admin girişi yap (panel erişimi için)
+      await adminGirisYap(page);
+
       // Eğer listede aday yoksa test için hızlıca aday ekle
       const detayButonlari = page.locator('.btn-detail');
       const count = await detayButonlari.count();
@@ -89,6 +102,9 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
 
   test.describe('PDF Raporu İndirme Butonları Testi', () => {
     test('Sonuç kartı ve aday detay modalındaki PDF İndir butonlarının görünürlüğünü ve etkileşimini doğrulama', async ({ page }) => {
+      // Admin girişi yap (panel erişimi için)
+      await adminGirisYap(page);
+
       // 1. Formu doldur ve analiz yap
       await page.locator('#isim').fill('Zeynep Demir');
       await page.locator('#eposta').fill('zeynep@test.com');
@@ -125,6 +141,9 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
 
   test.describe('Aday İstatistik Dashboard ve Grafik Testi', () => {
     test('Dashboard bölümü, istatistik kartları ve grafik canvas elemanlarının görünürlüğünü doğrulama', async ({ page }) => {
+      // Admin girişi yap (dashboard erişimi için)
+      await adminGirisYap(page);
+
       // 1. Dashboard bölümünün sayfada görünür olduğunu doğrula
       const dashboardSection = page.locator('#dashboard-section');
       await expect(dashboardSection).toBeVisible();
@@ -156,6 +175,9 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
 
   test.describe('CSV Dışa Aktarma ve Skor Filtreleme Testi', () => {
     test('Skor filtresi seçeneklerinin çalıştığını ve CSV butonunun görünür olduğunu doğrulama', async ({ page }) => {
+      // Admin girişi yap (panel erişimi için)
+      await adminGirisYap(page);
+
       // 1. Skor filtresi açılır menüsünün görünür olduğunu doğrula
       const scoreFilter = page.locator('#panel-score-filter');
       await expect(scoreFilter).toBeVisible();
@@ -276,6 +298,84 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
 
       const rateLimitBody = await rateLimitResponse.json();
       expect(rateLimitBody).toHaveProperty('mesaj');
+    });
+  });
+
+  test.describe('Yönetici Girişi (Admin Auth) ve Panel Kilitleme Testi', () => {
+    test('Giriş yapılmadan paneller gizli, giriş sonrası görünür, çıkış sonrası tekrar gizli olmalı', async ({ page }) => {
+      // 1. Sayfayı tertemiz aç ve localStorage'ı temizle
+      await page.goto('http://localhost:3000');
+      await page.evaluate(() => localStorage.clear());
+
+      // 2. Panel ve Dashboard gizli olmalı
+      const panelSection = page.locator('#panel-section');
+      const dashboardSection = page.locator('#dashboard-section');
+      await expect(panelSection).toBeHidden();
+      await expect(dashboardSection).toBeHidden();
+
+      // 3. Yönetici Girişi butonu görünür olmalı
+      const loginBtn = page.locator('#admin-login-btn');
+      await expect(loginBtn).toBeVisible();
+
+      // 4. Çıkış Yap butonu gizli olmalı
+      const logoutBtn = page.locator('#admin-logout-btn');
+      await expect(logoutBtn).toBeHidden();
+
+      // 5. Yönetici Girişi butonuna bas, modal açılmalı
+      await loginBtn.click();
+      const loginModal = page.locator('#login-modal');
+      await expect(loginModal).toBeVisible();
+
+      // 6. Inputları temizleyerek doldur ve formu gönder
+      const usernameInput = page.locator('#login-username');
+      const passwordInput = page.locator('#login-password');
+      await usernameInput.fill('');
+      await usernameInput.fill('admin');
+      await passwordInput.fill('');
+      await passwordInput.fill('admin123');
+      await page.locator('#login-submit-btn').click();
+
+      // 7. Modal kapanmış olmalı
+      await expect(loginModal).toBeHidden({ timeout: 10000 });
+
+      // 8. Çıkış Yap butonu görünür, Yönetici Girişi butonu gizli olmalı
+      await expect(logoutBtn).toBeVisible({ timeout: 10000 });
+      await expect(loginBtn).toBeHidden();
+
+      // 9. Panel ve Dashboard görünür olmalı
+      await expect(panelSection).toBeVisible({ timeout: 10000 });
+      await expect(dashboardSection).toBeVisible({ timeout: 10000 });
+
+      // 10. Çıkış Yap butonuna bas
+      await logoutBtn.click();
+
+      // 11. Panel ve Dashboard tekrar gizli olmalı
+      await expect(panelSection).toBeHidden({ timeout: 5000 });
+      await expect(dashboardSection).toBeHidden({ timeout: 5000 });
+
+      // 12. Yönetici Girişi butonu tekrar görünür olmalı
+      await expect(loginBtn).toBeVisible({ timeout: 5000 });
+      await expect(logoutBtn).toBeHidden();
+    });
+  });
+
+  test.describe('UI/UX Toast Bildirimleri ve Mobil Düzen Testi', () => {
+    test('Hata ve başarı toast bildirimlerinin görünürlüğünü, renklerini ve kapatma butonunu doğrulama', async ({ page }) => {
+      // 1. Formu boş gönder
+      await page.locator('#submit-btn').click();
+
+      // 2. Hata toast bildirimi kontrolü
+      const toast = page.locator('#toast-container div').first();
+      await expect(toast).toContainText('Lütfen tüm zorunlu alanları', { timeout: 7000 });
+
+      // 3. Kapatma butonunu test et
+      const closeBtn = toast.locator('button');
+      await closeBtn.dispatchEvent('click');
+      await expect(toast).toBeHidden({ timeout: 7000 });
+
+      // 4. Başarı toast'ı için showToast tetikle ve doğrula
+      await page.evaluate(() => showToast('Yönetici girişi başarılı!', 'success'));
+      await expect(page.locator('#toast-container')).toContainText('Yönetici girişi başarılı!', { timeout: 7000 });
     });
   });
 

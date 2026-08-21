@@ -4,7 +4,7 @@
 [![Express.js](https://img.shields.io/badge/Express.js-v5.0-000000?logo=express&logoColor=white)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![Google Gemini](https://img.shields.io/badge/Google%20Gemini-2.0%20Flash-4285F4?logo=google&logoColor=white)](https://ai.google.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-ES6+-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Playwright](https://img.shields.io/badge/Playwright-E2E_Tests-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/)
 [![Docker](https://img.shields.io/badge/Docker-Container-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
 
@@ -19,30 +19,57 @@
 - **Gemini 2.0 Flash Entegrasyonu:** İş ilanı kriterleri ile CV metnini karşılaştırarak 0-100 arası uygunluk skoru, güçlü yönler ve gelişim alanlarını çıkarır.
 - **Akıllı Kural Motoru (Smart Rule Fallback):** API kotası sınırlarında veya internet kesintilerinde kesintisiz hizmet sunan yerel kural motoru yedek mekanizması.
 
-### 2. 📊 Aday İstatistik Dashboard'u & Grafikler
+### 2. 🧠 Açıklanabilir Yapay Zeka (XAI) & Skor Kırılımı
+- **Skor Kırılımı:** Her adayın yapay zeka puanının **nasıl hesaplandığını** açıklayan 3 maddelik detaylı kırılım (Örn: `+ %40: Temel teknik yetkinlik uyumu`, `- %10: Yabancı dil eksikliği`).
+- **Şeffaf Değerlendirme:** İşverenler, AI'ın neden o skoru verdiğini tam olarak görebilir ve güvenilirliği doğrulayabilir.
+
+### 3. 🎤 Kişiselleştirilmiş Mülakat Asistanı
+- **AI Tabanlı Soru Üretimi:** Her adayın CV'sindeki güçlü ve zayıf yönlerine özel olarak hazırlanmış **3 adet mülakat sorusu** otomatik oluşturulur.
+- **Detay Modalında Görüntüleme:** Aday detayında mülakat soruları ayrı bir bölümde listelenir, tek tıkla kopyalanabilir.
+
+### 4. ⚠️ Risk & Çelişki Dedektörü
+- **Otomatik Risk Algılama:** CV'deki tutarsızlıklar, kariyer boşlukları veya aşırı abartılı ifadeler yapay zeka tarafından tespit edilir.
+- **Sarı Uyarı Rozeti:** Riskli adayların kartlarında `⚠️ Dikkat Noktası` rozeti gösterilir ve detay modalında risk maddeleri listelenir.
+
+### 5. ⚖️ İki Adayı Yan Yana Kıyaslama (Side-by-Side Compare)
+- **Checkbox Seçimi:** Aday kartlarında "Kıyasla" checkbox'ı ile en fazla 2 aday seçilir.
+- **Kıyaslama Modalı:** Seçilen iki adayın puanları, güçlü/zayıf yönleri, skor kırılımları ve riskleri yan yana iki sütunda karşılaştırılır.
+
+### 6. 📧 Hızlı AI E-posta Şablonları
+- **Otomatik Taslak Üretimi:** Aday detayından tek tıkla "Mülakat Daveti" veya "Red Bildirimi" e-posta taslağı oluşturulur.
+- **SMTP E-posta Gönderimi:** Yapılandırılan SMTP sunucusu üzerinden analiz özetini HTML formatlı e-posta olarak doğrudan gönderebilme.
+
+### 7. 📊 Aday İstatistik Dashboard'u & Grafikler
 - **Özet Metrik Kartları:** Toplam Başvuru, Ortalama Uygunluk Skoru ve Mükemmel Aday Sayısı (80+ puan).
 - **Dinamik Grafik Görselleştirmeleri (Chart.js):**
   - **Pasta Grafiği (Doughnut):** Başvuru skor dağılımı (Mükemmel, İyi, Gelişime Açık, Yetersiz).
   - **Çubuk Grafiği (Bar Chart):** Pozisyon / kriter bazlı başvuru yoğunluğu.
 
-### 3. 📑 Aday Yönetim Paneli ve Gelişmiş Filtreleme
+### 8. 📑 Aday Yönetim Paneli ve Gelişmiş Filtreleme
 - **Canlı Arama & Filtreleme:** İsim ve kriter bazlı anlık arama, skor kategorisine göre filtreleme (Tüm Skorlar, 80+ Mükemmel, 50-79 Orta, 0-49 Düşük).
+- **Sektör Kısayolları:** Yazılım/IT, Turizm/Otel, Restoran/Servis, Yönetim & İletişim filtre butonları ile aday listesini anında filtreleme.
+- **Kısa Liste (Shortlist):** Yüksek puanlı (%80+) adayları tek tıkla listeleme.
 - **Sayfalama (Pagination):** Büyük veri setlerinde hızlı ve akıcı gezinme.
-- **Aday Detay Modalı:** Güçlü/zayıf yönler, yüklenen görsel CV ve tam başvuru detaylarına hızlı erişim.
+- **Aday Detay Modalı:** Güçlü/zayıf yönler, skor kırılımı, mülakat soruları, riskler ve yüklenen görsel CV'ye hızlı erişim.
 
-### 4. 📄 Profesyonel Raporlama (PDF & CSV Export)
-- **PDF Analiz Raporu:** `html2pdf.js` entegrasyonu ile analiz sonucunu veya aday detayını tek tıkla şık bir PDF dokümanı olarak indirme.
+### 9. 📄 Profesyonel Raporlama (PDF & CSV Export)
+- **Toplu PDF Özet Raporu:** Filtrelenmiş aday listesini kurumsal başlıklı, şık tablolu bir PDF olarak yazdırma/indirme.
+- **Bireysel PDF Raporu:** `html2pdf.js` entegrasyonu ile aday detayını tek tıkla PDF dokümanı olarak indirme.
 - **CSV / Excel Dışa Aktarma:** `\uFEFF` UTF-8 BOM desteği ile Türkçe karakterleri bozmadan tüm aday verilerini Excel uyumlu CSV formatında dışa aktarma.
 
-### 5. 🔒 Güvenlik & Performans Mimarisi
-- **XSS & Input Sanitization:** Tüm kullanıcı girdileri backend ve frontend seviyesinde temizlenerek XSS enjeksiyonları engellenir.
-- **In-Memory Rate Limiter:** Belirli IP adreslerinden gelen aşırı istekleri sınırlandıran hafıza içi hız sınırlayıcı middleware.
-- **Bellek İçi Önbellekleme (In-Memory Cache):** Sık sorgulanan API istekleri için 30 saniyelik TTL ile hızlı yanıt (`X-Cache: HIT / MISS` başlıkları) ve veri güncellemelerinde otomatik geçersiz kılma (cache invalidation).
-- **Yönetici Girişi (Admin Auth):** Yetkisiz erişimlere karşı Aday Yönetim Paneli ve Dashboard alanlarını kilitleyen `localStorage` token tabanlı güvenli oturum kontrolü.
+### 10. 🔒 Güvenlik, Multi-Tenant İzolasyon & Performans
+- **Multi-Tenant Şirket İzolasyonu:** Her şirket yalnızca kendi eklediği adayları görebilir; Admin tüm adayları listeler.
+- **Şirket Kayıt Sistemi:** Yeni şirketler kendi hesaplarını oluşturabilir, Admin panelinden tüm şirketler yönetilebilir.
+- **JWT Tabanlı Kimlik Doğrulama:** Güvenli token tabanlı oturum yönetimi (`authMiddleware`).
+- **XSS & Input Sanitization:** Tüm kullanıcı girdileri backend ve frontend seviyesinde temizlenir.
+- **In-Memory Rate Limiter:** Aşırı istekleri sınırlandıran hafıza içi hız sınırlayıcı middleware.
+- **Bellek İçi Önbellekleme (In-Memory Cache):** 30 saniyelik TTL ile hızlı yanıt (`X-Cache: HIT / MISS` başlıkları) ve otomatik geçersiz kılma.
+- **Soft-Delete & Geri Yükleme:** Silinen adaylar arşive taşınır ve istendiğinde geri getirilebilir.
 
-### 6. 🎨 Modern & Akıcı Arayüz (60 FPS UI/UX)
-- **Toast Bildirim Sistemi:** Ekranda dinamik olarak beliren, animasyonlu ve otomatik kaybolan renk kodlu bildirimler.
-- **Donanım Hızlandırma:** GPU optimizasyonu, akıcı kaydırma (`smooth scroll`) ve mobil uyumlu (responsive) esnek düzenler.
+### 11. 🎨 Modern & Akıcı Arayüz (60 FPS UI/UX)
+- **Glassmorphism Tasarım:** Cam efektli kartlar, gradient başlıklar ve koyu tema.
+- **Toast Bildirim Sistemi:** Animasyonlu ve otomatik kaybolan renk kodlu bildirimler.
+- **Donanım Hızlandırma:** GPU optimizasyonu, akıcı kaydırma ve mobil uyumlu esnek düzenler.
 - **Canlı Sağlık Durumu (Health Check):** Navigasyon barında sunucu ve veritabanı bağlantı durumunu anlık izleyen dinamik durum rozeti.
 
 ---
@@ -51,13 +78,14 @@
 
 | Katman | Teknoloji / Kütüphane | Açıklama |
 |---|---|---|
-| **Backend** | **Node.js & Express.js (v5)** | RESTful API, Routing, Caching & Security Middleware |
+| **Backend** | **Node.js & Express.js (v5)** | RESTful API, Modüler Routing, Caching & Security Middleware |
 | **Veritabanı** | **MongoDB & Mongoose (v9)** | NoSQL Veritabanı (MongoMemoryServer yedek desteği ile) |
-| **Yapay Zeka** | **Google Generative AI** | Gemini 2.0 Flash / Gemini 1.5 Flash Multimodal NLP |
-| **Frontend** | **Vanilla HTML5 & Saf JavaScript** | Hızlı, bağımlılıksız, saf JS (ES6+) mimarisi |
-| **Stil & Arayüz** | **Tailwind CSS (CDN)** | Koyu Tema (Dark Mode), Glassmorphism & Responsive Tasarım |
+| **Yapay Zeka** | **Google Generative AI** | Gemini 2.0 Flash Multimodal NLP + XAI Skor Kırılımı |
+| **Frontend** | **Vanilla HTML5 & Saf JavaScript** | Hızlı, bağımlılıksız, modüler JS (ES6+ CommonJS) mimarisi |
+| **Stil & Arayüz** | **Vanilla CSS & Glassmorphism** | Koyu Tema (Dark Mode), Cam Efektli Kartlar & Responsive Tasarım |
 | **Grafik & Görselleştirme** | **Chart.js (v4)** | Skor ve Kriter İstatistik Grafikleri |
 | **Doküman & PDF** | **PDF.js & html2pdf.js** | İstemci tarafı PDF okuma ve dışa aktarma |
+| **E-posta** | **Nodemailer** | SMTP üzerinden HTML formatlı analiz özeti gönderimi |
 | **Test Altyapısı** | **Playwright** | Chromium, Firefox ve WebKit çapraz tarayıcı E2E testleri |
 | **Konteynerizasyon** | **Docker & Docker Compose** | Çoklu servis konteyner mimarisi (Node + MongoDB) |
 
@@ -89,7 +117,18 @@ MONGODB_URI=mongodb://localhost:27017/cv_analiz_db
 GEMINI_API_KEY=sizin_google_gemini_api_anahtariniz
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin123
+JWT_SECRET=sizin_jwt_gizli_anahtariniz
 ```
+
+**İsteğe bağlı SMTP yapılandırması (E-posta gönderimi için):**
+```env
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=kullanici@example.com
+SMTP_PASS=sifre
+```
+
 > 💡 **Not:** `MONGODB_URI` tanımlanmadığında veya yerel MongoDB servisi kapalı olduğunda sistem otomatik olarak bellek içi `MongoMemoryServer` başlatır; harici veritabanı kurmadan da anında çalışır.
 
 #### 3. Uygulamayı Başlatın:
@@ -128,95 +167,86 @@ docker compose down
 
 ## 📡 REST API Uç Noktaları (Endpoints)
 
-### 1. Yeni Başvuru ve CV Analizi
-- **Uç Nokta:** `POST /api/basvuru`
-- **İstek Gövdesi (JSON):**
+### Kimlik Doğrulama (Auth)
+
+| Yöntem | Uç Nokta | Açıklama |
+|--------|----------|----------|
+| `POST` | `/api/auth/register` | Yeni şirket/kullanıcı kaydı |
+| `POST` | `/api/auth/login` | Kullanıcı ve yönetici girişi |
+| `GET` | `/api/auth/me` | Aktif oturum bilgisi (JWT gerekli) |
+| `GET` | `/api/auth/users` | Tüm kullanıcılar listesi (Yalnızca Admin) |
+
+### CV Başvuru & Analiz
+
+| Yöntem | Uç Nokta | Açıklama |
+|--------|----------|----------|
+| `POST` | `/api/basvuru` | Yeni CV başvurusu ve AI analizi |
+| `GET` | `/api/basvurular` | Başvuruları filtreli, aramalı ve önbellekli listele |
+| `GET` | `/api/basvurular/:id` | Tekil başvuru detayı |
+| `DELETE` | `/api/basvurular/:id` | Tekil başvuru silme (soft-delete) |
+| `POST` | `/api/basvurular/:id/restore` | Silinmiş başvuruyu geri yükleme |
+| `DELETE` | `/api/basvurular` | Tüm başvuruları silme |
+
+> 💡 **Geriye Dönük Uyumluluk:** `/api/adaylar` ve `/api/analizler` alias'ları da desteklenir.
+
+### Araçlar
+
+| Yöntem | Uç Nokta | Açıklama |
+|--------|----------|----------|
+| `POST` | `/api/mail-gonder` | Aday analiz özetini e-posta ile gönder |
+| `GET` | `/api/health` | Sistem sağlık durumu (DB, uptime, env) |
+| `GET` | `/api/test-results` | E2E test sonuçları raporu |
+
+### Sorgu Parametreleri (Başvuru Listesi)
+
+| Parametre | Varsayılan | Açıklama |
+|-----------|-----------|----------|
+| `page` | `1` | Sayfa numarası |
+| `limit` | `6` | Sayfa başına kayıt |
+| `search` | — | İsim veya kriter arama metni |
+| `scoreFilter` | `all` | `all`, `high` (80+), `mid` (50-79), `low` (0-49) |
+
+---
+
+### Örnek API İstekleri
+
+**Yeni Başvuru:**
 ```json
+POST /api/basvuru
 {
   "isim": "Ahmet Yılmaz",
   "eposta": "ahmet@example.com",
   "arananKriter": "Senior Frontend Developer",
-  "cvMetni": "React, TypeScript, Next.js ve Tailwind CSS konularında 5 yıl deneyimli...",
+  "cvMetni": "React, TypeScript, Next.js konularında 5 yıl deneyimli...",
   "gorselVerisi": "data:image/png;base64,..."
 }
 ```
-- **Başarılı Yanıt (201 Created):**
+
+**Başarılı Yanıt (201 Created):**
 ```json
 {
   "mesaj": "CV analizi başarıyla tamamlandı.",
   "veri": {
     "_id": "66bc...",
     "isim": "Ahmet Yılmaz",
-    "eposta": "ahmet@example.com",
-    "arananKriter": "Senior Frontend Developer",
     "uygunlukSkoru": 92,
-    "gucluYonler": ["Kapsamlı React ekosistemi tecrübesi", "Modern CSS mimarileri"],
+    "gucluYonler": ["Kapsamlı React ekosistemi tecrübesi"],
     "zayifYonler": ["Test otomasyonu detaylandırılabilir"],
-    "tarih": "2026-08-15T00:00:00.000Z"
+    "skorKirilimi": ["+ %40: Temel teknik yetkinlik uyumu", "+ %30: Modern framework deneyimi", "- %10: Eksik test kültürü"],
+    "mulakatSorulari": ["React performans optimizasyonlarında hangi stratejileri uygularsınız?", "..."],
+    "riskler": []
   }
 }
 ```
 
----
-
-### 2. Aday Başvurularını Listeleme (Önbellekli & Sayfalanmış)
-- **Uç Nokta:** `GET /api/basvurular`
-- **Sorgu Parametreleri (Query Params):**
-  - `page` (varsayılan: `1`): Sayfa numarası
-  - `limit` (varsayılan: `6`): Sayfa başına kayıt sayısı
-  - `search` (isteğe bağlı): İsim veya kriter arama metni
-  - `scoreFilter` (isteğe bağlı): `all`, `high` (80+), `mid` (50-79), `low` (0-49)
-- **HTTP Başlıkları:** `X-Cache: HIT` (Önbellekten) veya `X-Cache: MISS` (Veritabanından)
-- **Başarılı Yanıt (200 OK):**
+**Şirket Kaydı:**
 ```json
+POST /api/auth/register
 {
-  "success": true,
-  "data": [...],
-  "toplam": 24,
-  "toplamSayfa": 4,
-  "mevcutSayfa": 1
-}
-```
-
----
-
-### 3. Aday Kaydı Silme
-- **Tekil Silme:** `DELETE /api/basvurular/:id` → 200 OK
-- **Toplu Silme:** `DELETE /api/basvurular` → 200 OK
-
----
-
-### 4. Yönetici Girişi (Admin Authentication)
-- **Uç Nokta:** `POST /api/auth/login`
-- **İstek Gövdesi (JSON):**
-```json
-{
-  "username": "admin",
-  "password": "admin123"
-}
-```
-- **Başarılı Yanıt (200 OK):**
-```json
-{
-  "success": true,
-  "token": "admin-token-123",
-  "mesaj": "Giriş başarılı."
-}
-```
-
----
-
-### 5. Sistem Sağlık Durumu (Health Check)
-- **Uç Nokta:** `GET /api/health`
-- **Başarılı Yanıt (200 OK):**
-```json
-{
-  "status": "OK",
-  "db": "Connected",
-  "dbState": "connected",
-  "uptime": "1420 saniye",
-  "env": "production",
-  "timestamp": "2026-08-15T00:00:00.000Z"
+  "kullaniciAdi": "teknosoft",
+  "sifre": "guvenli_sifre_123",
+  "sirketAdi": "TeknoSoft A.Ş.",
+  "eposta": "hr@teknosoft.com"
 }
 ```
 
@@ -224,7 +254,7 @@ docker compose down
 
 ## 🧪 Uçtan Uca (E2E) Test Paketi
 
-Proje, **Playwright** test çatısı ile Chromium, Firefox ve WebKit tarayıcılarında çalışan 11 farklı test senaryosuna ve toplam 33 bağımsız doğrulamaya sahiptir.
+Proje, **Playwright** test çatısı ile Chromium, Firefox ve WebKit tarayıcılarında çalışan 11 farklı test senaryosuna ve toplam **33 bağımsız doğrulamaya** sahiptir.
 
 ### Testleri Çalıştırma:
 ```bash
@@ -257,21 +287,85 @@ npx playwright show-report
 
 ```text
 cv-analiz-platformu/
+├── config/
+│   └── db.js                    # MongoDB bağlantı yöneticisi (MongoMemoryServer yedekli)
+├── controllers/
+│   ├── authController.js        # Giriş, kayıt, profil ve kullanıcı listeleme
+│   └── cvController.js          # Başvuru CRUD, multi-tenant filtreleme, istatistik, e-posta
+├── middleware/
+│   ├── authMiddleware.js        # JWT doğrulama ve admin yetki kontrolü
+│   └── rateLimiter.js           # IP bazlı in-memory hız sınırlayıcı
 ├── models/
-│   └── Analysis.js          # Mongoose Veri Şeması ve Modeli
+│   ├── Aday.js                  # Aday referans şeması
+│   ├── Analysis.js              # Ana analiz veri modeli (skor, XAI, risk, mülakat)
+│   └── User.js                  # Kullanıcı / Şirket modeli (JWT & rol yönetimi)
+├── routes/
+│   ├── authRoutes.js            # Auth API rotaları (/api/auth/*)
+│   └── cvRoutes.js              # CV & Başvuru API rotaları (/api/*)
+├── services/
+│   ├── geminiService.js         # Gemini AI analiz, XAI skor kırılımı, mülakat & risk üretimi
+│   └── mailService.js           # Nodemailer SMTP e-posta gönderim servisi
 ├── public/
-│   ├── index.html           # SPA Tek Sayfa Arayüzü, Chart.js & Toast Yönetimi
-│   └── test-results.json    # Otomatik Test Rapor Çıktısı
+│   ├── css/
+│   │   └── style.css            # Glassmorphism, animasyonlar, rozet ve scrollbar stilleri
+│   ├── js/
+│   │   ├── app.js               # Ana uygulama orkestratörü (CV, analiz, modal, PDF, grafik)
+│   │   ├── auth.js              # Oturum yönetimi (giriş, kayıt, sağlık kontrolü)
+│   │   └── compare.js           # İki adayı yan yana kıyaslama modülü
+│   ├── index.html               # SPA tek sayfa HTML iskeleti
+│   └── test-results.json        # Otomatik test rapor çıktısı
 ├── tests/
-│   └── app.spec.js          # Playwright Uçtan Uca (E2E) Test Paketi
-├── .dockerignore            # Docker İmajı Hariç Tutma Listesi
-├── .env                     # Ortam Değişkenleri Yapılandırması
-├── docker-compose.yml       # Docker Compose Servis Orkestrasyonu
-├── Dockerfile               # Node:20-Alpine Tabanlı Optimize Docker İmajı
-├── package.json             # NPM Bağımlılıkları ve Script Tanımları
-├── playwright.config.js     # Playwright Test Yapılandırması
-├── server.js                # Express REST API, Caching, AI & Auth Sunucusu
-└── README.md                # Kapsamlı Teknik Proje Dokümantasyonu
+│   └── app.spec.js              # 33 Playwright E2E test senaryosu (3 tarayıcı)
+├── .dockerignore                # Docker imajı hariç tutma listesi
+├── .env                         # Ortam değişkenleri yapılandırması
+├── docker-compose.yml           # Docker Compose servis orkestrasyonu (Node + MongoDB)
+├── Dockerfile                   # Node:20-Alpine tabanlı optimize Docker imajı
+├── package.json                 # NPM bağımlılıkları ve script tanımları
+├── playwright.config.js         # Playwright test yapılandırması (3 tarayıcı)
+├── render.yaml                  # Render.com bulut dağıtım yapılandırması
+├── server.js                    # Minimal Express giriş noktası (~36 satır)
+└── README.md                    # Kapsamlı teknik proje dokümantasyonu
+```
+
+---
+
+## 🏗️ Mimari Genel Bakış
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        İstemci (Browser)                        │
+│  ┌──────────┐  ┌──────────┐  ┌───────────┐  ┌───────────────┐  │
+│  │ index.html│  │  app.js  │  │  auth.js  │  │  compare.js   │  │
+│  └──────────┘  └──────────┘  └───────────┘  └───────────────┘  │
+└─────────────────────────┬───────────────────────────────────────┘
+                          │ HTTP/REST
+┌─────────────────────────▼───────────────────────────────────────┐
+│                     server.js (Express v5)                      │
+│  ┌─────────────┐  ┌──────────────┐  ┌────────────────────────┐ │
+│  │ authRoutes  │  │  cvRoutes    │  │  Middleware             │ │
+│  │ /api/auth/* │  │  /api/*      │  │  (JWT, RateLimiter)     │ │
+│  └──────┬──────┘  └──────┬───────┘  └────────────────────────┘ │
+│         │                │                                      │
+│  ┌──────▼──────┐  ┌──────▼───────┐                             │
+│  │   authCtrl  │  │   cvCtrl     │                             │
+│  └─────────────┘  └──────┬───────┘                             │
+│                          │                                      │
+│  ┌───────────────────────▼──────────────────────────────┐      │
+│  │              Services                                 │      │
+│  │  ┌──────────────────┐  ┌───────────────────────────┐ │      │
+│  │  │  geminiService   │  │     mailService           │ │      │
+│  │  │  (AI + XAI +     │  │     (SMTP E-posta)        │ │      │
+│  │  │   Risk + Mülakat)│  │                           │ │      │
+│  │  └──────────────────┘  └───────────────────────────┘ │      │
+│  └──────────────────────────────────────────────────────┘      │
+│                          │                                      │
+│  ┌───────────────────────▼──────────────────────────────┐      │
+│  │  MongoDB (Mongoose) / MongoMemoryServer (yedek)      │      │
+│  │  ┌──────────┐  ┌────────────┐  ┌──────────────────┐ │      │
+│  │  │ Analysis │  │    User    │  │      Aday        │ │      │
+│  │  └──────────┘  └────────────┘  └──────────────────┘ │      │
+│  └──────────────────────────────────────────────────────┘      │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---

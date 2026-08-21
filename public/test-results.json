@@ -124,7 +124,7 @@
               "specs": [
                 {
                   "title": "Formu doldurma, gönderme ve sonuç ekranının açıldığını doğrulama",
-                  "ok": false,
+                  "ok": true,
                   "tags": [],
                   "tests": [
                     {
@@ -137,40 +137,18 @@
                         {
                           "workerIndex": 0,
                           "parallelIndex": 0,
-                          "status": "timedOut",
-                          "duration": 30044,
-                          "error": {
-                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
-                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                          },
-                          "errors": [
-                            {
-                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                            },
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 35,
-                                "line": 20
-                              },
-                              "message": "Error: locator.fill: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#isim')\u001b[22m\n\u001b[2m    - locator resolved to <input id=\"isim\" type=\"text\" placeholder=\"Mustafa Barış Balcı (veya dosyadan otomatik)\" class=\"w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow\"/>\u001b[22m\n\u001b[2m    - fill(\"Mustafa Barış Balcı\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    54 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n\n  18 |     test('Formu doldurma, gönderme ve sonuç ekranının açıldığını doğrulama', async ({ page }) => {\n  19 |       // 1. Form alanlarını doldur\n> 20 |       await page.locator('#isim').fill('Mustafa Barış Balcı');\n     |                                   ^\n  21 |       await page.locator('#eposta').fill('baris@test.com');\n  22 |       await page.locator('#arananKriter').fill('Senior Node.js Backend Developer arıyoruz');\n  23 |       await page.locator('#cvMetni').fill('Node.js, Express, MongoDB, REST API ve Playwright E2E konularında 5 yıl tecrübeli yazılım uzmanı.');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:20:35"
-                            }
-                          ],
+                          "status": "passed",
+                          "duration": 6736,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:06.127Z",
+                          "startTime": "2026-08-21T15:21:53.623Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-9f828-anının-açıldığını-doğrulama-chromium\\error-context.md"
-                            }
-                          ]
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -181,41 +159,19 @@
                       "results": [
                         {
                           "workerIndex": 10,
-                          "parallelIndex": 4,
-                          "status": "timedOut",
-                          "duration": 30091,
-                          "error": {
-                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
-                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                          },
-                          "errors": [
-                            {
-                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                            },
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 35,
-                                "line": 20
-                              },
-                              "message": "Error: locator.fill: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#isim')\u001b[22m\n\u001b[2m    - locator resolved to <input id=\"isim\" type=\"text\" placeholder=\"Mustafa Barış Balcı (veya dosyadan otomatik)\" class=\"w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow\"/>\u001b[22m\n\u001b[2m    - fill(\"Mustafa Barış Balcı\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    54 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n\n  18 |     test('Formu doldurma, gönderme ve sonuç ekranının açıldığını doğrulama', async ({ page }) => {\n  19 |       // 1. Form alanlarını doldur\n> 20 |       await page.locator('#isim').fill('Mustafa Barış Balcı');\n     |                                   ^\n  21 |       await page.locator('#eposta').fill('baris@test.com');\n  22 |       await page.locator('#arananKriter').fill('Senior Node.js Backend Developer arıyoruz');\n  23 |       await page.locator('#cvMetni').fill('Node.js, Express, MongoDB, REST API ve Playwright E2E konularında 5 yıl tecrübeli yazılım uzmanı.');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:20:35"
-                            }
-                          ],
+                          "parallelIndex": 6,
+                          "status": "passed",
+                          "duration": 3772,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:10.125Z",
+                          "startTime": "2026-08-21T15:22:00.951Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-9f828-anının-açıldığını-doğrulama-firefox\\error-context.md"
-                            }
-                          ]
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -225,42 +181,20 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 19,
-                          "parallelIndex": 8,
-                          "status": "timedOut",
-                          "duration": 30054,
-                          "error": {
-                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
-                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                          },
-                          "errors": [
-                            {
-                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                            },
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 35,
-                                "line": 20
-                              },
-                              "message": "Error: locator.fill: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#isim')\u001b[22m\n\u001b[2m    - locator resolved to <input id=\"isim\" type=\"text\" placeholder=\"Mustafa Barış Balcı (veya dosyadan otomatik)\" class=\"w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow\"/>\u001b[22m\n\u001b[2m    - fill(\"Mustafa Barış Balcı\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    55 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n\n  18 |     test('Formu doldurma, gönderme ve sonuç ekranının açıldığını doğrulama', async ({ page }) => {\n  19 |       // 1. Form alanlarını doldur\n> 20 |       await page.locator('#isim').fill('Mustafa Barış Balcı');\n     |                                   ^\n  21 |       await page.locator('#eposta').fill('baris@test.com');\n  22 |       await page.locator('#arananKriter').fill('Senior Node.js Backend Developer arıyoruz');\n  23 |       await page.locator('#cvMetni').fill('Node.js, Express, MongoDB, REST API ve Playwright E2E konularında 5 yıl tecrübeli yazılım uzmanı.');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:20:35"
-                            }
-                          ],
+                          "workerIndex": 20,
+                          "parallelIndex": 6,
+                          "status": "passed",
+                          "duration": 3721,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:20.379Z",
+                          "startTime": "2026-08-21T15:22:09.937Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-9f828-anının-açıldığını-doğrulama-webkit\\error-context.md"
-                            }
-                          ]
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     }
                   ],
                   "id": "358bbd3632d8bf4e407c-805021ec4c2632a7627e",
@@ -292,12 +226,12 @@
                           "workerIndex": 1,
                           "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 5412,
+                          "duration": 7028,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:06.136Z",
+                          "startTime": "2026-08-21T15:21:53.645Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -313,14 +247,14 @@
                       "results": [
                         {
                           "workerIndex": 11,
-                          "parallelIndex": 3,
+                          "parallelIndex": 4,
                           "status": "passed",
-                          "duration": 4037,
+                          "duration": 5742,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:11.749Z",
+                          "startTime": "2026-08-21T15:22:00.942Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -335,15 +269,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 18,
-                          "parallelIndex": 2,
+                          "workerIndex": 21,
+                          "parallelIndex": 4,
                           "status": "passed",
-                          "duration": 3176,
+                          "duration": 4560,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:20.364Z",
+                          "startTime": "2026-08-21T15:22:10.283Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -380,12 +314,12 @@
                           "workerIndex": 2,
                           "parallelIndex": 2,
                           "status": "passed",
-                          "duration": 5220,
+                          "duration": 5625,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:06.150Z",
+                          "startTime": "2026-08-21T15:21:53.623Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -400,15 +334,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 12,
-                          "parallelIndex": 5,
+                          "workerIndex": 13,
+                          "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 4213,
+                          "duration": 5567,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:11.756Z",
+                          "startTime": "2026-08-21T15:22:01.424Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -423,15 +357,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 20,
-                          "parallelIndex": 9,
+                          "workerIndex": 22,
+                          "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 4450,
+                          "duration": 5694,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:22.084Z",
+                          "startTime": "2026-08-21T15:22:10.132Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -468,12 +402,12 @@
                           "workerIndex": 3,
                           "parallelIndex": 3,
                           "status": "passed",
-                          "duration": 4805,
+                          "duration": 8845,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:06.142Z",
+                          "startTime": "2026-08-21T15:21:53.645Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -488,15 +422,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 13,
-                          "parallelIndex": 2,
+                          "workerIndex": 12,
+                          "parallelIndex": 8,
                           "status": "passed",
-                          "duration": 6434,
+                          "duration": 8935,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:12.109Z",
+                          "startTime": "2026-08-21T15:22:01.365Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -511,15 +445,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 18,
-                          "parallelIndex": 2,
+                          "workerIndex": 23,
+                          "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 4440,
+                          "duration": 5493,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:23.648Z",
+                          "startTime": "2026-08-21T15:22:10.389Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -556,12 +490,12 @@
                           "workerIndex": 4,
                           "parallelIndex": 4,
                           "status": "passed",
-                          "duration": 3171,
+                          "duration": 6345,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:06.163Z",
+                          "startTime": "2026-08-21T15:21:53.667Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -579,12 +513,12 @@
                           "workerIndex": 14,
                           "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 4023,
+                          "duration": 4364,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:12.267Z",
+                          "startTime": "2026-08-21T15:22:01.575Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -599,15 +533,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 21,
-                          "parallelIndex": 3,
+                          "workerIndex": 24,
+                          "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 2156,
+                          "duration": 2780,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:24.754Z",
+                          "startTime": "2026-08-21T15:22:11.542Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -644,12 +578,12 @@
                           "workerIndex": 5,
                           "parallelIndex": 5,
                           "status": "passed",
-                          "duration": 4842,
+                          "duration": 7668,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:06.155Z",
+                          "startTime": "2026-08-21T15:21:53.673Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -665,14 +599,14 @@
                       "results": [
                         {
                           "workerIndex": 15,
-                          "parallelIndex": 9,
+                          "parallelIndex": 2,
                           "status": "passed",
-                          "duration": 6040,
+                          "duration": 6639,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:14.696Z",
+                          "startTime": "2026-08-21T15:22:02.379Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -687,15 +621,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 22,
-                          "parallelIndex": 6,
+                          "workerIndex": 25,
+                          "parallelIndex": 3,
                           "status": "passed",
-                          "duration": 3703,
+                          "duration": 4449,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:24.991Z",
+                          "startTime": "2026-08-21T15:22:11.777Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -718,7 +652,7 @@
               "specs": [
                 {
                   "title": "/api/health endpoint yanıtını ve arayüz rozetini doğrulama",
-                  "ok": false,
+                  "ok": true,
                   "tags": [],
                   "tests": [
                     {
@@ -731,48 +665,18 @@
                         {
                           "workerIndex": 6,
                           "parallelIndex": 6,
-                          "status": "failed",
-                          "duration": 8049,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#health-badge')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#health-badge')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"health-badge\" title=\"Sunucu Durumu\" class=\"hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/40 text-xs font-semibold text-slate-300\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#health-badge')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#health-badge')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"health-badge\" title=\"Sunucu Durumu\" class=\"hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/40 text-xs font-semibold text-slate-300\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:225:33",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 33,
-                              "line": 225
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 223 |\u001b[39m       \u001b[90m// 2. Arayüzdeki #health-badge elemanının görünür olduğunu doğrula\u001b[39m\n \u001b[90m 224 |\u001b[39m       \u001b[36mconst\u001b[39m healthBadge \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#health-badge'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 225 |\u001b[39m       \u001b[36mawait\u001b[39m expect(healthBadge)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 226 |\u001b[39m\n \u001b[90m 227 |\u001b[39m       \u001b[90m// 3. Rozet içerisinde sunucu durum metninin yer aldığını doğrula\u001b[39m\n \u001b[90m 228 |\u001b[39m       \u001b[36mconst\u001b[39m healthText \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#health-text'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 33,
-                                "line": 225
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#health-badge')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#health-badge')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"health-badge\" title=\"Sunucu Durumu\" class=\"hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/40 text-xs font-semibold text-slate-300\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  223 |       // 2. Arayüzdeki #health-badge elemanının görünür olduğunu doğrula\n  224 |       const healthBadge = page.locator('#health-badge');\n> 225 |       await expect(healthBadge).toBeVisible();\n      |                                 ^\n  226 |\n  227 |       // 3. Rozet içerisinde sunucu durum metninin yer aldığını doğrula\n  228 |       const healthText = page.locator('#health-text');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:225:33"
-                            }
-                          ],
+                          "status": "passed",
+                          "duration": 5903,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:06.140Z",
+                          "startTime": "2026-08-21T15:21:53.649Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-61052-e-arayüz-rozetini-doğrulama-chromium\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 33,
-                            "line": 225
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -783,49 +687,19 @@
                       "results": [
                         {
                           "workerIndex": 16,
-                          "parallelIndex": 6,
-                          "status": "failed",
-                          "duration": 8065,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#health-badge')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#health-badge')\u001b[22m\n\u001b[2m    13 × locator resolved to <div id=\"health-badge\" title=\"Sunucu Durumu\" class=\"hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/40 text-xs font-semibold text-slate-300\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#health-badge')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#health-badge')\u001b[22m\n\u001b[2m    13 × locator resolved to <div id=\"health-badge\" title=\"Sunucu Durumu\" class=\"hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/40 text-xs font-semibold text-slate-300\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:225:33",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 33,
-                              "line": 225
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 223 |\u001b[39m       \u001b[90m// 2. Arayüzdeki #health-badge elemanının görünür olduğunu doğrula\u001b[39m\n \u001b[90m 224 |\u001b[39m       \u001b[36mconst\u001b[39m healthBadge \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#health-badge'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 225 |\u001b[39m       \u001b[36mawait\u001b[39m expect(healthBadge)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 226 |\u001b[39m\n \u001b[90m 227 |\u001b[39m       \u001b[90m// 3. Rozet içerisinde sunucu durum metninin yer aldığını doğrula\u001b[39m\n \u001b[90m 228 |\u001b[39m       \u001b[36mconst\u001b[39m healthText \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#health-text'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 33,
-                                "line": 225
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#health-badge')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#health-badge')\u001b[22m\n\u001b[2m    13 × locator resolved to <div id=\"health-badge\" title=\"Sunucu Durumu\" class=\"hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/40 text-xs font-semibold text-slate-300\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  223 |       // 2. Arayüzdeki #health-badge elemanının görünür olduğunu doğrula\n  224 |       const healthBadge = page.locator('#health-badge');\n> 225 |       await expect(healthBadge).toBeVisible();\n      |                                 ^\n  226 |\n  227 |       // 3. Rozet içerisinde sunucu durum metninin yer aldığını doğrula\n  228 |       const healthText = page.locator('#health-text');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:225:33"
-                            }
-                          ],
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 3899,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:15.207Z",
+                          "startTime": "2026-08-21T15:22:02.376Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-61052-e-arayüz-rozetini-doğrulama-firefox\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 33,
-                            "line": 225
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -835,50 +709,20 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 23,
+                          "workerIndex": 26,
                           "parallelIndex": 5,
-                          "status": "failed",
-                          "duration": 6506,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#health-badge')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#health-badge')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"health-badge\" title=\"Sunucu Durumu\" class=\"hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/40 text-xs font-semibold text-slate-300\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#health-badge')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#health-badge')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"health-badge\" title=\"Sunucu Durumu\" class=\"hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/40 text-xs font-semibold text-slate-300\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:225:33",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 33,
-                              "line": 225
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 223 |\u001b[39m       \u001b[90m// 2. Arayüzdeki #health-badge elemanının görünür olduğunu doğrula\u001b[39m\n \u001b[90m 224 |\u001b[39m       \u001b[36mconst\u001b[39m healthBadge \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#health-badge'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 225 |\u001b[39m       \u001b[36mawait\u001b[39m expect(healthBadge)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 226 |\u001b[39m\n \u001b[90m 227 |\u001b[39m       \u001b[90m// 3. Rozet içerisinde sunucu durum metninin yer aldığını doğrula\u001b[39m\n \u001b[90m 228 |\u001b[39m       \u001b[36mconst\u001b[39m healthText \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#health-text'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 33,
-                                "line": 225
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#health-badge')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#health-badge')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"health-badge\" title=\"Sunucu Durumu\" class=\"hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/40 text-xs font-semibold text-slate-300\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  223 |       // 2. Arayüzdeki #health-badge elemanının görünür olduğunu doğrula\n  224 |       const healthBadge = page.locator('#health-badge');\n> 225 |       await expect(healthBadge).toBeVisible();\n      |                                 ^\n  226 |\n  227 |       // 3. Rozet içerisinde sunucu durum metninin yer aldığını doğrula\n  228 |       const healthText = page.locator('#health-text');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:225:33"
-                            }
-                          ],
+                          "status": "passed",
+                          "duration": 1961,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:25.273Z",
+                          "startTime": "2026-08-21T15:22:12.210Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-61052-e-arayüz-rozetini-doğrulama-webkit\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 33,
-                            "line": 225
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     }
                   ],
                   "id": "358bbd3632d8bf4e407c-8cde8163fbb723107fef",
@@ -910,12 +754,12 @@
                           "workerIndex": 7,
                           "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 3051,
+                          "duration": 8045,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:06.168Z",
+                          "startTime": "2026-08-21T15:21:53.678Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -931,14 +775,14 @@
                       "results": [
                         {
                           "workerIndex": 17,
-                          "parallelIndex": 8,
+                          "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 2956,
+                          "duration": 3267,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:15.473Z",
+                          "startTime": "2026-08-21T15:22:02.411Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -953,15 +797,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 20,
-                          "parallelIndex": 9,
+                          "workerIndex": 27,
+                          "parallelIndex": 2,
                           "status": "passed",
-                          "duration": 1301,
+                          "duration": 1646,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:26.610Z",
+                          "startTime": "2026-08-21T15:22:14.095Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -984,7 +828,7 @@
               "specs": [
                 {
                   "title": "Script tagı içeren girdi güvenli işlenmeli ve normal istek 201 ile tamamlanmalı",
-                  "ok": false,
+                  "ok": true,
                   "tags": [],
                   "tests": [
                     {
@@ -997,48 +841,18 @@
                         {
                           "workerIndex": 8,
                           "parallelIndex": 8,
-                          "status": "failed",
-                          "duration": 8306,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#form-section')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#form-section')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"form-section\" class=\"max-w-2xl mx-auto animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#form-section')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#form-section')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"form-section\" class=\"max-w-2xl mx-auto animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:284:33",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 33,
-                              "line": 284
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 282 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 283 |\u001b[39m       \u001b[36mconst\u001b[39m formSection \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#form-section'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 284 |\u001b[39m       \u001b[36mawait\u001b[39m expect(formSection)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 285 |\u001b[39m\n \u001b[90m 286 |\u001b[39m       \u001b[90m// 5. Rate limiter devrede: Normal bir POST isteğinin sorunsuz 201 ile tamamlandığını doğrula\u001b[39m\n \u001b[90m 287 |\u001b[39m       \u001b[36mvar\u001b[39m normalPayload \u001b[33m=\u001b[39m {\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 33,
-                                "line": 284
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#form-section')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#form-section')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"form-section\" class=\"max-w-2xl mx-auto animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  282 |       await page.goto('http://localhost:3000');\n  283 |       const formSection = page.locator('#form-section');\n> 284 |       await expect(formSection).toBeVisible();\n      |                                 ^\n  285 |\n  286 |       // 5. Rate limiter devrede: Normal bir POST isteğinin sorunsuz 201 ile tamamlandığını doğrula\n  287 |       var normalPayload = {\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:284:33"
-                            }
-                          ],
+                          "status": "passed",
+                          "duration": 6810,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:06.190Z",
+                          "startTime": "2026-08-21T15:21:53.652Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-932b6--istek-201-ile-tamamlanmalı-chromium\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 33,
-                            "line": 284
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -1048,50 +862,20 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 11,
+                          "workerIndex": 19,
                           "parallelIndex": 3,
-                          "status": "failed",
-                          "duration": 7660,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#form-section')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#form-section')\u001b[22m\n\u001b[2m    13 × locator resolved to <div id=\"form-section\" class=\"max-w-2xl mx-auto animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#form-section')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#form-section')\u001b[22m\n\u001b[2m    13 × locator resolved to <div id=\"form-section\" class=\"max-w-2xl mx-auto animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:284:33",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 33,
-                              "line": 284
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 282 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 283 |\u001b[39m       \u001b[36mconst\u001b[39m formSection \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#form-section'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 284 |\u001b[39m       \u001b[36mawait\u001b[39m expect(formSection)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 285 |\u001b[39m\n \u001b[90m 286 |\u001b[39m       \u001b[90m// 5. Rate limiter devrede: Normal bir POST isteğinin sorunsuz 201 ile tamamlandığını doğrula\u001b[39m\n \u001b[90m 287 |\u001b[39m       \u001b[36mvar\u001b[39m normalPayload \u001b[33m=\u001b[39m {\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 33,
-                                "line": 284
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#form-section')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#form-section')\u001b[22m\n\u001b[2m    13 × locator resolved to <div id=\"form-section\" class=\"max-w-2xl mx-auto animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  282 |       await page.goto('http://localhost:3000');\n  283 |       const formSection = page.locator('#form-section');\n> 284 |       await expect(formSection).toBeVisible();\n      |                                 ^\n  285 |\n  286 |       // 5. Rate limiter devrede: Normal bir POST isteğinin sorunsuz 201 ile tamamlandığını doğrula\n  287 |       var normalPayload = {\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:284:33"
-                            }
-                          ],
+                          "status": "passed",
+                          "duration": 4961,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:16.324Z",
+                          "startTime": "2026-08-21T15:22:03.933Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-932b6--istek-201-ile-tamamlanmalı-firefox\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 33,
-                            "line": 284
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -1101,50 +885,20 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 21,
-                          "parallelIndex": 3,
-                          "status": "failed",
-                          "duration": 6727,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#form-section')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#form-section')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"form-section\" class=\"max-w-2xl mx-auto animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#form-section')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#form-section')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"form-section\" class=\"max-w-2xl mx-auto animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:284:33",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 33,
-                              "line": 284
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 282 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 283 |\u001b[39m       \u001b[36mconst\u001b[39m formSection \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#form-section'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 284 |\u001b[39m       \u001b[36mawait\u001b[39m expect(formSection)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 285 |\u001b[39m\n \u001b[90m 286 |\u001b[39m       \u001b[90m// 5. Rate limiter devrede: Normal bir POST isteğinin sorunsuz 201 ile tamamlandığını doğrula\u001b[39m\n \u001b[90m 287 |\u001b[39m       \u001b[36mvar\u001b[39m normalPayload \u001b[33m=\u001b[39m {\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 33,
-                                "line": 284
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#form-section')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#form-section')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"form-section\" class=\"max-w-2xl mx-auto animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  282 |       await page.goto('http://localhost:3000');\n  283 |       const formSection = page.locator('#form-section');\n> 284 |       await expect(formSection).toBeVisible();\n      |                                 ^\n  285 |\n  286 |       // 5. Rate limiter devrede: Normal bir POST isteğinin sorunsuz 201 ile tamamlandığını doğrula\n  287 |       var normalPayload = {\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:284:33"
-                            }
-                          ],
+                          "workerIndex": 28,
+                          "parallelIndex": 9,
+                          "status": "passed",
+                          "duration": 2496,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:26.984Z",
+                          "startTime": "2026-08-21T15:22:14.551Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-932b6--istek-201-ile-tamamlanmalı-webkit\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 33,
-                            "line": 284
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     }
                   ],
                   "id": "358bbd3632d8bf4e407c-75b6d4c1375e76beab9b",
@@ -1162,7 +916,7 @@
               "specs": [
                 {
                   "title": "Giriş yapılmadan paneller gizli, giriş sonrası görünür, çıkış sonrası tekrar gizli olmalı",
-                  "ok": false,
+                  "ok": true,
                   "tags": [],
                   "tests": [
                     {
@@ -1175,48 +929,18 @@
                         {
                           "workerIndex": 9,
                           "parallelIndex": 9,
-                          "status": "failed",
-                          "duration": 7544,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#admin-login-btn')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-login-btn')\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\" id=\"admin-login-btn\" class=\"inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all cursor-pointer\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#admin-login-btn')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-login-btn')\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\" id=\"admin-login-btn\" class=\"inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all cursor-pointer\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:318:30",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 30,
-                              "line": 318
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 316 |\u001b[39m       \u001b[90m// 3. Yönetici Girişi butonu görünür olmalı\u001b[39m\n \u001b[90m 317 |\u001b[39m       \u001b[36mconst\u001b[39m loginBtn \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#admin-login-btn'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 318 |\u001b[39m       \u001b[36mawait\u001b[39m expect(loginBtn)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 319 |\u001b[39m\n \u001b[90m 320 |\u001b[39m       \u001b[90m// 4. Çıkış Yap butonu gizli olmalı\u001b[39m\n \u001b[90m 321 |\u001b[39m       \u001b[36mconst\u001b[39m logoutBtn \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#admin-logout-btn'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 30,
-                                "line": 318
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#admin-login-btn')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-login-btn')\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\" id=\"admin-login-btn\" class=\"inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all cursor-pointer\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  316 |       // 3. Yönetici Girişi butonu görünür olmalı\n  317 |       const loginBtn = page.locator('#admin-login-btn');\n> 318 |       await expect(loginBtn).toBeVisible();\n      |                              ^\n  319 |\n  320 |       // 4. Çıkış Yap butonu gizli olmalı\n  321 |       const logoutBtn = page.locator('#admin-logout-btn');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:318:30"
-                            }
-                          ],
+                          "status": "passed",
+                          "duration": 9412,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:06.086Z",
+                          "startTime": "2026-08-21T15:21:53.652Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-a5b98-sonrası-tekrar-gizli-olmalı-chromium\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 30,
-                            "line": 318
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -1226,50 +950,20 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 12,
-                          "parallelIndex": 5,
-                          "status": "failed",
-                          "duration": 7448,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#admin-login-btn')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-login-btn')\u001b[22m\n\u001b[2m    13 × locator resolved to <button type=\"button\" id=\"admin-login-btn\" class=\"inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all cursor-pointer\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#admin-login-btn')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-login-btn')\u001b[22m\n\u001b[2m    13 × locator resolved to <button type=\"button\" id=\"admin-login-btn\" class=\"inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all cursor-pointer\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:318:30",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 30,
-                              "line": 318
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 316 |\u001b[39m       \u001b[90m// 3. Yönetici Girişi butonu görünür olmalı\u001b[39m\n \u001b[90m 317 |\u001b[39m       \u001b[36mconst\u001b[39m loginBtn \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#admin-login-btn'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 318 |\u001b[39m       \u001b[36mawait\u001b[39m expect(loginBtn)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 319 |\u001b[39m\n \u001b[90m 320 |\u001b[39m       \u001b[90m// 4. Çıkış Yap butonu gizli olmalı\u001b[39m\n \u001b[90m 321 |\u001b[39m       \u001b[36mconst\u001b[39m logoutBtn \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#admin-logout-btn'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 30,
-                                "line": 318
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#admin-login-btn')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-login-btn')\u001b[22m\n\u001b[2m    13 × locator resolved to <button type=\"button\" id=\"admin-login-btn\" class=\"inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all cursor-pointer\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  316 |       // 3. Yönetici Girişi butonu görünür olmalı\n  317 |       const loginBtn = page.locator('#admin-login-btn');\n> 318 |       await expect(loginBtn).toBeVisible();\n      |                              ^\n  319 |\n  320 |       // 4. Çıkış Yap butonu gizli olmalı\n  321 |       const logoutBtn = page.locator('#admin-logout-btn');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:318:30"
-                            }
-                          ],
+                          "workerIndex": 18,
+                          "parallelIndex": 9,
+                          "status": "passed",
+                          "duration": 8434,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:16.983Z",
+                          "startTime": "2026-08-21T15:22:03.908Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-a5b98-sonrası-tekrar-gizli-olmalı-firefox\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 30,
-                            "line": 318
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -1280,49 +974,19 @@
                       "results": [
                         {
                           "workerIndex": 20,
-                          "parallelIndex": 9,
-                          "status": "failed",
-                          "duration": 6446,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#admin-login-btn')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-login-btn')\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\" id=\"admin-login-btn\" class=\"inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all cursor-pointer\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#admin-login-btn')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-login-btn')\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\" id=\"admin-login-btn\" class=\"inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all cursor-pointer\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:318:30",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 30,
-                              "line": 318
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 316 |\u001b[39m       \u001b[90m// 3. Yönetici Girişi butonu görünür olmalı\u001b[39m\n \u001b[90m 317 |\u001b[39m       \u001b[36mconst\u001b[39m loginBtn \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#admin-login-btn'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 318 |\u001b[39m       \u001b[36mawait\u001b[39m expect(loginBtn)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 319 |\u001b[39m\n \u001b[90m 320 |\u001b[39m       \u001b[90m// 4. Çıkış Yap butonu gizli olmalı\u001b[39m\n \u001b[90m 321 |\u001b[39m       \u001b[36mconst\u001b[39m logoutBtn \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#admin-logout-btn'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 30,
-                                "line": 318
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#admin-login-btn')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#admin-login-btn')\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\" id=\"admin-login-btn\" class=\"inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all cursor-pointer\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  316 |       // 3. Yönetici Girişi butonu görünür olmalı\n  317 |       const loginBtn = page.locator('#admin-login-btn');\n> 318 |       await expect(loginBtn).toBeVisible();\n      |                              ^\n  319 |\n  320 |       // 4. Çıkış Yap butonu gizli olmalı\n  321 |       const logoutBtn = page.locator('#admin-logout-btn');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:318:30"
-                            }
-                          ],
+                          "parallelIndex": 6,
+                          "status": "passed",
+                          "duration": 7992,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:27.933Z",
+                          "startTime": "2026-08-21T15:22:13.920Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-a5b98-sonrası-tekrar-gizli-olmalı-webkit\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 30,
-                            "line": 318
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     }
                   ],
                   "id": "358bbd3632d8bf4e407c-dc4f42f245ef8da76e68",
@@ -1340,7 +1004,7 @@
               "specs": [
                 {
                   "title": "Hata ve başarı toast bildirimlerinin görünürlüğünü, renklerini ve kapatma butonunu doğrulama",
-                  "ok": false,
+                  "ok": true,
                   "tags": [],
                   "tests": [
                     {
@@ -1351,42 +1015,20 @@
                       "projectName": "chromium",
                       "results": [
                         {
-                          "workerIndex": 7,
-                          "parallelIndex": 7,
-                          "status": "timedOut",
-                          "duration": 30035,
-                          "error": {
-                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
-                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                          },
-                          "errors": [
-                            {
-                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                            },
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 41,
-                                "line": 365
-                              },
-                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#submit-btn')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" id=\"submit-btn\" class=\"w-full py-3.5 rounded-xl btn-gradient text-white font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-indigo-600/20\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    55 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n\n  363 |     test('Hata ve başarı toast bildirimlerinin görünürlüğünü, renklerini ve kapatma butonunu doğrulama', async ({ page }) => {\n  364 |       // 1. Formu boş gönder\n> 365 |       await page.locator('#submit-btn').click();\n      |                                         ^\n  366 |\n  367 |       // 2. Hata toast bildirimi kontrolü\n  368 |       const toast = page.locator('#toast-container div').first();\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:365:41"
-                            }
-                          ],
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 1938,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:09.408Z",
+                          "startTime": "2026-08-21T15:21:59.421Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-c436d--kapatma-butonunu-doğrulama-chromium\\error-context.md"
-                            }
-                          ]
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -1396,42 +1038,20 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 14,
-                          "parallelIndex": 1,
-                          "status": "timedOut",
-                          "duration": 30069,
-                          "error": {
-                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
-                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                          },
-                          "errors": [
-                            {
-                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                            },
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 41,
-                                "line": 365
-                              },
-                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#submit-btn')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" id=\"submit-btn\" class=\"w-full py-3.5 rounded-xl btn-gradient text-white font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-indigo-600/20\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    55 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n\n  363 |     test('Hata ve başarı toast bildirimlerinin görünürlüğünü, renklerini ve kapatma butonunu doğrulama', async ({ page }) => {\n  364 |       // 1. Formu boş gönder\n> 365 |       await page.locator('#submit-btn').click();\n      |                                         ^\n  366 |\n  367 |       // 2. Hata toast bildirimi kontrolü\n  368 |       const toast = page.locator('#toast-container div').first();\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:365:41"
-                            }
-                          ],
+                          "workerIndex": 17,
+                          "parallelIndex": 7,
+                          "status": "passed",
+                          "duration": 2940,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:17.728Z",
+                          "startTime": "2026-08-21T15:22:06.535Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-c436d--kapatma-butonunu-doğrulama-firefox\\error-context.md"
-                            }
-                          ]
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -1441,42 +1061,20 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 18,
-                          "parallelIndex": 2,
-                          "status": "timedOut",
-                          "duration": 30053,
-                          "error": {
-                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
-                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                          },
-                          "errors": [
-                            {
-                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
-                            },
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 41,
-                                "line": 365
-                              },
-                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#submit-btn')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" id=\"submit-btn\" class=\"w-full py-3.5 rounded-xl btn-gradient text-white font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-indigo-600/20\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    45 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n\n  363 |     test('Hata ve başarı toast bildirimlerinin görünürlüğünü, renklerini ve kapatma butonunu doğrulama', async ({ page }) => {\n  364 |       // 1. Formu boş gönder\n> 365 |       await page.locator('#submit-btn').click();\n      |                                         ^\n  366 |\n  367 |       // 2. Hata toast bildirimi kontrolü\n  368 |       const toast = page.locator('#toast-container div').first();\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:365:41"
-                            }
-                          ],
+                          "workerIndex": 26,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 2529,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-19T12:11:28.097Z",
+                          "startTime": "2026-08-21T15:22:14.325Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-c436d--kapatma-butonunu-doğrulama-webkit\\error-context.md"
-                            }
-                          ]
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     }
                   ],
                   "id": "358bbd3632d8bf4e407c-e9816b21bc6d3ca3a3b3",
@@ -1493,11 +1091,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-08-19T12:11:05.550Z",
-    "duration": 52650.257000000005,
-    "expected": 18,
+    "startTime": "2026-08-21T15:21:52.378Z",
+    "duration": 29790.277000000002,
+    "expected": 33,
     "skipped": 0,
-    "unexpected": 15,
+    "unexpected": 0,
     "flaky": 0
   }
 }

@@ -45,6 +45,10 @@ const analysisSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    riskler: {
+      type: [String],
+      default: [],
+    },
     gorselVerisi: {
       type: String,
       default: "",

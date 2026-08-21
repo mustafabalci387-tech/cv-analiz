@@ -20,6 +20,61 @@ function onbellekAnahtariOlustur(req) {
   return userPrefix + (req.originalUrl || req.url);
 }
 
+// Filtre oluşturma yardımcısı
+function olusturBasvuruFiltresi(req) {
+  const filter = {};
+  const isAdmin = req.user && req.user.rol === "admin";
+
+  if (isAdmin) {
+    if (req.query.sirket) filter.sirketAdi = { $regex: req.query.sirket.trim(), $options: "i" };
+    if (req.query.userId) filter.userId = req.query.userId;
+    if (req.query.onlyArchived === "true") filter.$or = [{ silindiMi: true }, { silindi: true }];
+  } else {
+    // Normal şirket & misafir: silinmemiş kayıtlar
+    filter.silindi = { $ne: true };
+    filter.silindiMi = { $ne: true };
+
+    if (req.user) {
+      const uId = req.user._id || req.user.id;
+      const orList = [
+        { userId: uId },
+        { ekleyenKullanici: uId },
+        { ekleyenKullanici: String(uId) },
+      ];
+      if (req.user.kullaniciAdi) {
+        orList.push({ kullaniciAdi: req.user.kullaniciAdi }, { ekleyenKullanici: req.user.kullaniciAdi });
+      }
+      if (req.user.sirketAdi && req.user.sirketAdi !== "Genel Şirket") {
+        orList.push({ sirketAdi: req.user.sirketAdi });
+      }
+      filter.$and = [{ $or: orList }];
+    }
+  }
+
+  // Arama filtresi
+  const aramaMetni = (req.query.search || "").trim();
+  if (aramaMetni) {
+    const searchRegex = { $regex: aramaMetni, $options: "i" };
+    const searchOr = [
+      { isim: searchRegex },
+      { eposta: searchRegex },
+      { arananKriter: searchRegex },
+      { sirketAdi: searchRegex },
+      { kullaniciAdi: searchRegex },
+    ];
+    if (!filter.$and) filter.$and = [];
+    filter.$and.push({ $or: searchOr });
+  }
+
+  // Skor filtresi
+  const scoreFilter = req.query.scoreFilter;
+  if (scoreFilter === "high") filter.uygunlukSkoru = { $gte: 80 };
+  else if (scoreFilter === "mid") filter.uygunlukSkoru = { $gte: 50, $lt: 80 };
+  else if (scoreFilter === "low") filter.uygunlukSkoru = { $lt: 50 };
+
+  return filter;
+}
+
 // Yeni CV başvurusu oluşturur ve yapay zeka ile hassas puanlama yapar
 async function basvuruYap(req, res) {
   try {
@@ -32,11 +87,7 @@ async function basvuruYap(req, res) {
     }
 
     isim = isim ? metniGuvenliYap(String(isim).trim()) : "Aday (Otomatik)";
-    if (!isim) isim = "Aday (Otomatik)";
-
     eposta = eposta ? metniGuvenliYap(String(eposta).trim()) : "aday@cvanaliz.internal";
-    if (!eposta) eposta = "aday@cvanaliz.internal";
-
     arananKriter = metniGuvenliYap(arananKriter.trim());
 
     // Gemini AI / Kural motoru ile hassas analiz
@@ -48,8 +99,8 @@ async function basvuruYap(req, res) {
     const sirketAdiVal = req.user ? (req.user.sirketAdi || req.user.kullaniciAdi || "Genel Şirket") : "Genel Şirket";
 
     const yeniAnaliz = new Analysis({
-      isim,
-      eposta,
+      isim: isim || "Aday (Otomatik)",
+      eposta: eposta || "aday@cvanaliz.internal",
       cvMetni: cvMetni || "[Görsel CV Yüklendi]",
       arananKriter,
       gorselVerisi: gorselVerisi || "",
@@ -58,6 +109,7 @@ async function basvuruYap(req, res) {
       uygunlukSkoru: analizSonucu.uygunlukSkoru || 0,
       skorKirilimi: analizSonucu.skorKirilimi || [],
       mulakatSorulari: analizSonucu.mulakatSorulari || [],
+      riskler: analizSonucu.riskler || [],
       userId: userObjId,
       ekleyenKullanici: ekleyenKullaniciVal,
       kullaniciAdi: kullaniciAdiVal,
@@ -93,82 +145,10 @@ async function basvurulariListele(req, res) {
     const limit = parseInt(req.query.limit, 10) > 0 ? parseInt(req.query.limit, 10) : 6;
     const skip = (page - 1) * limit;
 
-    const filter = {};
-    const isAdmin = req.user && req.user.rol === "admin";
-
-    // 1. Multi-Tenant İzolasyon & Rol Kontrolü:
-    if (isAdmin) {
-      // Admin: Veritabanındaki TÜM adayları görür (silindi durumuna bakılmaksızın).
-      if (req.query.sirket) {
-        filter.sirketAdi = { $regex: req.query.sirket.trim(), $options: "i" };
-      }
-      if (req.query.userId) {
-        filter.userId = req.query.userId;
-      }
-      if (req.query.onlyArchived === "true") {
-        filter.$or = [{ silindiMi: true }, { silindi: true }];
-      }
-    } else if (req.user) {
-      // Normal Şirket: Yalnızca kendi eklediği adayları görebilir (Multi-tenant kesin izolasyon)
-      const uId = req.user._id || req.user.id;
-      const orKriterleri = [];
-      if (uId) {
-        orKriterleri.push({ ekleyenKullanici: uId });
-        orKriterleri.push({ ekleyenKullanici: String(uId) });
-        orKriterleri.push({ userId: uId });
-      }
-      if (req.user.kullaniciAdi) {
-        orKriterleri.push({ kullaniciAdi: req.user.kullaniciAdi });
-        orKriterleri.push({ ekleyenKullanici: req.user.kullaniciAdi });
-      }
-      if (req.user.sirketAdi && req.user.sirketAdi !== "Genel Şirket") {
-        orKriterleri.push({ sirketAdi: req.user.sirketAdi });
-      }
-
-      filter.$and = filter.$and || [];
-      filter.$and.push({ $or: orKriterleri.length > 0 ? orKriterleri : [{ userId: uId }] });
-      filter.$and.push({ silindi: { $ne: true } });
-      filter.$and.push({ silindiMi: { $ne: true } });
-    } else {
-      // Misafir / Oturumsuz İstekler: Sadece silinmemiş adayları getir
-      filter.$and = filter.$and || [];
-      filter.$and.push({ silindi: { $ne: true } });
-      filter.$and.push({ silindiMi: { $ne: true } });
-    }
-
-    // 2. Arama Filtresi (Boş değilse uygulanır)
-    const aramaMetni = (req.query.search || "").trim();
-    if (aramaMetni) {
-      const searchRegex = { $regex: aramaMetni, $options: "i" };
-      filter.$and = filter.$and || [];
-      filter.$and.push({
-        $or: [
-          { isim: searchRegex },
-          { eposta: searchRegex },
-          { arananKriter: searchRegex },
-          { sirketAdi: searchRegex },
-          { kullaniciAdi: searchRegex },
-        ],
-      });
-    }
-
-    // 3. Skor Kategorisi Filtresi
-    const scoreFilter = req.query.scoreFilter;
-    if (scoreFilter === "high") {
-      filter.uygunlukSkoru = { $gte: 80 };
-    } else if (scoreFilter === "mid") {
-      filter.uygunlukSkoru = { $gte: 50, $lt: 80 };
-    } else if (scoreFilter === "low") {
-      filter.uygunlukSkoru = { $lt: 50 };
-    }
-
-    // 4. 'En İyi 5 Aday' Özel Filtresi
-    let sortCriteria = { tarih: -1 };
-    let queryLimit = limit;
-    if (scoreFilter === "top5") {
-      sortCriteria = { uygunlukSkoru: -1, tarih: -1 };
-      queryLimit = 5;
-    }
+    const filter = olusturBasvuruFiltresi(req);
+    const isTop5 = req.query.scoreFilter === "top5";
+    const sortCriteria = isTop5 ? { uygunlukSkoru: -1, tarih: -1 } : { tarih: -1 };
+    const queryLimit = isTop5 ? 5 : limit;
 
     const total = await Analysis.countDocuments(filter);
     const totalPages = Math.ceil(total / queryLimit) || 1;
@@ -202,12 +182,10 @@ async function basvurulariListele(req, res) {
 async function basvuruDetay(req, res) {
   try {
     const aday = await Analysis.findById(req.params.id);
-    if (!aday) {
-      return res.status(404).json({ hata: "Aday bulunamadı." });
-    }
+    if (!aday) return res.status(404).json({ hata: "Aday bulunamadı." });
 
     const isAdmin = req.user && req.user.rol === "admin";
-    if (!isAdmin && aday.silindiMi) {
+    if (!isAdmin && (aday.silindiMi || aday.silindi)) {
       return res.status(404).json({ hata: "Aday bulunamadı." });
     }
 
@@ -222,22 +200,17 @@ async function basvuruSil(req, res) {
   try {
     const adayId = req.params.id;
     const aday = await Analysis.findById(adayId);
-
-    if (!aday) {
-      return res.status(404).json({ hata: "Aday bulunamadı." });
-    }
+    if (!aday) return res.status(404).json({ hata: "Aday bulunamadı." });
 
     const isAdmin = req.user && req.user.rol === "admin";
     const kaliciSil = req.query.kalici === "true" || req.query.hard === "true";
 
     if (isAdmin && kaliciSil) {
-      // Admin kalıcı olarak tamamen silebilir
       await Analysis.findByIdAndDelete(adayId);
       onbellekTemizle();
       return res.json({ success: true, mesaj: "Aday veritabanından kalıcı olarak silindi." });
     }
 
-    // Soft-delete (Arşivleme)
     aday.silindi = true;
     aday.silindiMi = true;
     await aday.save();
@@ -258,10 +231,7 @@ async function basvuruGeriYukle(req, res) {
   try {
     const adayId = req.params.id;
     const aday = await Analysis.findById(adayId);
-
-    if (!aday) {
-      return res.status(404).json({ hata: "Aday bulunamadı." });
-    }
+    if (!aday) return res.status(404).json({ hata: "Aday bulunamadı." });
 
     aday.silindi = false;
     aday.silindiMi = false;
@@ -292,7 +262,6 @@ async function tumBasvurulariSil(req, res) {
 async function mailGonder(req, res) {
   try {
     const { to, adayAdi, skor, arananKriter, gucluYonler, zayifYonler, sirketAdi } = req.body;
-
     if (!to || !to.includes("@")) {
       return res.status(400).json({ success: false, mesaj: "Geçerli bir e-posta adresi belirtilmelidir." });
     }
@@ -357,11 +326,4 @@ module.exports = {
   saglikKontrolu,
   testSonuclari,
   onbellekTemizle,
-  // İsimlendirme alternatifleri (Aliases)
-  adaylariGetir: basvurulariListele,
-  adaySil: basvuruSil,
-  adayGeriYukle: basvuruGeriYukle,
-  adayDetay: basvuruDetay,
-  istatistikleriGetir: saglikKontrolu,
-  raporMailGonder: mailGonder,
 };

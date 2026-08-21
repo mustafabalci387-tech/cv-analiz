@@ -8,9 +8,8 @@ let yedekModel = null;
 if (apiKey) {
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    // En güncel ve desteklenen model tanımları
     birincilModel = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-    yedekModel = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
+    yedekModel = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   } catch (err) {
     console.warn("Gemini API başlatılamadı:", err.message);
   }
@@ -46,6 +45,29 @@ async function icerikUretModelAgnostik(icerikler) {
   }
 }
 
+// Varsayılan XAI skor kırılımı üretici
+function varsayilanKirilim(skor, eksikKelimeler = []) {
+  return [
+    `+ %${Math.min(Math.round(skor * 0.5), 45)}: İlan anahtar kelimeleri ve teknik eşleşme`,
+    `+ %${Math.min(Math.round(skor * 0.35), 35)}: Sektörel tecrübe derinliği ve CV kapsamı`,
+    eksikKelimeler.length > 0
+      ? `- %${Math.min(Math.max(100 - skor, 10), 30)}: "${eksikKelimeler.slice(0, 2).join(", ")}" kriterindeki eksiklikler`
+      : `+ %${Math.max(skor - 75, 10)}: Pozisyon standartlarının üzerindeki yetkinlik seviyesi`,
+  ];
+}
+
+// Varsayılan hedef odaklı mülakat sorusu üretici
+function varsayilanMulakat(kriter, eslesenKelimeler = [], eksikKelimeler = []) {
+  const anahtar = eslesenKelimeler.slice(0, 2).join(" ve ") || (kriter || "ilgili pozisyon").slice(0, 30);
+  return [
+    `"${anahtar}" teknolojilerinde yönettiğiniz en karmaşık mimariyi ve aldığınız kritik kararları anlatır mısınız?`,
+    eksikKelimeler.length > 0
+      ? `İlanda belirtilen ancak özgeçmişinizde öne çıkmayan "${eksikKelimeler.slice(0, 2).join(", ")}" alanlarında geçmiş tecrübeniz veya kendinizi geliştirme planınız nedir?`
+      : `Geliştirdiğiniz projelerde ölçeklenebilirlik, performans optimizasyonu ve kod kalitesini nasıl sağlıyorsunuz?`,
+    "Yüksek teslimat baskısı altında ekip içi iletişimi ve kriz yönetimini nasıl yönetirsiniz?",
+  ];
+}
+
 // API kotası dolduğunda veya çevrimdışı durumda çalışan hassas puanlama kural motoru
 function akilliYedekAnaliz(cvMetni, arananKriter) {
   const temizCv = htmlEntityTemizle(cvMetni || "");
@@ -54,28 +76,21 @@ function akilliYedekAnaliz(cvMetni, arananKriter) {
   const cvAlt = temizCv.toLowerCase();
   const kriterAlt = temizKriter.toLowerCase();
 
-  // Görsel CV kontrolü (Metin yerine resim/PDF görseli yüklendiğinde)
   const isGorselCv =
     /\[görsel cv|\[gorsel cv/i.test(cvAlt) ||
     !cvMetni ||
     (cvAlt.length < 50 && cvAlt.includes("görsel"));
 
-  const kriterKelimeler = kriterAlt.match(/[a-zA-ZçğıöşüÇĞİÖŞÜ0-9]+/g) || [];
-  const durakKelimeler = ["ve", "veya", "ile", "bir", "en", "az", "için", "olan", "şarttır", "önemli", "aranıyor", "istenen", "gibi", "yıl", "tecrübeli", "deneyimli", "aranmaktadır", "aranan"];
-  const filtrelenmisKriterler = kriterKelimeler.filter(
-    (k) => k.length > 2 && !durakKelimeler.includes(k)
-  );
+  const durakKelimeler = new Set(["ve", "veya", "ile", "bir", "en", "az", "için", "olan", "şarttır", "önemli", "aranıyor", "istenen", "gibi", "yıl", "tecrübeli", "deneyimli", "aranmaktadır", "aranan"]);
+  const kriterKelimeler = (kriterAlt.match(/[a-zA-ZçğıöşüÇĞİÖŞÜ0-9]+/g) || [])
+    .filter((k) => k.length > 2 && !durakKelimeler.has(k));
 
-  // Görsel CV durumunda kural motoru taban değerlendirme puanı (Örn: %74 - %88)
   if (isGorselCv) {
-    const kriterUzunlugu = filtrelenmisKriterler.length;
-    let tabanSkor = 76 + (kriterUzunlugu % 9) * 1.5;
-    let hesaplananSkor = Math.round(tabanSkor);
+    let tabanSkor = 76 + (kriterKelimeler.length % 9) * 1.5;
+    let hesaplananSkor = Math.min(Math.max(Math.round(tabanSkor), 74), 88);
     if (hesaplananSkor % 10 === 0) hesaplananSkor += 3;
-    if (hesaplananSkor > 94) hesaplananSkor = 88;
-    if (hesaplananSkor < 65) hesaplananSkor = 74;
 
-    const baslik = filtrelenmisKriterler.slice(0, 3).join(", ") || "ilgili pozisyon";
+    const baslik = kriterKelimeler.slice(0, 3).join(", ") || "ilgili pozisyon";
 
     return {
       gucluYonler: [
@@ -87,23 +102,16 @@ function akilliYedekAnaliz(cvMetni, arananKriter) {
         "Görsel formatta yer alan bazı teknik araçların ve referans projelerin mülakat aşamasında derinlemesine teyit edilmesi önerilir.",
       ],
       uygunlukSkoru: hesaplananSkor,
-      skorKirilimi: [
-        `+ %${Math.round(hesaplananSkor * 0.5)}: Görsel portfolyo ve profesyonel belge standartları`,
-        `+ %${Math.round(hesaplananSkor * 0.35)}: Pozisyon genel teknik ve sektörel uyumu`,
-        hesaplananSkor < 80 ? `- %${100 - hesaplananSkor}: Görsel içerikteki teknik detayların mülakatla teyit ihtiyacı` : `+ %${hesaplananSkor - 75}: Güçlü görsel sunum ve içerik düzeni`
-      ],
-      mulakatSorulari: [
-        `Portfolyonuzda yer alan en başarılı projenizin mimari tasarım ve geliştirme adımlarını anlatır mısınız?`,
-        `"${baslik}" alanında karşılaştığınız en zorlu teknik problemi hangi yöntemlerle çözdünüz?`,
-        `Ekip içi koordinasyon ve değişen proje önceliklerinde zaman yönetimini nasıl sağlıyorsunuz?`
-      ]
+      skorKirilimi: varsayilanKirilim(hesaplananSkor),
+      mulakatSorulari: varsayilanMulakat(baslik),
+      riskler: ["Görsel formattaki bilgilerin doğrulanması için mülakatta referans proje detaylarının sorulması önerilir."],
     };
   }
 
   const eslesenKelimeler = [];
   const eksikKelimeler = [];
 
-  filtrelenmisKriterler.forEach((kelime) => {
+  kriterKelimeler.forEach((kelime) => {
     if (cvAlt.includes(kelime)) {
       if (!eslesenKelimeler.includes(kelime)) eslesenKelimeler.push(kelime);
     } else {
@@ -111,66 +119,49 @@ function akilliYedekAnaliz(cvMetni, arananKriter) {
     }
   });
 
-  const toplamKriter = filtrelenmisKriterler.length || 1;
+  const toplamKriter = kriterKelimeler.length || 1;
   const eslesmeOrani = eslesenKelimeler.length / toplamKriter;
 
-  // Hassas puan hesaplama
   const metinUzunluguFaktoru = Math.min(cvAlt.length / 500, 1) * 20;
   const anahtarKelimePuani = eslesmeOrani * 65;
   const ekstraUyum = eslesenKelimeler.length > 2 ? 11 : eslesenKelimeler.length * 4;
 
   let hesaplananSkor = Math.round(anahtarKelimePuani + metinUzunluguFaktoru + ekstraUyum);
-
-  // Doğal tekil puan varyasyonu
   if (hesaplananSkor % 10 === 0 && hesaplananSkor > 0 && hesaplananSkor < 100) {
     hesaplananSkor += (eslesenKelimeler.length % 2 === 0) ? 3 : -2;
   }
+  hesaplananSkor = Math.min(Math.max(hesaplananSkor, (eslesenKelimeler.length > 0 ? 28 : 0)), 96);
 
-  if (hesaplananSkor > 98) hesaplananSkor = 96;
-  if (hesaplananSkor < 15 && eslesenKelimeler.length > 0) hesaplananSkor = 28;
-  if (hesaplananSkor < 0) hesaplananSkor = 0;
+  const gucluYonler = eslesenKelimeler.length > 0
+    ? [
+        `İlanda aranan "${eslesenKelimeler.slice(0, 3).join(", ")}" kriterleri CV ile doğrudan örtüşüyor.`,
+        "İlgili pozisyon için temel yetkinliklere ve teknik altyapıya sahip.",
+      ]
+    : ["Genel profil ve temel başvuru formatı eksiksiz sunuldu."];
 
-  const gucluYonler = [];
-  const zayifYonler = [];
-
-  if (eslesenKelimeler.length > 0) {
-    gucluYonler.push(`İlanda aranan "${eslesenKelimeler.slice(0, 3).join(", ")}" kriterleri CV ile doğrudan örtüşüyor.`);
-    gucluYonler.push(`İlgili pozisyon için temel yetkinliklere ve teknik altyapıya sahip.`);
-    if (eslesenKelimeler.length > 3) {
-      gucluYonler.push(`Ek olarak "${eslesenKelimeler.slice(3, 5).join(", ")}" alanlarında da eşleşme saptandı.`);
-    }
-  } else {
-    gucluYonler.push("Genel profil ve temel başvuru formatı eksiksiz sunuldu.");
+  if (eslesenKelimeler.length > 3) {
+    gucluYonler.push(`Ek olarak "${eslesenKelimeler.slice(3, 5).join(", ")}" alanlarında da eşleşme saptandı.`);
   }
 
-  if (eksikKelimeler.length > 0) {
-    zayifYonler.push(`İş ilanındaki "${eksikKelimeler.slice(0, 3).join(", ")}" gereksinimleri CV'de açıkça belirtilmemiş.`);
-  } else {
-    zayifYonler.push("Aday pozisyon gereksinimlerini yüksek standartta karşılıyor.");
+  const zayifYonler = eksikKelimeler.length > 0
+    ? [`İş ilanındaki "${eksikKelimeler.slice(0, 3).join(", ")}" gereksinimleri CV'de açıkça belirtilmemiş.`]
+    : ["Aday pozisyon gereksinimlerini yüksek standartta karşılıyor."];
+
+  const riskler = [];
+  if (eksikKelimeler.length > 1) {
+    riskler.push(`İlanda aranan temel gereksinimlerden (${eksikKelimeler.slice(0, 2).join(", ")}) CV'de bahsedilmemiş olması.`);
   }
-
-  const skorKirilimi = [
-    `+ %${Math.min(Math.round(hesaplananSkor * 0.5), 45)}: İlan anahtar kelimeleri ve teknik eşleşme`,
-    `+ %${Math.min(Math.round(hesaplananSkor * 0.35), 35)}: Sektörel tecrübe derinliği ve CV kapsamı`,
-    eksikKelimeler.length > 0 
-      ? `- %${Math.min(Math.max(100 - hesaplananSkor, 10), 30)}: "${eksikKelimeler.slice(0, 2).join(', ')}" kriterindeki eksiklikler`
-      : `+ %${Math.max(hesaplananSkor - 75, 10)}: Pozisyon standartlarının üzerindeki yetkinlik seviyesi`
-  ];
-
-  const mulakatSorulari = [
-    `"${eslesenKelimeler.slice(0, 2).join(" ve ") || arananKriter}" teknolojilerinde yönettiğiniz en karmaşık mimariyi ve aldığınız kritik kararları anlatır mısınız?`,
-    eksikKelimeler.length > 0 
-      ? `İlanda belirtilen ancak özgeçmişinizde öne çıkmayan "${eksikKelimeler.slice(0, 2).join(", ")}" alanlarında geçmiş tecrübeniz veya kendinizi geliştirme planınız nedir?`
-      : `Geliştirdiğiniz projelerde ölçeklenebilirlik, performans optimizasyonu ve kod kalitesini nasıl sağlıyorsunuz?`,
-    `Yüksek teslimat baskısı altında ekip içi iletişimi ve kriz yönetimini nasıl yönetirsiniz?`
-  ];
+  if (temizCv.length < 150 && !isGorselCv) {
+    riskler.push("Özgeçmiş metninin çok kısa olması ve iş tecrübesi detaylarının yetersiz kalması.");
+  }
 
   return {
     gucluYonler,
     zayifYonler,
     uygunlukSkoru: hesaplananSkor,
-    skorKirilimi,
-    mulakatSorulari,
+    skorKirilimi: varsayilanKirilim(hesaplananSkor, eksikKelimeler),
+    mulakatSorulari: varsayilanMulakat(arananKriter, eslesenKelimeler, eksikKelimeler),
+    riskler,
   };
 }
 
@@ -179,10 +170,11 @@ async function cvAnalizEt(cvMetni, arananKriter, gorselVerisi) {
   const prompt = `Sen kıdemli bir İK ve Teknik İşe Alım Uzmanısın.
 Aşağıdaki CV içeriğini işverenin talep ettiği şu kriterlere göre detaylıca incele: "${arananKriter}".
 
-HASSAS PUANLAMA & AÇIKLANABİLİR YAPAY ZEKA (XAI) KURALI:
+HASSAS PUANLAMA & RİSK DEDEKTÖRÜ (XAI) KURALI:
 - Uygunluk skorunu 10'ar 10'ar veya 5'er 5'er yuvarlama! 0-100 arasında tekil ve kesin bir tam sayı üret (Örn: 63, 74, 81, 87, 92 gibi).
 - Skor kırılımında puanın nasıl oluştuğunu açıklayan pozitif (+) ve varsa negatif (-) 3 somut madde yaz.
 - Adayın güçlü ve eksik/riskli yönlerine özel olarak 3 adet hedef odaklı mülakat sorusu oluştur.
+- Varsa CV'deki tutarsızlık, aşırı abartı, kariyer boşlukları veya önemli eksiklikleri belirten 1-2 maddelik 'riskler' dizisi ekle (Risk yoksa boş dizi [] ver).
 
 SADECE geçerli bir JSON objesi döndür:
 {
@@ -198,6 +190,9 @@ SADECE geçerli bir JSON objesi döndür:
     "X teknolojisi ile yönettiğiniz en karmaşık mimariyi ve aldığınız kritik kararları anlatır mısınız?",
     "Özgeçmişinizde belirtilen proje ölçeklendirme sürecinde karşılaştığınız engelleri nasıl aştınız?",
     "Aranan kriterdeki eksik/gelişime açık alanda kendinizi geliştirmek için nasıl bir yol izliyorsunuz?"
+  ],
+  "riskler": [
+    "İş tecrübeleri arasındaki 1 yıllık açıklanmamış kariyer boşluğu"
   ]
 }
 
@@ -234,28 +229,17 @@ ${cvMetni || "Görsel CV ekte sunulmuştur."}`;
     if (isNaN(skor) || skor < 0) skor = 50;
     if (skor > 100) skor = 100;
 
-    let skorKirilimi = Array.isArray(parsed.skorKirilimi) && parsed.skorKirilimi.length > 0
-      ? parsed.skorKirilimi
-      : [
-          `+ %${Math.round(skor * 0.5)}: Temel teknik yetkinlik uyumu`,
-          `+ %${Math.round(skor * 0.35)}: Sektörel tecrübe ve iş geçmişi tutarlılığı`,
-          skor < 80 ? `- %${100 - skor}: Aranan bazı spesifik kriterlerdeki eksiklikler` : `+ %${skor - 75}: Pozisyon kriterlerinin üzerindeki yetkinlik seviyesi`
-        ];
-
-    let mulakatSorulari = Array.isArray(parsed.mulakatSorulari) && parsed.mulakatSorulari.length > 0
-      ? parsed.mulakatSorulari
-      : [
-          `Pozisyonda aranan "${arananKriter.slice(0, 30)}" ile ilgili gerçekleştirdiğiniz en başarılı projeyi ve karşılaştığınız zorlukları anlatır mısınız?`,
-          `Özgeçmişinizde yer alan yetkinlikleriniz doğrultusunda, bir kriz anında karar alma ve önceliklendirme yaklaşımınız nasıldır?`,
-          `Sektördeki güncel gelişmeleri ve yeni teknolojileri iş akışınıza nasıl entegre ediyorsunuz?`
-        ];
-
     return {
       gucluYonler: Array.isArray(parsed.gucluYonler) ? parsed.gucluYonler : [],
       zayifYonler: Array.isArray(parsed.zayifYonler) ? parsed.zayifYonler : [],
       uygunlukSkoru: skor,
-      skorKirilimi,
-      mulakatSorulari,
+      skorKirilimi: (Array.isArray(parsed.skorKirilimi) && parsed.skorKirilimi.length > 0)
+        ? parsed.skorKirilimi
+        : varsayilanKirilim(skor),
+      mulakatSorulari: (Array.isArray(parsed.mulakatSorulari) && parsed.mulakatSorulari.length > 0)
+        ? parsed.mulakatSorulari
+        : varsayilanMulakat(arananKriter),
+      riskler: Array.isArray(parsed.riskler) ? parsed.riskler : [],
     };
   } catch (err) {
     console.warn("Gemini API çağrısı başarısız, Akıllı Kural Motoru devreye girdi:", err.message);

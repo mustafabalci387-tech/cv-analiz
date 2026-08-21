@@ -16,6 +16,9 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
 
   test.describe('Uçtan Uca CV Analizi ve Form Testi', () => {
     test('Formu doldurma, gönderme ve sonuç ekranının açıldığını doğrulama', async ({ page }) => {
+      // Oturum aç (workspace görünür olsun)
+      await adminGirisYap(page);
+
       // 1. Form alanlarını doldur
       await page.locator('#isim').fill('Mustafa Barış Balcı');
       await page.locator('#eposta').fill('baris@test.com');
@@ -210,6 +213,9 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
 
   test.describe('Canlı Ortam Sağlık Kontrolü (Health Check) Testi', () => {
     test('/api/health endpoint yanıtını ve arayüz rozetini doğrulama', async ({ page }) => {
+      // Oturum aç (arayüz rozetini görebilmek için)
+      await adminGirisYap(page);
+
       // 1. /api/health REST API uç noktasına istek at ve yanıtı doğrula
       const response = await page.request.get('http://localhost:3000/api/health');
       await expect(response).toBeOK();
@@ -280,8 +286,9 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
 
       // 4. Arayüzde XSS çalışmadığını doğrula - sayfa hala yüklü ve sağlam
       await page.goto('http://localhost:3000');
-      const formSection = page.locator('#form-section');
-      await expect(formSection).toBeVisible();
+      // Auth landing ekranı veya workspace görünür olmalı (sayfa sağlam)
+      const authLanding = page.locator('#auth-landing-screen');
+      await expect(authLanding).toBeVisible();
 
       // 5. Rate limiter devrede: Normal bir POST isteğinin sorunsuz 201 ile tamamlandığını doğrula
       var normalPayload = {
@@ -306,61 +313,52 @@ test.describe('CV Analiz Platformu E2E Test Senaryoları', () => {
       // 1. Sayfayı tertemiz aç ve localStorage'ı temizle
       await page.goto('http://localhost:3000');
       await page.evaluate(() => localStorage.clear());
+      await page.reload();
+      await page.waitForTimeout(500);
 
-      // 2. Panel ve Dashboard gizli olmalı
+      // 2. Auth landing ekranı görünür, ana çalışma alanı gizli olmalı
+      const authLanding = page.locator('#auth-landing-screen');
+      const mainWorkspace = page.locator('#main-workspace');
+      await expect(authLanding).toBeVisible();
+      await expect(mainWorkspace).toBeHidden();
+
+      // 3. Landing ekranında giriş formu görünür olmalı
+      const landingLoginForm = page.locator('#landing-login-form');
+      await expect(landingLoginForm).toBeVisible();
+
+      // 4. Landing giriş formunu doldur ve gönder
+      await page.locator('#landing-login-user').fill('admin');
+      await page.locator('#landing-login-pass').fill('admin123');
+      await page.locator('#landing-login-submit').click();
+
+      // 5. Auth landing gizlenmeli, ana çalışma alanı görünmeli
+      await expect(authLanding).toBeHidden({ timeout: 10000 });
+      await expect(mainWorkspace).toBeVisible({ timeout: 10000 });
+
+      // 6. Panel ve Dashboard görünür olmalı
       const panelSection = page.locator('#panel-section');
       const dashboardSection = page.locator('#dashboard-section');
-      await expect(panelSection).toBeHidden();
-      await expect(dashboardSection).toBeHidden();
-
-      // 3. Yönetici Girişi butonu görünür olmalı
-      const loginBtn = page.locator('#admin-login-btn');
-      await expect(loginBtn).toBeVisible();
-
-      // 4. Çıkış Yap butonu gizli olmalı
-      const logoutBtn = page.locator('#admin-logout-btn');
-      await expect(logoutBtn).toBeHidden();
-
-      // 5. Yönetici Girişi butonuna bas, modal açılmalı
-      await loginBtn.click();
-      const loginModal = page.locator('#login-modal');
-      await expect(loginModal).toBeVisible();
-
-      // 6. Inputları temizleyerek doldur ve formu gönder
-      const usernameInput = page.locator('#login-username');
-      const passwordInput = page.locator('#login-password');
-      await usernameInput.fill('');
-      await usernameInput.fill('admin');
-      await passwordInput.fill('');
-      await passwordInput.fill('admin123');
-      await page.locator('#login-submit-btn').click();
-
-      // 7. Modal kapanmış olmalı
-      await expect(loginModal).toBeHidden({ timeout: 10000 });
-
-      // 8. Çıkış Yap butonu görünür, Yönetici Girişi butonu gizli olmalı
-      await expect(logoutBtn).toBeVisible({ timeout: 10000 });
-      await expect(loginBtn).toBeHidden();
-
-      // 9. Panel ve Dashboard görünür olmalı
       await expect(panelSection).toBeVisible({ timeout: 10000 });
       await expect(dashboardSection).toBeVisible({ timeout: 10000 });
 
-      // 10. Çıkış Yap butonuna bas
+      // 7. Çıkış Yap butonu görünür olmalı
+      const logoutBtn = page.locator('#admin-logout-btn');
+      await expect(logoutBtn).toBeVisible({ timeout: 10000 });
+
+      // 8. Çıkış Yap butonuna bas
       await logoutBtn.click();
 
-      // 11. Panel ve Dashboard tekrar gizli olmalı
-      await expect(panelSection).toBeHidden({ timeout: 5000 });
-      await expect(dashboardSection).toBeHidden({ timeout: 5000 });
-
-      // 12. Yönetici Girişi butonu tekrar görünür olmalı
-      await expect(loginBtn).toBeVisible({ timeout: 5000 });
-      await expect(logoutBtn).toBeHidden();
+      // 9. Auth landing tekrar görünmeli, workspace gizlenmeli
+      await expect(authLanding).toBeVisible({ timeout: 5000 });
+      await expect(mainWorkspace).toBeHidden({ timeout: 5000 });
     });
   });
 
   test.describe('UI/UX Toast Bildirimleri ve Mobil Düzen Testi', () => {
     test('Hata ve başarı toast bildirimlerinin görünürlüğünü, renklerini ve kapatma butonunu doğrulama', async ({ page }) => {
+      // Oturum aç (workspace görünür olsun)
+      await adminGirisYap(page);
+
       // 1. Formu boş gönder
       await page.locator('#submit-btn').click();
 

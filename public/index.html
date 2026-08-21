@@ -39,8 +39,96 @@
   <!-- Toast Bildirim Konteyneri -->
   <div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
-  <!-- ====== Ana Çalışma Alanı ====== -->
-  <div id="main-workspace">
+  <!-- ====== Giriş / Kayıt Landing Ekranı (Token yokken gösterilir) ====== -->
+  <div id="auth-landing-screen" class="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative">
+    <!-- Dekoratif Arka Plan Efektleri -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Logo & Başlık -->
+    <div class="text-center mb-8 relative z-10">
+      <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-2xl shadow-indigo-500/30">
+        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611l-.573.097a9.59 9.59 0 0 1-3.124 0l-.573-.097c-1.717-.293-2.3-2.379-1.067-3.61L16 15.3M5 14.5l-1.402 1.402c-1.232 1.232-.65 3.318 1.067 3.611l.573.097a9.59 9.59 0 0 0 3.124 0l.573-.097c1.717-.293 2.3-2.379 1.067-3.61L8.2 15.3" />
+        </svg>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-3 tracking-tight">CV Analiz Platformu</h1>
+      <p class="text-sm sm:text-base text-slate-400 max-w-md mx-auto leading-relaxed">Google Gemini AI destekli özgeçmiş analiz ve aday değerlendirme sistemi</p>
+      <div class="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-xs text-indigo-300 font-medium">SaaS Multimodal AI</span>
+      </div>
+    </div>
+
+    <!-- Giriş / Kayıt Kartı -->
+    <div class="w-full max-w-sm relative z-10">
+      <div class="bg-slate-900/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 shadow-2xl border border-indigo-500/20">
+        <!-- Sekme Başlıkları -->
+        <div class="flex rounded-xl bg-slate-800/80 border border-slate-700/60 p-1 mb-6">
+          <button type="button" id="landing-tab-login"
+            class="flex-1 py-2.5 rounded-lg text-xs font-bold transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/20">
+            Giriş Yap
+          </button>
+          <button type="button" id="landing-tab-register"
+            class="flex-1 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white">
+            Şirket Kaydı
+          </button>
+        </div>
+
+        <!-- Giriş Formu -->
+        <form id="landing-login-form" class="space-y-4">
+          <div>
+            <label for="landing-login-user" class="block text-xs font-semibold text-slate-300 mb-1.5">Kullanıcı Adı</label>
+            <input type="text" id="landing-login-user" placeholder="admin veya şirket kullanıcı adı" required
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow" />
+          </div>
+          <div>
+            <label for="landing-login-pass" class="block text-xs font-semibold text-slate-300 mb-1.5">Şifre</label>
+            <input type="password" id="landing-login-pass" placeholder="••••••••" required
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow" />
+          </div>
+          <p id="landing-login-error" class="text-xs text-red-400 font-medium hidden"></p>
+          <button type="submit" id="landing-login-submit"
+            class="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-sm font-bold transition-all cursor-pointer shadow-lg shadow-indigo-600/25">
+            Giriş Yap
+          </button>
+        </form>
+
+        <!-- Kayıt Formu -->
+        <form id="landing-register-form" class="space-y-4 hidden">
+          <div>
+            <label for="landing-reg-company" class="block text-xs font-semibold text-slate-300 mb-1.5">Şirket Adı <span class="text-slate-500 font-normal">(isteğe bağlı)</span></label>
+            <input type="text" id="landing-reg-company" placeholder="Örn: TechCorp A.Ş."
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow" />
+          </div>
+          <div>
+            <label for="landing-reg-user" class="block text-xs font-semibold text-slate-300 mb-1.5">Kullanıcı Adı</label>
+            <input type="text" id="landing-reg-user" placeholder="kullanici_adi" required
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow" />
+          </div>
+          <div>
+            <label for="landing-reg-pass" class="block text-xs font-semibold text-slate-300 mb-1.5">Şifre</label>
+            <input type="password" id="landing-reg-pass" placeholder="••••••••" required
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all input-glow" />
+          </div>
+          <p id="landing-reg-error" class="text-xs text-red-400 font-medium hidden"></p>
+          <button type="submit" id="landing-reg-submit"
+            class="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-bold transition-all cursor-pointer shadow-lg shadow-emerald-600/25">
+            Kayıt Ol ve Giriş Yap
+          </button>
+        </form>
+      </div>
+
+      <!-- Alt Bilgi -->
+      <p class="text-center text-[11px] text-slate-500 mt-4">Google Gemini 2.0 Flash AI destekli kurumsal platform</p>
+    </div>
+  </div>
+
+  <!-- ====== Ana Çalışma Alanı (Oturum açıkken gösterilir) ====== -->
+  <div id="main-workspace" class="hidden">
 
   <!-- Sol Hamburger Sidebar (Açılır/Kapanır Yan Menü) -->
   <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/60 transition-opacity duration-300 hidden"></div>

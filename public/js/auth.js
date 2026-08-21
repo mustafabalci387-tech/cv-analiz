@@ -52,10 +52,11 @@ function oturumKontrol() {
   const playwrightReportLink = $id("playwright-report-link");
   const adminUsersPanel = $id("admin-users-panel");
 
-  authLanding?.classList.add("hidden");
-  mainWorkspace?.classList.remove("hidden");
-
   if (token) {
+    // Oturum açık: Landing gizle, ana çalışma alanını göster
+    if (authLanding) authLanding.classList.add("hidden");
+    if (mainWorkspace) mainWorkspace.classList.remove("hidden");
+
     if (panelSection) panelSection.style.display = "";
     if (dashboardSection) dashboardSection.style.display = "";
     if (loginBtn) loginBtn.style.display = "none";
@@ -77,6 +78,10 @@ function oturumKontrol() {
     }
     return true;
   } else {
+    // Oturum kapalı: Landing göster, ana çalışma alanını gizle
+    if (authLanding) authLanding.classList.remove("hidden");
+    if (mainWorkspace) mainWorkspace.classList.add("hidden");
+
     if (panelSection) panelSection.style.display = "none";
     if (dashboardSection) dashboardSection.style.display = "none";
     if (adminUsersPanel) adminUsersPanel.style.display = "none";
@@ -89,6 +94,7 @@ function oturumKontrol() {
     return false;
   }
 }
+
 
 // ====== Admin Şirketler & Kullanıcılar Paneli ======
 async function adminSirketleriYukle() {
@@ -330,6 +336,125 @@ function saglikKontroluYap() {
       text.textContent = "Sunucu: Erişilemiyor";
     });
 }
+
+// ====== Landing Ekranı Sekme Geçişleri ve Form İşleyicileri ======
+const landingTabLogin = $id("landing-tab-login");
+const landingTabRegister = $id("landing-tab-register");
+const landingLoginForm = $id("landing-login-form");
+const landingRegisterForm = $id("landing-register-form");
+
+function landingSekmeDegistir(aktif) {
+  if (!landingLoginForm || !landingRegisterForm) return;
+  if (aktif === "login") {
+    landingLoginForm.classList.remove("hidden");
+    landingRegisterForm.classList.add("hidden");
+    if (landingTabLogin) landingTabLogin.className = "flex-1 py-2.5 rounded-lg text-xs font-bold transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/20";
+    if (landingTabRegister) landingTabRegister.className = "flex-1 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white";
+  } else {
+    landingLoginForm.classList.add("hidden");
+    landingRegisterForm.classList.remove("hidden");
+    if (landingTabRegister) landingTabRegister.className = "flex-1 py-2.5 rounded-lg text-xs font-bold transition-all bg-emerald-600 text-white shadow-lg shadow-emerald-600/20";
+    if (landingTabLogin) landingTabLogin.className = "flex-1 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white";
+  }
+  const le = $id("landing-login-error");
+  const re = $id("landing-reg-error");
+  if (le) { le.textContent = ""; le.classList.add("hidden"); }
+  if (re) { re.textContent = ""; re.classList.add("hidden"); }
+}
+
+landingTabLogin?.addEventListener("click", () => landingSekmeDegistir("login"));
+landingTabRegister?.addEventListener("click", () => landingSekmeDegistir("register"));
+
+// Landing Giriş Formu
+landingLoginForm?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = $id("landing-login-user").value.trim();
+  const password = $id("landing-login-pass").value.trim();
+  const errEl = $id("landing-login-error");
+  const submitBtn = $id("landing-login-submit");
+
+  if (!username || !password) {
+    if (errEl) { errEl.textContent = "Kullanıcı adı ve şifre zorunludur."; errEl.classList.remove("hidden"); }
+    return;
+  }
+
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Giriş yapılıyor..."; }
+
+  try {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+    const result = await res.json();
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Giriş Yap"; }
+
+    if (result.success) {
+      if (result.user?.rol === "admin" || username === "admin") {
+        localStorage.setItem("adminToken", result.token || "admin-token-123");
+      } else {
+        localStorage.setItem("userToken", result.token);
+        localStorage.setItem("kullaniciAdi", result.user?.kullaniciAdi || username);
+      }
+      landingLoginForm.reset();
+      oturumKontrol();
+      if (typeof basvurulariYukle === "function") basvurulariYukle(1, "");
+      if (typeof dashboardGuncelle === "function") dashboardGuncelle();
+      if (typeof showToast === "function") showToast("Giriş başarılı!", "success");
+    } else {
+      if (errEl) { errEl.textContent = result.mesaj || "Giriş başarısız."; errEl.classList.remove("hidden"); }
+      if (typeof showToast === "function") showToast(result.mesaj || "Giriş başarısız.", "error");
+    }
+  } catch (err) {
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Giriş Yap"; }
+    if (errEl) { errEl.textContent = "Sunucuya bağlanılamadı."; errEl.classList.remove("hidden"); }
+    if (typeof showToast === "function") showToast("Sunucuya bağlanılamadı.", "error");
+  }
+});
+
+// Landing Kayıt Formu
+landingRegisterForm?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const sirketAdi = ($id("landing-reg-company")?.value || "").trim() || "Genel Şirket";
+  const kullaniciAdi = $id("landing-reg-user").value.trim();
+  const sifre = $id("landing-reg-pass").value.trim();
+  const errEl = $id("landing-reg-error");
+  const submitBtn = $id("landing-reg-submit");
+
+  if (!kullaniciAdi || !sifre) {
+    if (errEl) { errEl.textContent = "Kullanıcı adı ve şifre zorunludur."; errEl.classList.remove("hidden"); }
+    return;
+  }
+
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Kayıt oluşturuluyor..."; }
+
+  try {
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kullaniciAdi, sifre, sirketAdi }),
+    });
+    const result = await res.json();
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Kayıt Ol ve Giriş Yap"; }
+
+    if (result.success) {
+      localStorage.setItem("userToken", result.token);
+      localStorage.setItem("kullaniciAdi", result.user?.kullaniciAdi || kullaniciAdi);
+      landingRegisterForm.reset();
+      oturumKontrol();
+      if (typeof basvurulariYukle === "function") basvurulariYukle(1, "");
+      if (typeof dashboardGuncelle === "function") dashboardGuncelle();
+      if (typeof showToast === "function") showToast(`Şirket kaydı başarılı! Hoş geldiniz, ${result.user?.kullaniciAdi || kullaniciAdi}.`, "success");
+    } else {
+      if (errEl) { errEl.textContent = result.mesaj || "Kayıt başarısız."; errEl.classList.remove("hidden"); }
+      if (typeof showToast === "function") showToast(result.mesaj || "Kayıt başarısız.", "error");
+    }
+  } catch (err) {
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Kayıt Ol ve Giriş Yap"; }
+    if (errEl) { errEl.textContent = "Sunucuya bağlanılamadı."; errEl.classList.remove("hidden"); }
+    if (typeof showToast === "function") showToast("Sunucuya bağlanılamadı.", "error");
+  }
+});
 
 window.oturumKontrol = oturumKontrol;
 window.cikisYap = cikisYap;

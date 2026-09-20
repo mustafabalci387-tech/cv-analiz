@@ -1,4 +1,3 @@
-// CV analizi, aday yönetimi, filtreleme, önbellek ve e-posta iş mantığı kontrolcüsü
 const path = require("path");
 const fs = require("fs");
 const mongoose = require("mongoose");
@@ -7,9 +6,8 @@ const { cvAnalizEt } = require("../services/geminiService");
 const { adayOzetMailiGonder } = require("../services/mailService");
 const { metniGuvenliYap } = require("../middleware/rateLimiter");
 
-// In-Memory Önbellek Deposu
 let memoryCache = {};
-const CACHE_SURESI_MS = 30000; // 30 saniye TTL
+const CACHE_SURESI_MS = 30000;
 
 function onbellekTemizle() {
   memoryCache = {};
@@ -20,7 +18,6 @@ function onbellekAnahtariOlustur(req) {
   return userPrefix + (req.originalUrl || req.url);
 }
 
-// Filtre oluşturma yardımcısı
 function olusturBasvuruFiltresi(req) {
   const filter = {};
   const isAdmin = req.user && req.user.rol === "admin";
@@ -30,28 +27,19 @@ function olusturBasvuruFiltresi(req) {
     if (req.query.userId) filter.userId = req.query.userId;
     if (req.query.onlyArchived === "true") filter.$or = [{ silindiMi: true }, { silindi: true }];
   } else {
-    // Normal şirket & misafir: silinmemiş kayıtlar
     filter.silindi = { $ne: true };
     filter.silindiMi = { $ne: true };
 
     if (req.user) {
       const uId = req.user._id || req.user.id;
-      const orList = [
-        { userId: uId },
-        { ekleyenKullanici: uId },
-        { ekleyenKullanici: String(uId) },
-      ];
-      if (req.user.kullaniciAdi) {
-        orList.push({ kullaniciAdi: req.user.kullaniciAdi }, { ekleyenKullanici: req.user.kullaniciAdi });
-      }
+      const orConditions = [{ userId: uId }];
       if (req.user.sirketAdi && req.user.sirketAdi !== "Genel Şirket") {
-        orList.push({ sirketAdi: req.user.sirketAdi });
+        orConditions.push({ sirketAdi: req.user.sirketAdi });
       }
-      filter.$and = [{ $or: orList }];
+      filter.$or = orConditions;
     }
   }
 
-  // Arama filtresi
   const aramaMetni = (req.query.search || "").trim();
   if (aramaMetni) {
     const searchRegex = { $regex: aramaMetni, $options: "i" };
@@ -60,13 +48,11 @@ function olusturBasvuruFiltresi(req) {
       { eposta: searchRegex },
       { arananKriter: searchRegex },
       { sirketAdi: searchRegex },
-      { kullaniciAdi: searchRegex },
     ];
     if (!filter.$and) filter.$and = [];
     filter.$and.push({ $or: searchOr });
   }
 
-  // Skor filtresi
   const scoreFilter = req.query.scoreFilter;
   if (scoreFilter === "high") filter.uygunlukSkoru = { $gte: 80 };
   else if (scoreFilter === "mid") filter.uygunlukSkoru = { $gte: 50, $lt: 80 };
@@ -75,8 +61,7 @@ function olusturBasvuruFiltresi(req) {
   return filter;
 }
 
-// Yeni CV başvurusu oluşturur ve yapay zeka ile hassas puanlama yapar
-async function basvuruYap(req, res) {
+async function basvuruYap(req, res, next) {
   try {
     let { isim, eposta, cvMetni, arananKriter, gorselVerisi } = req.body;
 
@@ -90,17 +75,15 @@ async function basvuruYap(req, res) {
     eposta = eposta ? metniGuvenliYap(String(eposta).trim()) : "aday@cvanaliz.internal";
     arananKriter = metniGuvenliYap(arananKriter.trim());
 
-    // Gemini AI / Kural motoru ile hassas analiz
     const analizSonucu = await cvAnalizEt(cvMetni, arananKriter, gorselVerisi);
 
     const userObjId = req.user ? (req.user._id || req.user.id || null) : null;
-    const ekleyenKullaniciVal = req.user ? String(req.user._id || req.user.id || req.user.kullaniciAdi || "") : "";
     const kullaniciAdiVal = req.user ? (req.user.kullaniciAdi || "") : "";
-    const sirketAdiVal = req.user ? (req.user.sirketAdi || req.user.kullaniciAdi || "Genel Şirket") : "Genel Şirket";
+    const sirketAdiVal = req.user ? (req.user.sirketAdi || "Genel Şirket") : "Genel Şirket";
 
     const yeniAnaliz = new Analysis({
-      isim: isim || "Aday (Otomatik)",
-      eposta: eposta || "aday@cvanaliz.internal",
+      isim,
+      eposta,
       cvMetni: cvMetni || "[Görsel CV Yüklendi]",
       arananKriter,
       gorselVerisi: gorselVerisi || "",
@@ -111,7 +94,6 @@ async function basvuruYap(req, res) {
       mulakatSorulari: analizSonucu.mulakatSorulari || [],
       riskler: analizSonucu.riskler || [],
       userId: userObjId,
-      ekleyenKullanici: ekleyenKullaniciVal,
       kullaniciAdi: kullaniciAdiVal,
       sirketAdi: sirketAdiVal,
       silindi: false,
@@ -126,12 +108,12 @@ async function basvuruYap(req, res) {
       veri: yeniAnaliz,
     });
   } catch (err) {
-    return res.status(500).json({ hata: "Sunucu hatası: " + err.message });
+    console.error("Başvuru hatası:", err);
+    return res.status(500).json({ success: false, hata: "Sunucu hatası: " + err.message });
   }
 }
 
-// Aday başvurularını arama, skor filtresi, 'En İyi 5' ve önbellek desteğiyle listeler
-async function basvurulariListele(req, res) {
+async function basvurulariListele(req, res, next) {
   try {
     const cacheKey = onbellekAnahtariOlustur(req);
     const cachedEntry = memoryCache[cacheKey];
@@ -178,8 +160,7 @@ async function basvurulariListele(req, res) {
   }
 }
 
-// Tekil aday başvuru detayını döner
-async function basvuruDetay(req, res) {
+async function basvuruDetay(req, res, next) {
   try {
     const aday = await Analysis.findById(req.params.id);
     if (!aday) return res.status(404).json({ hata: "Aday bulunamadı." });
@@ -195,8 +176,7 @@ async function basvuruDetay(req, res) {
   }
 }
 
-// Aday başvurusunu siler (Şirket için Soft-Delete, Admin için Kalıcı/Arşivleme)
-async function basvuruSil(req, res) {
+async function basvuruSil(req, res, next) {
   try {
     const adayId = req.params.id;
     const aday = await Analysis.findById(adayId);
@@ -226,8 +206,7 @@ async function basvuruSil(req, res) {
   }
 }
 
-// Silinmiş/Arşivlenmiş adayı geri yükler (Restore)
-async function basvuruGeriYukle(req, res) {
+async function basvuruGeriYukle(req, res, next) {
   try {
     const adayId = req.params.id;
     const aday = await Analysis.findById(adayId);
@@ -244,14 +223,12 @@ async function basvuruGeriYukle(req, res) {
   }
 }
 
-// Tüm aday başvurularını siler (Admin için Hard Delete, Normal Şirket için Soft Delete)
-async function tumBasvurulariSil(req, res) {
+async function tumBasvurulariSil(req, res, next) {
   try {
     const isAdmin = req.user && req.user.rol === "admin";
     const hardDelete = req.query.hardDelete === "true" || req.body?.hardDelete === true || isAdmin;
 
     if (isAdmin || hardDelete) {
-      // Arşivlenmiş olanlar dahil tüm koleksiyonu kalıcı olarak sil (Hard Delete)
       const result = await Analysis.deleteMany({});
       onbellekTemizle();
       return res.status(200).json({
@@ -262,7 +239,6 @@ async function tumBasvurulariSil(req, res) {
       });
     }
 
-    // Normal şirket kullanıcısı: kendi şirket/kullanıcı kayıtlarını soft-delete yapar
     if (!req.user) {
       return res.status(401).json({ success: false, hata: "Yetkisiz işlem. Giriş yapmalısınız." });
     }
@@ -271,14 +247,11 @@ async function tumBasvurulariSil(req, res) {
     const filter = {
       $or: [
         { userId: uId },
-        { ekleyenKullanici: uId },
-        { ekleyenKullanici: String(uId) },
-        ...(req.user.kullaniciAdi ? [{ kullaniciAdi: req.user.kullaniciAdi }, { ekleyenKullanici: req.user.kullaniciAdi }] : []),
         ...(req.user.sirketAdi && req.user.sirketAdi !== "Genel Şirket" ? [{ sirketAdi: req.user.sirketAdi }] : []),
       ],
     };
 
-    const result = await Analysis.updateMany(filter, { silindi: true, silindiMi: true, arsivlendi: true });
+    const result = await Analysis.updateMany(filter, { silindi: true, silindiMi: true });
     onbellekTemizle();
     return res.status(200).json({
       success: true,
@@ -295,8 +268,7 @@ async function tumBasvurulariSil(req, res) {
   }
 }
 
-// Aday analiz özetini alıcı e-posta adresine HTML formatında gönderir
-async function mailGonder(req, res) {
+async function mailGonder(req, res, next) {
   try {
     const { to, adayAdi, skor, arananKriter, gucluYonler, zayifYonler, sirketAdi } = req.body;
     if (!to || !to.includes("@")) {
@@ -323,7 +295,6 @@ async function mailGonder(req, res) {
   }
 }
 
-// Canlı sistem ve veritabanı sağlık durumunu kontrol eder
 function saglikKontrolu(req, res) {
   const dbDurumlari = ["disconnected", "connected", "connecting", "disconnecting"];
   const dbDurumu = dbDurumlari[mongoose.connection.readyState] || "unknown";
@@ -338,14 +309,13 @@ function saglikKontrolu(req, res) {
   });
 }
 
-// Kaydedilmiş Playwright E2E test sonuçlarını JSON olarak sunar
 function testSonuclari(req, res) {
   const jsonPath = path.join(__dirname, "..", "public", "test-results.json");
   if (fs.existsSync(jsonPath)) {
     try {
       const data = JSON.parse(fs.readFileSync(jsonPath, "utf8"));
       return res.json({ success: true, data });
-    } catch (e) {
+    } catch {
       return res.status(500).json({ success: false, error: "Test raporu okunamadı." });
     }
   }

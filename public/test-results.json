@@ -119,7 +119,7 @@
             {
               "title": "Uçtan Uca CV Analizi ve Form Testi",
               "file": "tests/app.spec.js",
-              "line": 17,
+              "line": 16,
               "column": 8,
               "specs": [
                 {
@@ -138,12 +138,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 20430,
+                          "duration": 13523,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:39.802Z",
+                          "startTime": "2026-09-20T14:55:12.260Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -159,14 +159,14 @@
                       "results": [
                         {
                           "workerIndex": 10,
-                          "parallelIndex": 6,
+                          "parallelIndex": 4,
                           "status": "passed",
-                          "duration": 13977,
+                          "duration": 19014,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:46.232Z",
+                          "startTime": "2026-09-20T14:55:18.349Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -181,15 +181,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 17,
-                          "parallelIndex": 1,
+                          "workerIndex": 20,
+                          "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 5797,
+                          "duration": 4338,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:58.497Z",
+                          "startTime": "2026-09-20T14:55:30.182Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -199,7 +199,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-805021ec4c2632a7627e",
                   "file": "tests/app.spec.js",
-                  "line": 18,
+                  "line": 17,
                   "column": 5
                 }
               ]
@@ -207,7 +207,7 @@
             {
               "title": "Geçmiş Analizler ve Arama Testi",
               "file": "tests/app.spec.js",
-              "line": 43,
+              "line": 37,
               "column": 8,
               "specs": [
                 {
@@ -226,12 +226,12 @@
                           "workerIndex": 1,
                           "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 7766,
+                          "duration": 7512,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:39.774Z",
+                          "startTime": "2026-09-20T14:55:12.255Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -247,14 +247,14 @@
                       "results": [
                         {
                           "workerIndex": 11,
-                          "parallelIndex": 8,
+                          "parallelIndex": 5,
                           "status": "passed",
-                          "duration": 6491,
+                          "duration": 7552,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:46.281Z",
+                          "startTime": "2026-09-20T14:55:18.454Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -270,14 +270,14 @@
                       "results": [
                         {
                           "workerIndex": 19,
-                          "parallelIndex": 5,
+                          "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 6537,
+                          "duration": 6196,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:28:01.944Z",
+                          "startTime": "2026-09-20T14:55:30.148Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -287,7 +287,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-2843e2d5e0a4bc6df6ca",
                   "file": "tests/app.spec.js",
-                  "line": 44,
+                  "line": 38,
                   "column": 5
                 }
               ]
@@ -295,12 +295,12 @@
             {
               "title": "Aday Detay Modalı Testi",
               "file": "tests/app.spec.js",
-              "line": 69,
+              "line": 55,
               "column": 8,
               "specs": [
                 {
-                  "title": "Detaylar butonuna basma, modalın açıldığını ve kapat butonuna basıldığında kapandığını doğrulama",
-                  "ok": false,
+                  "title": "Detaylar butonuna basma, modalın açıldığını ve kapatıldığını doğrulama",
+                  "ok": true,
                   "tags": [],
                   "tests": [
                     {
@@ -313,48 +313,18 @@
                         {
                           "workerIndex": 2,
                           "parallelIndex": 2,
-                          "status": "failed",
-                          "duration": 21200,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:84:55",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 55,
-                              "line": 84
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 82 |\u001b[39m         \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#cvMetni'\u001b[39m)\u001b[33m.\u001b[39mfill(\u001b[32m'React, Tailwind CSS ve JavaScript geliştirme deneyimi olan ön yüz uzmanı.'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 83 |\u001b[39m         \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#submit-btn'\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 84 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'#result-section'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 85 |\u001b[39m       }\n \u001b[90m 86 |\u001b[39m\n \u001b[90m 87 |\u001b[39m       \u001b[90m// Detaylar butonuna tıkla\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 55,
-                                "line": 84
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  82 |         await page.locator('#cvMetni').fill('React, Tailwind CSS ve JavaScript geliştirme deneyimi olan ön yüz uzmanı.');\n  83 |         await page.locator('#submit-btn').click();\n> 84 |         await expect(page.locator('#result-section')).toBeVisible({ timeout: 15000 });\n     |                                                       ^\n  85 |       }\n  86 |\n  87 |       // Detaylar butonuna tıkla\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:84:55"
-                            }
-                          ],
+                          "status": "passed",
+                          "duration": 7422,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:39.791Z",
+                          "startTime": "2026-09-20T14:55:12.248Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-c66b5-ğında-kapandığını-doğrulama-chromium\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 55,
-                            "line": 84
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -365,308 +335,14 @@
                       "results": [
                         {
                           "workerIndex": 12,
-                          "parallelIndex": 4,
+                          "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 22496,
+                          "duration": 6007,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:46.596Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    },
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "webkit",
-                      "projectName": "webkit",
-                      "results": [
-                        {
-                          "workerIndex": 18,
-                          "parallelIndex": 0,
-                          "status": "passed",
-                          "duration": 7760,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:28:01.451Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    }
-                  ],
-                  "id": "358bbd3632d8bf4e407c-b6a442087aab1029af0e",
-                  "file": "tests/app.spec.js",
-                  "line": 70,
-                  "column": 5
-                }
-              ]
-            },
-            {
-              "title": "PDF Raporu İndirme Butonları Testi",
-              "file": "tests/app.spec.js",
-              "line": 106,
-              "column": 8,
-              "specs": [
-                {
-                  "title": "Sonuç kartı ve aday detay modalındaki PDF İndir butonlarının görünürlüğünü ve etkileşimini doğrulama",
-                  "ok": false,
-                  "tags": [],
-                  "tests": [
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "chromium",
-                      "projectName": "chromium",
-                      "results": [
-                        {
-                          "workerIndex": 3,
-                          "parallelIndex": 3,
-                          "status": "failed",
-                          "duration": 21139,
-                          "error": {
-                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
-                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:123:35",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 35,
-                              "line": 123
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 121 |\u001b[39m       \u001b[90m// 2. Analiz sonuç kartının göründüğünü doğrula\u001b[39m\n \u001b[90m 122 |\u001b[39m       \u001b[36mconst\u001b[39m resultSection \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#result-section'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 123 |\u001b[39m       \u001b[36mawait\u001b[39m expect(resultSection)\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 124 |\u001b[39m\n \u001b[90m 125 |\u001b[39m       \u001b[90m// 3. Sonuç kartındaki #download-pdf-btn butonunun görünür ve tıklanabilir olduğunu doğrula\u001b[39m\n \u001b[90m 126 |\u001b[39m       \u001b[36mconst\u001b[39m downloadPdfBtn \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#download-pdf-btn'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 35,
-                                "line": 123
-                              },
-                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  121 |       // 2. Analiz sonuç kartının göründüğünü doğrula\n  122 |       const resultSection = page.locator('#result-section');\n> 123 |       await expect(resultSection).toBeVisible({ timeout: 15000 });\n      |                                   ^\n  124 |\n  125 |       // 3. Sonuç kartındaki #download-pdf-btn butonunun görünür ve tıklanabilir olduğunu doğrula\n  126 |       const downloadPdfBtn = page.locator('#download-pdf-btn');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:123:35"
-                            }
-                          ],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:27:39.818Z",
-                          "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-8b5bc-ü-ve-etkileşimini-doğrulama-chromium\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 35,
-                            "line": 123
-                          }
-                        }
-                      ],
-                      "status": "unexpected"
-                    },
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "firefox",
-                      "projectName": "firefox",
-                      "results": [
-                        {
-                          "workerIndex": 13,
-                          "parallelIndex": 5,
-                          "status": "passed",
-                          "duration": 9235,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:27:47.660Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    },
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "webkit",
-                      "projectName": "webkit",
-                      "results": [
-                        {
-                          "workerIndex": 22,
-                          "parallelIndex": 7,
-                          "status": "passed",
-                          "duration": 6048,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:28:02.479Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    }
-                  ],
-                  "id": "358bbd3632d8bf4e407c-4ea6288f4e498e765f84",
-                  "file": "tests/app.spec.js",
-                  "line": 107,
-                  "column": 5
-                }
-              ]
-            },
-            {
-              "title": "Aday İstatistik Dashboard ve Grafik Testi",
-              "file": "tests/app.spec.js",
-              "line": 145,
-              "column": 8,
-              "specs": [
-                {
-                  "title": "Dashboard bölümü, istatistik kartları ve grafik canvas elemanlarının görünürlüğünü doğrulama",
-                  "ok": true,
-                  "tags": [],
-                  "tests": [
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "chromium",
-                      "projectName": "chromium",
-                      "results": [
-                        {
-                          "workerIndex": 4,
-                          "parallelIndex": 4,
-                          "status": "passed",
-                          "duration": 5923,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:27:39.766Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    },
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "firefox",
-                      "projectName": "firefox",
-                      "results": [
-                        {
-                          "workerIndex": 14,
-                          "parallelIndex": 9,
-                          "status": "passed",
-                          "duration": 5780,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:27:48.221Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    },
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "webkit",
-                      "projectName": "webkit",
-                      "results": [
-                        {
-                          "workerIndex": 20,
-                          "parallelIndex": 3,
-                          "status": "passed",
-                          "duration": 3190,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:28:02.187Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    }
-                  ],
-                  "id": "358bbd3632d8bf4e407c-89e44d46f7c125154e12",
-                  "file": "tests/app.spec.js",
-                  "line": 146,
-                  "column": 5
-                }
-              ]
-            },
-            {
-              "title": "CSV Dışa Aktarma ve Skor Filtreleme Testi",
-              "file": "tests/app.spec.js",
-              "line": 179,
-              "column": 8,
-              "specs": [
-                {
-                  "title": "Skor filtresi seçeneklerinin çalıştığını ve CSV butonunun görünür olduğunu doğrulama",
-                  "ok": true,
-                  "tags": [],
-                  "tests": [
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "chromium",
-                      "projectName": "chromium",
-                      "results": [
-                        {
-                          "workerIndex": 5,
-                          "parallelIndex": 5,
-                          "status": "passed",
-                          "duration": 6968,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:27:39.781Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    },
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "firefox",
-                      "projectName": "firefox",
-                      "results": [
-                        {
-                          "workerIndex": 15,
-                          "parallelIndex": 1,
-                          "status": "passed",
-                          "duration": 7565,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:27:48.429Z",
+                          "startTime": "2026-09-20T14:55:18.761Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -682,14 +358,14 @@
                       "results": [
                         {
                           "workerIndex": 21,
-                          "parallelIndex": 2,
+                          "parallelIndex": 3,
                           "status": "passed",
-                          "duration": 4807,
+                          "duration": 6505,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:28:02.343Z",
+                          "startTime": "2026-09-20T14:55:31.089Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -697,9 +373,273 @@
                       "status": "expected"
                     }
                   ],
-                  "id": "358bbd3632d8bf4e407c-b175787268983103e35d",
+                  "id": "358bbd3632d8bf4e407c-3e0c9b783f447b51bc8b",
                   "file": "tests/app.spec.js",
-                  "line": 180,
+                  "line": 56,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "PDF Raporu İndirme Butonları Testi",
+              "file": "tests/app.spec.js",
+              "line": 87,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Sonuç kartı ve detay modalındaki PDF butonlarının görünürlüğünü doğrulama",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 11088,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:12.268Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 10402,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:20.718Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 22,
+                          "parallelIndex": 9,
+                          "status": "passed",
+                          "duration": 6283,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:31.988Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "358bbd3632d8bf4e407c-710468898d034ff5a7e8",
+                  "file": "tests/app.spec.js",
+                  "line": 88,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "Aday İstatistik Dashboard ve Grafik Testi",
+              "file": "tests/app.spec.js",
+              "line": 116,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Dashboard bölümü ve grafik canvas elemanlarının varlığını doğrulama",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 4,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 5227,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:12.276Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 14,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 5737,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:20.811Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 24,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 2757,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:33.062Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "358bbd3632d8bf4e407c-67475d2d2d5cf4938023",
+                  "file": "tests/app.spec.js",
+                  "line": 117,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "CSV Dışa Aktarma ve Skor Filtreleme Testi",
+              "file": "tests/app.spec.js",
+              "line": 130,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Skor filtresi seçeneklerinin çalıştığını ve CSV butonunu doğrulama",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 5,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 5321,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:12.230Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 15,
+                          "parallelIndex": 7,
+                          "status": "passed",
+                          "duration": 6376,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:21.330Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 23,
+                          "parallelIndex": 8,
+                          "status": "passed",
+                          "duration": 3040,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:32.952Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "358bbd3632d8bf4e407c-340caf3e5a55b42efb3c",
+                  "file": "tests/app.spec.js",
+                  "line": 131,
                   "column": 5
                 }
               ]
@@ -707,7 +647,7 @@
             {
               "title": "Canlı Ortam Sağlık Kontrolü (Health Check) Testi",
               "file": "tests/app.spec.js",
-              "line": 214,
+              "line": 155,
               "column": 8,
               "specs": [
                 {
@@ -726,12 +666,12 @@
                           "workerIndex": 6,
                           "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 5434,
+                          "duration": 5653,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:39.819Z",
+                          "startTime": "2026-09-20T14:55:12.261Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -747,14 +687,14 @@
                       "results": [
                         {
                           "workerIndex": 16,
-                          "parallelIndex": 7,
+                          "parallelIndex": 9,
                           "status": "passed",
-                          "duration": 6249,
+                          "duration": 6183,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:48.506Z",
+                          "startTime": "2026-09-20T14:55:22.276Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -769,15 +709,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 23,
-                          "parallelIndex": 6,
+                          "workerIndex": 25,
+                          "parallelIndex": 5,
                           "status": "passed",
-                          "duration": 3408,
+                          "duration": 2890,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:28:03.954Z",
+                          "startTime": "2026-09-20T14:55:33.876Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -787,7 +727,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-8cde8163fbb723107fef",
                   "file": "tests/app.spec.js",
-                  "line": 215,
+                  "line": 156,
                   "column": 5
                 }
               ]
@@ -795,7 +735,7 @@
             {
               "title": "In-Memory Caching (Bellek İçi Önbellekleme) Testi",
               "file": "tests/app.spec.js",
-              "line": 240,
+              "line": 175,
               "column": 8,
               "specs": [
                 {
@@ -814,12 +754,12 @@
                           "workerIndex": 7,
                           "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 4606,
+                          "duration": 4813,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:39.792Z",
+                          "startTime": "2026-09-20T14:55:12.281Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -834,15 +774,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 11,
-                          "parallelIndex": 8,
+                          "workerIndex": 17,
+                          "parallelIndex": 3,
                           "status": "passed",
-                          "duration": 2796,
+                          "duration": 3882,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:53.545Z",
+                          "startTime": "2026-09-20T14:55:24.298Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -857,15 +797,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 24,
-                          "parallelIndex": 8,
+                          "workerIndex": 20,
+                          "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 2508,
+                          "duration": 1691,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:28:03.972Z",
+                          "startTime": "2026-09-20T14:55:34.668Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -875,7 +815,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-5e03ce0a54bd408e1eb2",
                   "file": "tests/app.spec.js",
-                  "line": 241,
+                  "line": 176,
                   "column": 5
                 }
               ]
@@ -883,12 +823,12 @@
             {
               "title": "Güvenlik ve Girdi Temizleme (XSS & Rate Limiter) Testi",
               "file": "tests/app.spec.js",
-              "line": 260,
+              "line": 190,
               "column": 8,
               "specs": [
                 {
                   "title": "Script tagı içeren girdi güvenli işlenmeli ve normal istek 201 ile tamamlanmalı",
-                  "ok": false,
+                  "ok": true,
                   "tags": [],
                   "tests": [
                     {
@@ -901,48 +841,18 @@
                         {
                           "workerIndex": 8,
                           "parallelIndex": 8,
-                          "status": "failed",
-                          "duration": 5486,
-                          "error": {
-                            "message": "Error: apiRequestContext.post: read ECONNRESET\nCall log:\n\u001b[2m  - → POST http://localhost:3000/api/basvuru\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 216\u001b[22m\n",
-                            "stack": "Error: apiRequestContext.post: read ECONNRESET\nCall log:\n\u001b[2m  - → POST http://localhost:3000/api/basvuru\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 216\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:271:47",
-                            "location": {
-                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                              "column": 47,
-                              "line": 271
-                            },
-                            "snippet": "\u001b[0m \u001b[90m 269 |\u001b[39m\n \u001b[90m 270 |\u001b[39m       \u001b[90m// 2. POST /api/basvuru isteği at ve 201 Created döndüğünü doğrula\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 271 |\u001b[39m       \u001b[36mconst\u001b[39m postResponse \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mrequest\u001b[33m.\u001b[39mpost(\u001b[32m'http://localhost:3000/api/basvuru'\u001b[39m\u001b[33m,\u001b[39m {\n \u001b[90m     |\u001b[39m                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 272 |\u001b[39m         data\u001b[33m:\u001b[39m xssPayload\n \u001b[90m 273 |\u001b[39m       })\u001b[33m;\u001b[39m\n \u001b[90m 274 |\u001b[39m       expect(postResponse\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
-                          },
-                          "errors": [
-                            {
-                              "location": {
-                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                                "column": 47,
-                                "line": 271
-                              },
-                              "message": "Error: apiRequestContext.post: read ECONNRESET\nCall log:\n\u001b[2m  - → POST http://localhost:3000/api/basvuru\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 216\u001b[22m\n\n\n  269 |\n  270 |       // 2. POST /api/basvuru isteği at ve 201 Created döndüğünü doğrula\n> 271 |       const postResponse = await page.request.post('http://localhost:3000/api/basvuru', {\n      |                                               ^\n  272 |         data: xssPayload\n  273 |       });\n  274 |       expect(postResponse.status()).toBe(201);\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:271:47"
-                            }
-                          ],
+                          "status": "passed",
+                          "duration": 19672,
+                          "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:39.824Z",
+                          "startTime": "2026-09-20T14:55:12.283Z",
                           "annotations": [],
-                          "attachments": [
-                            {
-                              "name": "error-context",
-                              "contentType": "text/markdown",
-                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-932b6--istek-201-ile-tamamlanmalı-chromium\\error-context.md"
-                            }
-                          ],
-                          "errorLocation": {
-                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
-                            "column": 47,
-                            "line": 271
-                          }
+                          "attachments": []
                         }
                       ],
-                      "status": "unexpected"
+                      "status": "expected"
                     },
                     {
                       "timeout": 30000,
@@ -952,15 +862,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 14,
-                          "parallelIndex": 9,
+                          "workerIndex": 12,
+                          "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 16331,
+                          "duration": 9878,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:54.710Z",
+                          "startTime": "2026-09-20T14:55:26.013Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -975,15 +885,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 17,
-                          "parallelIndex": 1,
+                          "workerIndex": 26,
+                          "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 3206,
+                          "duration": 2306,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:28:04.577Z",
+                          "startTime": "2026-09-20T14:55:37.081Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -993,7 +903,7 @@
                   ],
                   "id": "358bbd3632d8bf4e407c-75b6d4c1375e76beab9b",
                   "file": "tests/app.spec.js",
-                  "line": 261,
+                  "line": 191,
                   "column": 5
                 }
               ]
@@ -1001,7 +911,7 @@
             {
               "title": "Yönetici Girişi (Admin Auth) ve Panel Kilitleme Testi",
               "file": "tests/app.spec.js",
-              "line": 311,
+              "line": 228,
               "column": 8,
               "specs": [
                 {
@@ -1020,12 +930,12 @@
                           "workerIndex": 9,
                           "parallelIndex": 9,
                           "status": "passed",
-                          "duration": 7354,
+                          "duration": 9135,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:39.833Z",
+                          "startTime": "2026-09-20T14:55:12.262Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -1040,103 +950,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 11,
-                          "parallelIndex": 8,
+                          "workerIndex": 18,
+                          "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 5986,
+                          "duration": 7857,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:27:56.357Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    },
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "webkit",
-                      "projectName": "webkit",
-                      "results": [
-                        {
-                          "workerIndex": 20,
-                          "parallelIndex": 3,
-                          "status": "passed",
-                          "duration": 7154,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:28:05.639Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    }
-                  ],
-                  "id": "358bbd3632d8bf4e407c-dc4f42f245ef8da76e68",
-                  "file": "tests/app.spec.js",
-                  "line": 312,
-                  "column": 5
-                }
-              ]
-            },
-            {
-              "title": "UI/UX Toast Bildirimleri ve Mobil Düzen Testi",
-              "file": "tests/app.spec.js",
-              "line": 357,
-              "column": 8,
-              "specs": [
-                {
-                  "title": "Hata ve başarı toast bildirimlerinin görünürlüğünü, renklerini ve kapatma butonunu doğrulama",
-                  "ok": true,
-                  "tags": [],
-                  "tests": [
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "chromium",
-                      "projectName": "chromium",
-                      "results": [
-                        {
-                          "workerIndex": 7,
-                          "parallelIndex": 7,
-                          "status": "passed",
-                          "duration": 3164,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:27:44.604Z",
-                          "annotations": [],
-                          "attachments": []
-                        }
-                      ],
-                      "status": "expected"
-                    },
-                    {
-                      "timeout": 30000,
-                      "annotations": [],
-                      "expectedStatus": "passed",
-                      "projectId": "firefox",
-                      "projectName": "firefox",
-                      "results": [
-                        {
-                          "workerIndex": 16,
-                          "parallelIndex": 7,
-                          "status": "passed",
-                          "duration": 4344,
-                          "errors": [],
-                          "stdout": [],
-                          "stderr": [],
-                          "retry": 0,
-                          "startTime": "2026-09-20T02:27:56.525Z",
+                          "startTime": "2026-09-20T14:55:27.295Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -1152,14 +974,14 @@
                       "results": [
                         {
                           "workerIndex": 24,
-                          "parallelIndex": 8,
+                          "parallelIndex": 2,
                           "status": "passed",
-                          "duration": 3593,
+                          "duration": 5926,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-09-20T02:28:06.667Z",
+                          "startTime": "2026-09-20T14:55:35.949Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -1167,9 +989,97 @@
                       "status": "expected"
                     }
                   ],
-                  "id": "358bbd3632d8bf4e407c-e9816b21bc6d3ca3a3b3",
+                  "id": "358bbd3632d8bf4e407c-dc4f42f245ef8da76e68",
                   "file": "tests/app.spec.js",
-                  "line": 358,
+                  "line": 229,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "UI/UX Toast Bildirimleri Testi",
+              "file": "tests/app.spec.js",
+              "line": 260,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Hata ve başarı toast bildirimlerinin doğruluk kontrolü",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 7,
+                          "status": "passed",
+                          "duration": 3255,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:17.302Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 11,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 4372,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:28.320Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    },
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 23,
+                          "parallelIndex": 8,
+                          "status": "passed",
+                          "duration": 5259,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-09-20T14:55:36.114Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "358bbd3632d8bf4e407c-ddc6c3eb586e05a9e3ac",
+                  "file": "tests/app.spec.js",
+                  "line": 261,
                   "column": 5
                 }
               ]
@@ -1181,11 +1091,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-09-20T02:27:39.211Z",
-    "duration": 33687.427,
-    "expected": 30,
+    "startTime": "2026-09-20T14:55:10.931Z",
+    "duration": 31273.374000000003,
+    "expected": 33,
     "skipped": 0,
-    "unexpected": 3,
+    "unexpected": 0,
     "flaky": 0
   }
 }

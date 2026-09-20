@@ -1,15 +1,21 @@
 {
   "name": "cv-analiz-platformu",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Google Gemini AI destekli çoklu CV analiz ve aday değerlendirme SaaS platformu",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
     "test": "npx playwright test"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "recruitment",
+    "cv-parser",
+    "gemini-ai",
+    "express",
+    "mongoose"
+  ],
+  "author": "Mustafa Barış Balcı",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
@@ -22,7 +28,6 @@
     "nodemailer": "^9.0.5"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.1",
-    "@types/node": "^26.1.1"
+    "@playwright/test": "^1.61.1"
   }
 }

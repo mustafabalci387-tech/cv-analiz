@@ -1,8 +1,8 @@
-// ====== CV Analiz Platformu - Ana Uygulama Modülü (app.js) ======
+// ====== CV Analiz Platformu - Optimize Ana İstemci Modülü (app.js) ======
 
-// DOM Kısayolları
 const $ = (id) => document.getElementById(id);
 
+// Temel Form ve DOM Öğeleri
 const form = $("cv-form");
 const submitBtn = $("submit-btn");
 const btnText = $("btn-text");
@@ -18,12 +18,12 @@ const isimInput = $("isim");
 const epostaInput = $("eposta");
 const arananKriterInput = $("arananKriter");
 
-// Modal & Sidebar
+// Modal ve Sidebar
 const detailModal = $("detail-modal");
 const appSidebar = $("app-sidebar");
 const sidebarOverlay = $("sidebar-overlay");
 
-// Panel DOM
+// Aday Paneli DOM
 const panelList = $("panel-list");
 const panelSkeleton = $("panel-skeleton");
 const panelEmpty = $("panel-empty");
@@ -35,7 +35,7 @@ const panelPageInfo = $("panel-page-info");
 const panelSearchInput = $("panel-search-input");
 const panelScoreFilter = $("panel-score-filter");
 
-// Global Durum
+// Uygulama Durumu (State)
 let yuklenenDosyalar = [];
 let yuklenenGorselBase64 = "";
 let secilenAdayForMail = null;
@@ -46,22 +46,17 @@ let mevcutAdaylar = [];
 let scoreChart = null;
 let kriterChart = null;
 
-// HTML Entity kalıntılarını temizleyen yardımcı
-function htmlEntityDecode(str) {
-  if (!str) return "";
-  const txt = document.createElement("textarea");
-  txt.innerHTML = String(str)
-    .replace(/&#x2F;/gi, "/")
-    .replace(/&#x27;/gi, "'")
-    .replace(/&#39;/gi, "'")
-    .replace(/&quot;/gi, '"')
-    .replace(/&amp;/gi, "&")
-    .replace(/&lt;/gi, "<")
-    .replace(/&gt;/gi, ">");
-  return txt.value;
+function getAuthHeaders() {
+  const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
-// ====== Toast Bildirim Sistemi ======
+function htmlEntityDecode(str) {
+  if (!str) return "";
+  const doc = new DOMParser().parseFromString(String(str), "text/html");
+  return doc.body.textContent || "";
+}
+
 function showToast(mesaj, tip = "info") {
   let container = $("toast-container");
   if (!container) {
@@ -104,7 +99,6 @@ function showToast(mesaj, tip = "info") {
 
 const showError = (msg) => showToast(msg, "error");
 
-// ====== Sidebar Kontrolleri ======
 function sidebarAc() {
   appSidebar?.classList.remove("-translate-x-full");
   sidebarOverlay?.classList.remove("hidden");
@@ -127,7 +121,6 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// ====== Sol Menü Filtreleri ======
 function adayListesineKaydir() {
   const pSec = $("panel-section") || $("aday-listesi-container");
   if (pSec) {
@@ -188,9 +181,7 @@ async function topluPdfOzetiIndir() {
 
   if (list.length === 0) {
     try {
-      const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const res = await fetch("/api/basvurular?limit=1000", { headers });
+      const res = await fetch("/api/basvurular?limit=1000", { headers: getAuthHeaders() });
       const resData = await res.json();
       list = resData.data || [];
     } catch (e) {
@@ -200,7 +191,6 @@ async function topluPdfOzetiIndir() {
 
   if (!list || list.length === 0) {
     showToast("Listede aday bulunmuyor.", "info");
-    alert("Listede aday bulunmuyor.");
     return;
   }
 
@@ -233,7 +223,7 @@ async function topluPdfOzetiIndir() {
 
   const printWin = window.open("", "_blank");
   if (!printWin) {
-    showToast("Yazdırma penceresi açılamadı. Lütfen açılır pencere engelleyicisini kontrol edin.", "error");
+    showToast("Yazdırma penceresi açılamadı. Tarayıcı engelleyicisini kontrol edin.", "error");
     return;
   }
 
@@ -429,14 +419,12 @@ function renderResult(veri) {
       .join("");
   }
 
-  // XAI ve Mülakat Asistanı
   const resBreakdown = $("result-score-breakdown");
   const resInterviewList = $("result-interview-list");
   const resCopyBtn = $("result-copy-questions-btn");
   if (resBreakdown && resInterviewList) renderSkorVeMulakat(resBreakdown, resInterviewList, veri);
   if (resCopyBtn) resCopyBtn.onclick = () => mulakatSorulariniKopyala(veri);
 
-  // Risk Dedektörü
   const resRiskBox = $("result-risk-box");
   const resRiskList = $("result-risk-list");
   const resRiskBadge = $("result-risk-badge");
@@ -504,14 +492,11 @@ async function basvurulariYukle(sayfa = 1, arama, filtre) {
   panelError?.classList.add("hidden");
 
   try {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
     let url = `/api/basvurular?page=${aktifSayfa}&limit=6`;
     if (aktifArama) url += `&search=${encodeURIComponent(aktifArama)}`;
     if (aktifFiltre && aktifFiltre !== "all") url += `&scoreFilter=${encodeURIComponent(aktifFiltre)}`;
 
-    const res = await fetch(url, { headers });
+    const res = await fetch(url, { headers: getAuthHeaders() });
     const resData = await res.json();
 
     panelSkeleton?.classList.add("hidden");
@@ -609,9 +594,7 @@ function adayKartiOlustur(aday, index, filtre) {
 
   div.querySelector(".btn-restore")?.addEventListener("click", async () => {
     try {
-      const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const res = await fetch(`/api/basvurular/${aday._id}/restore`, { method: "PUT", headers });
+      const res = await fetch(`/api/basvurular/${aday._id}/restore`, { method: "POST", headers: getAuthHeaders() });
       if (!res.ok) throw new Error("Geri yükleme başarısız.");
       showToast("Aday kaydı başarıyla geri yüklendi.", "success");
       basvurulariYukle(aktifSayfa, aktifArama, aktifFiltre);
@@ -629,12 +612,10 @@ function adayKartiOlustur(aday, index, filtre) {
     if (!confirm(msg)) return;
 
     try {
-      const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
       let url = `/api/basvurular/${aday._id}`;
       if (isAdmin && isArchived) url += "?kalici=true";
 
-      const res = await fetch(url, { method: "DELETE", headers });
+      const res = await fetch(url, { method: "DELETE", headers: getAuthHeaders() });
       if (!res.ok) throw new Error("Silme başarısız.");
       showToast(isAdmin && isArchived ? "Aday kalıcı olarak silindi." : "Aday kaydı başarıyla silindi.", "success");
       basvurulariYukle(aktifSayfa, aktifArama, aktifFiltre);
@@ -671,9 +652,7 @@ if (form) {
     setLoading(true);
 
     try {
-      const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-      const headers = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
+      const headers = { "Content-Type": "application/json", ...getAuthHeaders() };
 
       const res = await fetch("/api/basvuru", {
         method: "POST",
@@ -703,7 +682,6 @@ if (form) {
   });
 }
 
-// Toplu CV Analizi
 async function topluCvAnalizEt(files, arananKriter) {
   const progressContainer = $("batch-progress-container");
   const progressBar = $("batch-progress-bar");
@@ -715,10 +693,7 @@ async function topluCvAnalizEt(files, arananKriter) {
   const total = files.length;
   let basarili = 0;
   let sonAnaliz = null;
-
-  const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-  const headers = { "Content-Type": "application/json" };
-  if (token) headers["Authorization"] = `Bearer ${token}`;
+  const headers = { "Content-Type": "application/json", ...getAuthHeaders() };
 
   for (let i = 0; i < total; i++) {
     const file = files[i];
@@ -799,10 +774,7 @@ async function tumAdaylariSil() {
   if (!confirm(onayMesaji)) return;
 
   try {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-    const headers = { "Content-Type": "application/json" };
-    if (token) headers["Authorization"] = `Bearer ${token}`;
-
+    const headers = { "Content-Type": "application/json", ...getAuthHeaders() };
     const url = isAdmin ? "/api/basvurular?hardDelete=true" : "/api/basvurular";
     const res = await fetch(url, { method: "DELETE", headers });
     if (!res.ok) {
@@ -810,13 +782,11 @@ async function tumAdaylariSil() {
       throw new Error(errData.hata || errData.message || "Toplu silme başarısız.");
     }
 
-    // 1. Liste görünümünü temizle ve boş durum mesajını göster
     if (panelList) panelList.innerHTML = "";
     if (panelEmpty) panelEmpty.classList.remove("hidden");
     if (panelSkeleton) panelSkeleton.classList.add("hidden");
     if (panelError) panelError.classList.add("hidden");
 
-    // 2. Sayaçları anında 0 olarak güncelle
     const countIds = ["panel-count", "stat-total-count", "sidebar-stat-total", "stat-excellent-count", "sidebar-stat-high"];
     countIds.forEach((id) => {
       const el = $(id);
@@ -825,12 +795,11 @@ async function tumAdaylariSil() {
     const avgScoreEl = $("stat-avg-score");
     if (avgScoreEl) avgScoreEl.textContent = "%0";
 
-    // 3. Dashboard grafiklerini boş verilerle sıfırla
-    if (typeof scoreChart !== "undefined" && scoreChart) {
+    if (scoreChart) {
       scoreChart.data.datasets[0].data = [0, 0, 0];
       scoreChart.update();
     }
-    if (typeof kriterChart !== "undefined" && kriterChart) {
+    if (kriterChart) {
       kriterChart.data.labels = [];
       kriterChart.data.datasets[0].data = [];
       kriterChart.update();
@@ -839,13 +808,9 @@ async function tumAdaylariSil() {
     mevcutAdaylar = [];
     aktifSayfa = 1;
 
-    // Şirket listesi varsa güncelle
     if (typeof adminSirketleriYukle === "function") adminSirketleriYukle();
 
-    // 4. Başarılı bildirim toast mesajı göster
     showToast("Tüm adaylar ve arşiv kalıcı olarak temizlendi.", "success");
-
-    // Verileri tazele
     basvurulariYukle(1, "");
     dashboardGuncelle();
   } catch (e) {
@@ -858,9 +823,7 @@ $("panel-delete-all-btn")?.addEventListener("click", tumAdaylariSil);
 // ====== CSV Dışa Aktarma ======
 $("panel-csv-export-btn")?.addEventListener("click", async () => {
   try {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    const res = await fetch("/api/basvurular?limit=1000", { headers });
+    const res = await fetch("/api/basvurular?limit=1000", { headers: getAuthHeaders() });
     const resData = await res.json();
     const data = resData.data || [];
 
@@ -906,10 +869,10 @@ function renderSkorVeMulakat(breakdownContainer, questionsContainer, aday) {
   const kirilim = (aday.skorKirilimi && aday.skorKirilimi.length > 0)
     ? aday.skorKirilimi
     : [
-        `+ %${Math.round(skor * 0.5)}: Temel teknik yetkinlik ve gereksinim uyumu`,
-        `+ %${Math.round(skor * 0.35)}: Sektörel iş tecrübesi ve proje tutarlılığı`,
-        skor < 80 ? `- %${100 - skor}: İlanda aranan bazı spesifik kriterlerdeki eksiklikler` : `+ %${Math.max(skor - 75, 5)}: Standart beklentilerin üzerindeki yetkinlik seviyesi`
-      ];
+      `+ %${Math.round(skor * 0.5)}: Temel teknik yetkinlik ve gereksinim uyumu`,
+      `+ %${Math.round(skor * 0.35)}: Sektörel iş tecrübesi ve proje tutarlılığı`,
+      skor < 80 ? `- %${100 - skor}: İlanda aranan bazı spesifik kriterlerdeki eksiklikler` : `+ %${Math.max(skor - 75, 5)}: Standart beklentilerin üzerindeki yetkinlik seviyesi`
+    ];
 
   kirilim.forEach((madde) => {
     const div = document.createElement("div");
@@ -933,10 +896,10 @@ function renderSkorVeMulakat(breakdownContainer, questionsContainer, aday) {
   const sorular = (aday.mulakatSorulari && aday.mulakatSorulari.length > 0)
     ? aday.mulakatSorulari
     : [
-        "Özgeçmişinizde belirtilen pozisyon deneyiminiz doğrultusunda, yönettiğiniz en karmaşık projeyi ve aldığınız kritik mimari kararları anlatır mısınız?",
-        "Aranan kriterdeki beklentiler ve teknik gereksinimler karşısında karşılaşabileceğiniz engelleri nasıl aşmayı planlıyorsunuz?",
-        "Zaman kısıtı ve yüksek teslimat baskısı altında ekip içi iletişimi ve kriz yönetimini nasıl sağlarsınız?"
-      ];
+      "Özgeçmişinizde belirtilen pozisyon deneyiminiz doğrultusunda, yönettiğiniz en karmaşık projeyi ve aldığınız kritik mimari kararları anlatır mısınız?",
+      "Aranan kriterdeki beklentiler ve teknik gereksinimler karşısında karşılaşabileceğiniz engelleri nasıl aşmayı planlıyorsunuz?",
+      "Zaman kısıtı ve yüksek teslimat baskısı altında ekip içi iletişimi ve kriz yönetimini nasıl sağlarsınız?"
+    ];
 
   sorular.forEach((soru, i) => {
     const li = document.createElement("li");
@@ -956,10 +919,10 @@ function mulakatSorulariniKopyala(aday) {
   const sorular = (aday.mulakatSorulari && aday.mulakatSorulari.length > 0)
     ? aday.mulakatSorulari
     : [
-        "Özgeçmişinizde belirtilen pozisyon deneyiminiz doğrultusunda, yönettiğiniz en karmaşık projeyi ve aldığınız kritik mimari kararları anlatır mısınız?",
-        "Aranan kriterdeki beklentiler ve teknik gereksinimler karşısında karşılaşabileceğiniz engelleri nasıl aşmayı planlıyorsunuz?",
-        "Zaman kısıtı ve yüksek teslimat baskısı altında ekip içi iletişimi ve kriz yönetimini nasıl sağlarsınız?"
-      ];
+      "Özgeçmişinizde belirtilen pozisyon deneyiminiz doğrultusunda, yönettiğiniz en karmaşık projeyi ve aldığınız kritik mimari kararları anlatır mısınız?",
+      "Aranan kriterdeki beklentiler ve teknik gereksinimler karşısında karşılaşabileceğiniz engelleri nasıl aşmayı planlıyorsunuz?",
+      "Zaman kısıtı ve yüksek teslimat baskısı altında ekip içi iletişimi ve kriz yönetimini nasıl sağlarsınız?"
+    ];
 
   const text = `🎙️ Kişiselleştirilmiş Mülakat Soruları - ${isim} (${kriter})\n\n` +
     sorular.map((s, i) => `${i + 1}. ${htmlEntityDecode(s)}`).join("\n\n");
@@ -976,7 +939,7 @@ function mulakatSorulariniKopyala(aday) {
     try {
       document.execCommand("copy");
       showToast("3 mülakat sorusu panoya kopyalandı!", "success");
-    } catch (err) {
+    } catch {
       showToast("Panoya kopyalanamadı.", "error");
     }
     textArea.remove();
@@ -1004,7 +967,7 @@ function renderRiskler(riskBox, riskList, riskBadge, aday) {
   }
 }
 
-// ====== Hızlı AI E-posta Şablonları (Template Literals) ======
+// ====== Hızlı AI E-posta Şablonları ======
 function epostaSablonuHazirla(aday, tip) {
   if (!aday) return;
   const isim = htmlEntityDecode(aday.isim || "Aday");
@@ -1017,30 +980,10 @@ function epostaSablonuHazirla(aday, tip) {
 
   if (tip === "davet") {
     subject = `Mülakat Daveti: ${kriter} - ${sirket}`;
-    body = `Sayın ${isim},
-
-${sirket} bünyesindeki "${kriter}" pozisyonuna yapmış olduğunuz başvuru ve özgeçmişiniz titizlikle değerlendirilmiş olup, yetkinlikleriniz pozisyon kriterlerimizle son derece uyumlu bulunmuştur.
-
-Sizinle karşılıklı teknik ve kültürel uyumu değerlendireceğimiz bir mülakat görüşmesi gerçekleştirmek istiyoruz.
-
-Uygun olduğunuz gün ve saat aralıklarını bu e-postayı yanıtlayarak bizimle paylaşabilirsiniz.
-
-İlginiz için teşekkür eder, mülakat sürecinde başarılar dileriz.
-
-Saygılarımızla,
-${sirket} İnsan Kaynakları Ekibi`;
+    body = `Sayın ${isim},\n\n${sirket} bünyesindeki "${kriter}" pozisyonuna yapmış olduğunuz başvuru ve özgeçmişiniz titizlikle değerlendirilmiş olup, yetkinlikleriniz pozisyon kriterlerimizle son derece uyumlu bulunmuştur.\n\nSizinle karşılıklı teknik ve kültürel uyumu değerlendireceğimiz bir mülakat görüşmesi gerçekleştirmek istiyoruz.\n\nUygun olduğunuz gün ve saat aralıklarını bu e-postayı yanıtlayarak bizimle paylaşabilirsiniz.\n\nİlginiz için teşekkür eder, mülakat sürecinde başarılar dileriz.\n\nSaygılarımızla,\n${sirket} İnsan Kaynakları Ekibi`;
   } else {
     subject = `Başvuru Durumu: ${kriter} - ${sirket}`;
-    body = `Sayın ${isim},
-
-${sirket} olarak "${kriter}" pozisyonuna göstermiş olduğunuz ilgi ve başvurunuz için teşekkür ederiz.
-
-Özgeçmişiniz titizlikle incelenmiş olup, mevcut dönemde aradığımız spesifik kriterler doğrultusunda diğer adaylarla ilerleme kararı alınmıştır.
-
-Özgeçmişiniz gelecekte açılabilecek uygun pozisyonlar için yetenek havuzumuzda saklanacaktır. Kariyer yolculuğunuzda başarılar dileriz.
-
-Saygılarımızla,
-${sirket} İnsan Kaynakları Ekibi`;
+    body = `Sayın ${isim},\n\n${sirket} olarak "${kriter}" pozisyonuna göstermiş olduğunuz ilgi ve başvurunuz için teşekkür ederiz.\n\nÖzgeçmişiniz titizlikle incelenmiş olup, mevcut dönemde aradığımız spesifik kriterler doğrultusunda diğer adaylarla ilerleme kararı alınmıştır.\n\nÖzgeçmişiniz gelecekte açılabilecek uygun pozisyonlar için yetenek havuzumuzda saklanacaktır. Kariyer yolculuğunuzda başarılar dileriz.\n\nSaygılarımızla,\n${sirket} İnsan Kaynakları Ekibi`;
   }
 
   if (navigator.clipboard?.writeText) {
@@ -1082,15 +1025,12 @@ function detayModalAc(aday) {
     .map((z) => `<li class="tag-weak rounded-lg px-2.5 py-1.5 text-xs font-semibold text-amber-300">${htmlEntityDecode(z)}</li>`)
     .join("");
 
-  // XAI & Mülakat
   renderSkorVeMulakat($("modal-score-breakdown"), $("modal-interview-list"), aday);
   const modalCopyBtn = $("modal-copy-questions-btn");
   if (modalCopyBtn) modalCopyBtn.onclick = () => mulakatSorulariniKopyala(aday);
 
-  // Risk Dedektörü
   renderRiskler($("modal-risk-box"), $("modal-risk-list"), $("modal-risk-count-badge"), aday);
 
-  // Hızlı E-posta Şablonları
   const quickInviteBtn = $("modal-quick-invite-btn");
   const quickRejectBtn = $("modal-quick-reject-btn");
   if (quickInviteBtn) quickInviteBtn.onclick = () => epostaSablonuHazirla(aday, "davet");
@@ -1180,9 +1120,7 @@ mailForm?.addEventListener("submit", async (e) => {
   btn.textContent = "Gönderiliyor...";
 
   try {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-    const headers = { "Content-Type": "application/json" };
-    if (token) headers["Authorization"] = `Bearer ${token}`;
+    const headers = { "Content-Type": "application/json", ...getAuthHeaders() };
 
     const res = await fetch("/api/mail-gonder", {
       method: "POST",
@@ -1217,10 +1155,7 @@ mailForm?.addEventListener("submit", async (e) => {
 // ====== Dashboard & Grafikler ======
 async function dashboardGuncelle() {
   try {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
-    const res = await fetch("/api/basvurular?limit=1000", { headers });
+    const res = await fetch("/api/basvurular?limit=1000", { headers: getAuthHeaders() });
     const resData = await res.json();
     const list = resData.data || [];
 
@@ -1260,7 +1195,6 @@ async function dashboardGuncelle() {
     const sidebarHighEl = $("sidebar-stat-high");
     if (sidebarHighEl) sidebarHighEl.textContent = excellentCount;
 
-    // Doughnut Grafiği
     const scoreCanvas = $("score-chart");
     if (scoreCanvas && typeof Chart !== "undefined") {
       if (scoreChart) scoreChart.destroy();
@@ -1281,7 +1215,6 @@ async function dashboardGuncelle() {
       });
     }
 
-    // Bar Grafiği
     const kriterCanvas = $("kriter-chart");
     if (kriterCanvas && typeof Chart !== "undefined") {
       if (kriterChart) kriterChart.destroy();
@@ -1316,7 +1249,6 @@ async function dashboardGuncelle() {
 
 // ====== Başlangıç / Boot ======
 document.addEventListener("DOMContentLoaded", () => {
-  // Sayfa açılışında olası body kaydırma kilitlerini sıfırla
   document.body.classList.remove("overflow-hidden");
   document.body.style.overflow = "";
 
@@ -1331,7 +1263,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Modül ve Test Dışa Aktarımları
+// Modül ve Test Dışa Aktarımları (Window Global)
 window.showToast = showToast;
 window.showError = showError;
 window.htmlEntityDecode = htmlEntityDecode;

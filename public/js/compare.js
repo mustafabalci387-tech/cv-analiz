@@ -1,64 +1,70 @@
 // ====== CV Analiz Platformu - Aday Kıyaslama Modülü (compare.js) ======
 
-let secilenKiyaslamaAdaylari = [];
+window.secilenKiyaslamaAdaylari = window.secilenKiyaslamaAdaylari || [];
+
+const $c = (id) => document.getElementById(id);
 
 function kiyaslamaDurumunuGuncelle() {
-  const floatingBar = document.getElementById("compare-floating-bar");
-  const compareBtn = document.getElementById("compare-submit-btn");
-  const compareText = document.getElementById("compare-bar-text");
+  const floatingBar = $c("compare-floating-bar");
+  const compareBtn = $c("compare-submit-btn");
+  const compareText = $c("compare-bar-text");
 
   if (!floatingBar || !compareBtn) return;
 
   const secilenler = (typeof mevcutAdaylar !== "undefined" ? mevcutAdaylar : []).filter((a) =>
-    secilenKiyaslamaAdaylari.includes(a._id)
+    window.secilenKiyaslamaAdaylari.includes(a._id)
   );
 
-  if (secilenKiyaslamaAdaylari.length === 0) {
+  const secimSayisi = window.secilenKiyaslamaAdaylari.length;
+
+  if (secimSayisi === 0) {
     floatingBar.classList.add("hidden");
+    return;
+  }
+
+  floatingBar.classList.remove("hidden");
+
+  if (secimSayisi === 1) {
+    const isim1 = secilenler[0] ? (typeof htmlEntityDecode === "function" ? htmlEntityDecode(secilenler[0].isim) : secilenler[0].isim) : "1. Aday";
+    if (compareText) compareText.textContent = `1 Aday Seçildi: ${isim1} (Kıyaslamak için 1 aday daha seçin)`;
+    compareBtn.disabled = true;
+    compareBtn.textContent = "Adayları Kıyasla (1/2)";
+    compareBtn.className = "px-4 py-2 rounded-xl bg-slate-700 text-slate-400 text-xs font-bold cursor-not-allowed opacity-60";
   } else {
-    floatingBar.classList.remove("hidden");
-    if (secilenKiyaslamaAdaylari.length === 1) {
-      const isim1 = secilenler[0] ? (typeof htmlEntityDecode === "function" ? htmlEntityDecode(secilenler[0].isim) : secilenler[0].isim) : "1. Aday";
-      compareText.textContent = `1 Aday Seçildi: ${isim1} (Kıyaslamak için 1 aday daha seçin)`;
-      compareBtn.disabled = true;
-      compareBtn.textContent = "Adayları Kıyasla (1/2)";
-      compareBtn.className = "px-4 py-2 rounded-xl bg-slate-700 text-slate-400 text-xs font-bold cursor-not-allowed opacity-60";
-    } else if (secilenKiyaslamaAdaylari.length >= 2) {
-      const ad1 = secilenler[0] ? (typeof htmlEntityDecode === "function" ? htmlEntityDecode(secilenler[0].isim) : secilenler[0].isim) : "1. Aday";
-      const ad2 = secilenler[1] ? (typeof htmlEntityDecode === "function" ? htmlEntityDecode(secilenler[1].isim) : secilenler[1].isim) : "2. Aday";
-      compareText.textContent = `2 Aday Seçildi: ${ad1} ⚡ ${ad2}`;
-      compareBtn.disabled = false;
-      compareBtn.textContent = "⚖️ Adayları Kıyasla (2)";
-      compareBtn.className = "px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-bold transition-all shadow-lg shadow-indigo-500/25 cursor-pointer";
-    }
+    const ad1 = secilenler[0] ? (typeof htmlEntityDecode === "function" ? htmlEntityDecode(secilenler[0].isim) : secilenler[0].isim) : "1. Aday";
+    const ad2 = secilenler[1] ? (typeof htmlEntityDecode === "function" ? htmlEntityDecode(secilenler[1].isim) : secilenler[1].isim) : "2. Aday";
+    if (compareText) compareText.textContent = `2 Aday Seçildi: ${ad1} ⚡ ${ad2}`;
+    compareBtn.disabled = false;
+    compareBtn.textContent = "⚖️ Adayları Kıyasla (2)";
+    compareBtn.className = "px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-bold transition-all shadow-lg shadow-indigo-500/25 cursor-pointer";
   }
 }
 
-document.getElementById("compare-clear-btn")?.addEventListener("click", () => {
-  secilenKiyaslamaAdaylari = [];
-  window.secilenKiyaslamaAdaylari = secilenKiyaslamaAdaylari;
+$c("compare-clear-btn")?.addEventListener("click", () => {
+  window.secilenKiyaslamaAdaylari = [];
   document.querySelectorAll(".compare-checkbox").forEach((cb) => { cb.checked = false; });
   kiyaslamaDurumunuGuncelle();
 });
 
-document.getElementById("compare-submit-btn")?.addEventListener("click", adaylariKiyaslaModalAc);
-document.getElementById("compare-modal-close-btn")?.addEventListener("click", compareModalKapat);
-document.getElementById("compare-modal-close-bottom-btn")?.addEventListener("click", compareModalKapat);
-document.getElementById("compare-modal")?.addEventListener("click", (e) => {
-  if (e.target === document.getElementById("compare-modal")) compareModalKapat();
+$c("compare-submit-btn")?.addEventListener("click", adaylariKiyaslaModalAc);
+$c("compare-modal-close-btn")?.addEventListener("click", compareModalKapat);
+$c("compare-modal-close-bottom-btn")?.addEventListener("click", compareModalKapat);
+
+$c("compare-modal")?.addEventListener("click", (e) => {
+  if (e.target === $c("compare-modal")) compareModalKapat();
 });
 
 function compareModalKapat() {
-  document.getElementById("compare-modal")?.classList.add("hidden");
+  $c("compare-modal")?.classList.add("hidden");
 }
 
 function adaylariKiyaslaModalAc() {
-  const modal = document.getElementById("compare-modal");
-  const container = document.getElementById("compare-columns-container");
+  const modal = $c("compare-modal");
+  const container = $c("compare-columns-container");
   if (!modal || !container) return;
 
   const secilenler = (typeof mevcutAdaylar !== "undefined" ? mevcutAdaylar : []).filter((a) =>
-    secilenKiyaslamaAdaylari.includes(a._id)
+    window.secilenKiyaslamaAdaylari.includes(a._id)
   );
 
   if (secilenler.length < 2) {
@@ -75,7 +81,7 @@ function adaylariKiyaslaModalAc() {
     const scoreInfo = typeof getScoreInfo === "function" ? getScoreInfo(score) : { label: "Aday", bg: "bg-indigo-500/20 text-indigo-300" };
     const decode = typeof htmlEntityDecode === "function" ? htmlEntityDecode : (t) => t || "";
 
-    const winnerBadge = isWinner && score !== otherScore
+    const winnerBadge = isWinner && score > otherScore
       ? '<span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 animate-pulse">👑 Daha Yüksek Skor</span>'
       : "";
 
@@ -96,7 +102,7 @@ function adaylariKiyaslaModalAc() {
     }).join("");
 
     return `
-      <div class="p-5 rounded-2xl bg-slate-800/60 border ${isWinner && score !== otherScore ? 'border-emerald-500/40 shadow-xl shadow-emerald-950/20' : 'border-slate-700/60'} space-y-4">
+      <div class="p-5 rounded-2xl bg-slate-800/60 border ${isWinner && score > otherScore ? 'border-emerald-500/40 shadow-xl shadow-emerald-950/20' : 'border-slate-700/60'} space-y-4">
         <div class="flex items-center justify-between gap-3 pb-3 border-b border-slate-700/60">
           <div class="flex items-center gap-3">
             <div class="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-300 font-extrabold flex items-center justify-center text-lg flex-shrink-0">
@@ -170,7 +176,6 @@ function adaylariKiyaslaModalAc() {
   modal.classList.remove("hidden");
 }
 
-window.secilenKiyaslamaAdaylari = secilenKiyaslamaAdaylari;
 window.kiyaslamaDurumunuGuncelle = kiyaslamaDurumunuGuncelle;
 window.adaylariKiyaslaModalAc = adaylariKiyaslaModalAc;
 window.compareModalKapat = compareModalKapat;

@@ -1,4 +1,3 @@
-// Aday CV analizi ve başvuru kayıt şeması (Analysis Modeli)
 const mongoose = require("mongoose");
 
 const analysisSchema = new mongoose.Schema(
@@ -58,21 +57,18 @@ const analysisSchema = new mongoose.Schema(
       ref: "User",
       default: null,
     },
-    ekleyenKullanici: {
-      type: String,
-      default: "",
-    },
     kullaniciAdi: {
       type: String,
       default: "",
     },
     sirketAdi: {
       type: String,
-      default: "",
+      default: "Genel Şirket",
     },
     silindi: {
       type: Boolean,
       default: false,
+      index: true,
     },
     silindiMi: {
       type: Boolean,
@@ -86,7 +82,7 @@ const analysisSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// silindi ve silindiMi alanlarını eşitle
+// Geriye dönük uyumluluk için iki alanı eşit tutar (Mongoose 9+ Promise-tabanlı hook)
 analysisSchema.pre("save", function () {
   if (this.isModified("silindi")) {
     this.silindiMi = this.silindi;
@@ -95,7 +91,8 @@ analysisSchema.pre("save", function () {
   }
 });
 
-analysisSchema.index({ tarih: -1 });
-analysisSchema.index({ silindi: 1, silindiMi: 1, tarih: -1 });
+// Aday listeleme ve dashboard filtreleme performansını artıran birleşik indeksler
+analysisSchema.index({ silindi: 1, tarih: -1 });
+analysisSchema.index({ sirketAdi: 1, silindi: 1 });
 
 module.exports = mongoose.model("Analysis", analysisSchema);

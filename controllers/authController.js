@@ -1,14 +1,13 @@
-// Kullanıcı kayıt, giriş ve şirket oturum iş mantığı kontrolcüsü
 const User = require("../models/User");
 const Analysis = require("../models/Analysis");
 
 const ADMIN_KULLANICI = process.env.ADMIN_USERNAME || "admin";
 const ADMIN_SIFRE = process.env.ADMIN_PASSWORD || "admin123";
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || "admin-token-123";
 
-// Yeni kullanıcı ve şirket kaydı oluşturur
 async function kayitOl(req, res) {
   try {
-    const { kullaniciAdi, sifre, sirketAdi, rol } = req.body;
+    const { kullaniciAdi, sifre, sirketAdi } = req.body;
 
     if (!kullaniciAdi || !sifre) {
       return res.status(400).json({
@@ -17,7 +16,7 @@ async function kayitOl(req, res) {
       });
     }
 
-    const temizKullaniciAdi = kullaniciAdi.trim().toLowerCase();
+    const temizKullaniciAdi = String(kullaniciAdi).trim().toLowerCase();
     const varMi = await User.findOne({ kullaniciAdi: temizKullaniciAdi });
     if (varMi) {
       return res.status(400).json({
@@ -26,13 +25,14 @@ async function kayitOl(req, res) {
       });
     }
 
-    const hashliSifre = User.sifreHashle(sifre.trim());
+    const hashliSifre = User.sifreHashle(String(sifre).trim());
 
+    // Güvenlik: Dışarıdan admin rolü enjekte edilemez, herkes 'user' başlar
     const yeniKullanici = new User({
       kullaniciAdi: temizKullaniciAdi,
       sifre: hashliSifre,
       sirketAdi: (sirketAdi || "Genel Şirket").trim(),
-      rol: rol === "admin" ? "admin" : "user",
+      rol: "user",
     });
 
     await yeniKullanici.save();
@@ -58,11 +58,10 @@ async function kayitOl(req, res) {
   }
 }
 
-// Kullanıcı veya yönetici girişi yaparak oturum token'ı döner
 async function girisYap(req, res) {
   try {
-    const kullaniciAdi = (req.body.username || req.body.kullaniciAdi || "").trim().toLowerCase();
-    const sifre = (req.body.password || req.body.sifre || "").trim();
+    const kullaniciAdi = String(req.body.username || req.body.kullaniciAdi || "").trim().toLowerCase();
+    const sifre = String(req.body.password || req.body.sifre || "").trim();
 
     if (!kullaniciAdi || !sifre) {
       return res.status(400).json({
@@ -71,14 +70,14 @@ async function girisYap(req, res) {
       });
     }
 
-    // 1. Varsayılan yönetici (admin) kontrolü
+    // 1. Sistem yöneticisi (admin) doğrulaması
     if (kullaniciAdi === ADMIN_KULLANICI.toLowerCase() && sifre === ADMIN_SIFRE) {
       return res.status(200).json({
         success: true,
-        token: "admin-token-123",
+        token: ADMIN_TOKEN,
         user: {
           id: null,
-          kullaniciAdi: "admin",
+          kullaniciAdi: ADMIN_KULLANICI,
           rol: "admin",
           sirketAdi: "Yönetim Kurulu",
         },
@@ -86,7 +85,7 @@ async function girisYap(req, res) {
       });
     }
 
-    // 2. Veritabanı kayıtlı kullanıcı kontrolü
+    // 2. Veritabanı kayıtlı şirket/kullanıcı doğrulaması
     const user = await User.findOne({ kullaniciAdi });
     if (user && User.sifreDogrula(sifre, user.sifre)) {
       const token = `user-token-${user._id}`;
@@ -115,7 +114,6 @@ async function girisYap(req, res) {
   }
 }
 
-// Aktif oturum sahibinin profil bilgilerini döner
 async function profilGetir(req, res) {
   if (!req.user) {
     return res.status(401).json({ success: false, mesaj: "Oturum bulunamadı." });
@@ -123,21 +121,19 @@ async function profilGetir(req, res) {
   return res.json({ success: true, user: req.user });
 }
 
-// Admin için tüm kayıtlı şirket ve kullanıcıları istatistikleriyle listeler
 async function kullanicilariListele(req, res) {
   try {
     const users = await User.find({ rol: { $ne: "admin" } })
       .sort({ createdAt: -1 })
       .lean();
 
+    // Veritabanını tek tek boğmak yerine paralel sorgu çözümü
     const stats = await Promise.all(
       users.map(async (u) => {
-        const toplamCv = await Analysis.countDocuments({ userId: u._id });
-        const aktifCv = await Analysis.countDocuments({
-          userId: u._id,
-          silindiMi: false,
-          silindi: false,
-        });
+        const [toplamCv, aktifCv] = await Promise.all([
+          Analysis.countDocuments({ userId: u._id }),
+          Analysis.countDocuments({ userId: u._id, silindi: false, silindiMi: false }),
+        ]);
 
         return {
           id: u._id,
@@ -145,8 +141,8 @@ async function kullanicilariListele(req, res) {
           sirketAdi: u.sirketAdi || "Genel Şirket",
           rol: u.rol,
           kayitTarihi: u.createdAt || u.tarih || new Date(),
-          toplamCv: toplamCv,
-          aktifCv: aktifCv,
+          toplamCv,
+          aktifCv,
         };
       })
     );

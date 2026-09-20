@@ -1,7 +1,5 @@
-// Kullanıcı ve yönetici oturum yetkilendirme kontrol middleware katmanı
 const User = require("../models/User");
 
-// İstek başlıklarındaki token bilgisini çözerek req.user nesnesine bağlar
 async function authKontrol(req, res, next) {
   const authHeader = req.headers["authorization"] || req.headers["x-auth-token"] || "";
   const token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
@@ -11,8 +9,9 @@ async function authKontrol(req, res, next) {
     return next();
   }
 
-  // Varsayılan yönetici token doğrulaması
-  if (token === "admin-token-123") {
+  const ADMIN_SECRET = process.env.ADMIN_TOKEN || "admin-token-123";
+
+  if (token === ADMIN_SECRET) {
     req.user = {
       _id: null,
       id: null,
@@ -23,7 +22,6 @@ async function authKontrol(req, res, next) {
     return next();
   }
 
-  // Veritabanı kullanıcı token doğrulaması (user-token-<userId>)
   if (token.startsWith("user-token-")) {
     const userId = token.replace("user-token-", "");
     try {
@@ -34,10 +32,12 @@ async function authKontrol(req, res, next) {
           id: user._id,
           kullaniciAdi: user.kullaniciAdi,
           rol: user.rol,
-          sirketAdi: user.sirketAdi,
+          sirketAdi: user.sirketAdi || "Genel Şirket",
         };
+      } else {
+        req.user = null;
       }
-    } catch (e) {
+    } catch {
       req.user = null;
     }
   }
@@ -45,7 +45,6 @@ async function authKontrol(req, res, next) {
   next();
 }
 
-// Sadece yönetici (admin) rolündeki kullanıcıların erişimine izin verir
 function adminZorunlu(req, res, next) {
   if (!req.user || req.user.rol !== "admin") {
     return res.status(403).json({

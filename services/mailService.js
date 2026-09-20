@@ -1,10 +1,12 @@
-// Aday değerlendirme sonuçlarını e-posta ile ileten bildirim servisi
 const nodemailer = require("nodemailer");
 
-// E-posta gönderici istemcisini oluşturur (Ortam değişkenleri yoksa test simülasyonu yapar)
+let cachedTransporter = null;
+
 function getTransporter() {
+  if (cachedTransporter) return cachedTransporter;
+
   if (process.env.SMTP_HOST && process.env.SMTP_USER) {
-    return nodemailer.createTransport({
+    cachedTransporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT, 10) || 587,
       secure: process.env.SMTP_SECURE === "true",
@@ -13,14 +15,14 @@ function getTransporter() {
         pass: process.env.SMTP_PASS,
       },
     });
+    return cachedTransporter;
   }
   return null;
 }
 
-// Aday analiz özetini HTML formatında alıcı e-posta adresine gönderir
 async function adayOzetMailiGonder({ to, adayAdi, skor, arananKriter, gucluYonler, zayifYonler, sirketAdi }) {
   const sirket = sirketAdi || "CV Analiz Platformu";
-  const scorePercent = skor || 0;
+  const scorePercent = Number(skor) || 0;
   const scoreColor = scorePercent >= 80 ? "#10b981" : scorePercent >= 60 ? "#3b82f6" : scorePercent >= 40 ? "#f59e0b" : "#ef4444";
   const scoreLabel = scorePercent >= 80 ? "Mükemmel Aday" : scorePercent >= 60 ? "İyi Aday" : scorePercent >= 40 ? "Gelişime Açık" : "Yetersiz";
 
@@ -77,7 +79,6 @@ async function adayOzetMailiGonder({ to, adayAdi, skor, arananKriter, gucluYonle
     });
   }
 
-  // SMTP tanımlı değilse konsola loglayıp simülasyon olarak başarılı döner
   console.log(`[MAIL SİMÜLASYONU] ${to} adresine "${adayAdi}" aday raporu gönderildi (%${scorePercent}).`);
   return {
     simulasyon: true,

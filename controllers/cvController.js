@@ -244,17 +244,54 @@ async function basvuruGeriYukle(req, res) {
   }
 }
 
-// Tüm aday başvurularını mantıksal olarak siler
+// Tüm aday başvurularını siler (Admin için Hard Delete, Normal Şirket için Soft Delete)
 async function tumBasvurulariSil(req, res) {
   try {
     const isAdmin = req.user && req.user.rol === "admin";
-    const filter = isAdmin ? {} : { userId: req.user ? req.user.id : null };
+    const hardDelete = req.query.hardDelete === "true" || req.body?.hardDelete === true || isAdmin;
 
-    await Analysis.updateMany(filter, { silindiMi: true, silindi: true });
+    if (isAdmin || hardDelete) {
+      // Arşivlenmiş olanlar dahil tüm koleksiyonu kalıcı olarak sil (Hard Delete)
+      const result = await Analysis.deleteMany({});
+      onbellekTemizle();
+      return res.status(200).json({
+        success: true,
+        message: "Tüm aday kayıtları kalıcı olarak temizlendi",
+        mesaj: "Tüm aday kayıtları kalıcı olarak temizlendi",
+        deletedCount: result.deletedCount || 0,
+      });
+    }
+
+    // Normal şirket kullanıcısı: kendi şirket/kullanıcı kayıtlarını soft-delete yapar
+    if (!req.user) {
+      return res.status(401).json({ success: false, hata: "Yetkisiz işlem. Giriş yapmalısınız." });
+    }
+
+    const uId = req.user._id || req.user.id;
+    const filter = {
+      $or: [
+        { userId: uId },
+        { ekleyenKullanici: uId },
+        { ekleyenKullanici: String(uId) },
+        ...(req.user.kullaniciAdi ? [{ kullaniciAdi: req.user.kullaniciAdi }, { ekleyenKullanici: req.user.kullaniciAdi }] : []),
+        ...(req.user.sirketAdi && req.user.sirketAdi !== "Genel Şirket" ? [{ sirketAdi: req.user.sirketAdi }] : []),
+      ],
+    };
+
+    const result = await Analysis.updateMany(filter, { silindi: true, silindiMi: true, arsivlendi: true });
     onbellekTemizle();
-    return res.json({ success: true, mesaj: "Tüm başvurular başarıyla arşivlendi." });
+    return res.status(200).json({
+      success: true,
+      message: "Şirketinize ait başvurular arşivlendi.",
+      mesaj: "Şirketinize ait başvurular arşivlendi.",
+      modifiedCount: result.modifiedCount || 0,
+    });
   } catch (err) {
-    return res.status(500).json({ hata: "Sunucu hatası: " + err.message });
+    return res.status(500).json({
+      success: false,
+      hata: "Sunucu hatası: " + err.message,
+      message: "Sunucu hatası: " + err.message,
+    });
   }
 }
 

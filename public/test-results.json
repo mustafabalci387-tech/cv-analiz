@@ -138,12 +138,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 5541,
+                          "duration": 20430,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:47.799Z",
+                          "startTime": "2026-09-20T02:27:39.802Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -159,14 +159,14 @@
                       "results": [
                         {
                           "workerIndex": 10,
-                          "parallelIndex": 4,
+                          "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 6610,
+                          "duration": 13977,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:52.227Z",
+                          "startTime": "2026-09-20T02:27:46.232Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -181,15 +181,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 20,
-                          "parallelIndex": 2,
+                          "workerIndex": 17,
+                          "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 6039,
+                          "duration": 5797,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:04.077Z",
+                          "startTime": "2026-09-20T02:27:58.497Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -226,12 +226,12 @@
                           "workerIndex": 1,
                           "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 5499,
+                          "duration": 7766,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:47.787Z",
+                          "startTime": "2026-09-20T02:27:39.774Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -246,15 +246,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 12,
-                          "parallelIndex": 6,
+                          "workerIndex": 11,
+                          "parallelIndex": 8,
                           "status": "passed",
-                          "duration": 7601,
+                          "duration": 6491,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:52.259Z",
+                          "startTime": "2026-09-20T02:27:46.281Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -269,15 +269,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 21,
-                          "parallelIndex": 0,
+                          "workerIndex": 19,
+                          "parallelIndex": 5,
                           "status": "passed",
-                          "duration": 5326,
+                          "duration": 6537,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:05.379Z",
+                          "startTime": "2026-09-20T02:28:01.944Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -300,7 +300,7 @@
               "specs": [
                 {
                   "title": "Detaylar butonuna basma, modalın açıldığını ve kapat butonuna basıldığında kapandığını doğrulama",
-                  "ok": true,
+                  "ok": false,
                   "tags": [],
                   "tests": [
                     {
@@ -313,18 +313,48 @@
                         {
                           "workerIndex": 2,
                           "parallelIndex": 2,
-                          "status": "passed",
-                          "duration": 3332,
-                          "errors": [],
+                          "status": "failed",
+                          "duration": 21200,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:84:55",
+                            "location": {
+                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
+                              "column": 55,
+                              "line": 84
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 82 |\u001b[39m         \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#cvMetni'\u001b[39m)\u001b[33m.\u001b[39mfill(\u001b[32m'React, Tailwind CSS ve JavaScript geliştirme deneyimi olan ön yüz uzmanı.'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 83 |\u001b[39m         \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#submit-btn'\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 84 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'#result-section'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 85 |\u001b[39m       }\n \u001b[90m 86 |\u001b[39m\n \u001b[90m 87 |\u001b[39m       \u001b[90m// Detaylar butonuna tıkla\u001b[39m\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
+                                "column": 55,
+                                "line": 84
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  82 |         await page.locator('#cvMetni').fill('React, Tailwind CSS ve JavaScript geliştirme deneyimi olan ön yüz uzmanı.');\n  83 |         await page.locator('#submit-btn').click();\n> 84 |         await expect(page.locator('#result-section')).toBeVisible({ timeout: 15000 });\n     |                                                       ^\n  85 |       }\n  86 |\n  87 |       // Detaylar butonuna tıkla\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:84:55"
+                            }
+                          ],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:47.763Z",
+                          "startTime": "2026-09-20T02:27:39.791Z",
                           "annotations": [],
-                          "attachments": []
+                          "attachments": [
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-c66b5-ğında-kapandığını-doğrulama-chromium\\error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
+                            "column": 55,
+                            "line": 84
+                          }
                         }
                       ],
-                      "status": "expected"
+                      "status": "unexpected"
                     },
                     {
                       "timeout": 30000,
@@ -334,15 +364,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 11,
-                          "parallelIndex": 2,
+                          "workerIndex": 12,
+                          "parallelIndex": 4,
                           "status": "passed",
-                          "duration": 6466,
+                          "duration": 22496,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:52.266Z",
+                          "startTime": "2026-09-20T02:27:46.596Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -357,15 +387,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 22,
-                          "parallelIndex": 6,
+                          "workerIndex": 18,
+                          "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 6104,
+                          "duration": 7760,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:05.512Z",
+                          "startTime": "2026-09-20T02:28:01.451Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -388,7 +418,7 @@
               "specs": [
                 {
                   "title": "Sonuç kartı ve aday detay modalındaki PDF İndir butonlarının görünürlüğünü ve etkileşimini doğrulama",
-                  "ok": true,
+                  "ok": false,
                   "tags": [],
                   "tests": [
                     {
@@ -401,18 +431,48 @@
                         {
                           "workerIndex": 3,
                           "parallelIndex": 3,
-                          "status": "passed",
-                          "duration": 7455,
-                          "errors": [],
+                          "status": "failed",
+                          "duration": 21139,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:123:35",
+                            "location": {
+                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
+                              "column": 35,
+                              "line": 123
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 121 |\u001b[39m       \u001b[90m// 2. Analiz sonuç kartının göründüğünü doğrula\u001b[39m\n \u001b[90m 122 |\u001b[39m       \u001b[36mconst\u001b[39m resultSection \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#result-section'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 123 |\u001b[39m       \u001b[36mawait\u001b[39m expect(resultSection)\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m15000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 124 |\u001b[39m\n \u001b[90m 125 |\u001b[39m       \u001b[90m// 3. Sonuç kartındaki #download-pdf-btn butonunun görünür ve tıklanabilir olduğunu doğrula\u001b[39m\n \u001b[90m 126 |\u001b[39m       \u001b[36mconst\u001b[39m downloadPdfBtn \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'#download-pdf-btn'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
+                                "column": 35,
+                                "line": 123
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#result-section')\nExpected: visible\nReceived: hidden\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('#result-section')\u001b[22m\n\u001b[2m    32 × locator resolved to <div id=\"result-section\" class=\"hidden max-w-2xl mx-auto mt-8 animate-fade-in-up\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  121 |       // 2. Analiz sonuç kartının göründüğünü doğrula\n  122 |       const resultSection = page.locator('#result-section');\n> 123 |       await expect(resultSection).toBeVisible({ timeout: 15000 });\n      |                                   ^\n  124 |\n  125 |       // 3. Sonuç kartındaki #download-pdf-btn butonunun görünür ve tıklanabilir olduğunu doğrula\n  126 |       const downloadPdfBtn = page.locator('#download-pdf-btn');\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:123:35"
+                            }
+                          ],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:47.776Z",
+                          "startTime": "2026-09-20T02:27:39.818Z",
                           "annotations": [],
-                          "attachments": []
+                          "attachments": [
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-8b5bc-ü-ve-etkileşimini-doğrulama-chromium\\error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
+                            "column": 35,
+                            "line": 123
+                          }
                         }
                       ],
-                      "status": "expected"
+                      "status": "unexpected"
                     },
                     {
                       "timeout": 30000,
@@ -422,15 +482,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 14,
-                          "parallelIndex": 8,
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
                           "status": "passed",
-                          "duration": 9712,
+                          "duration": 9235,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:53.810Z",
+                          "startTime": "2026-09-20T02:27:47.660Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -445,15 +505,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 23,
-                          "parallelIndex": 4,
+                          "workerIndex": 22,
+                          "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 7506,
+                          "duration": 6048,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:06.023Z",
+                          "startTime": "2026-09-20T02:28:02.479Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -490,12 +550,12 @@
                           "workerIndex": 4,
                           "parallelIndex": 4,
                           "status": "passed",
-                          "duration": 3015,
+                          "duration": 5923,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:47.820Z",
+                          "startTime": "2026-09-20T02:27:39.766Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -510,15 +570,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 13,
-                          "parallelIndex": 5,
+                          "workerIndex": 14,
+                          "parallelIndex": 9,
                           "status": "passed",
-                          "duration": 7550,
+                          "duration": 5780,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:53.848Z",
+                          "startTime": "2026-09-20T02:27:48.221Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -533,15 +593,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 24,
-                          "parallelIndex": 5,
+                          "workerIndex": 20,
+                          "parallelIndex": 3,
                           "status": "passed",
-                          "duration": 3946,
+                          "duration": 3190,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:06.091Z",
+                          "startTime": "2026-09-20T02:28:02.187Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -578,12 +638,12 @@
                           "workerIndex": 5,
                           "parallelIndex": 5,
                           "status": "passed",
-                          "duration": 4582,
+                          "duration": 6968,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:47.820Z",
+                          "startTime": "2026-09-20T02:27:39.781Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -598,15 +658,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 16,
+                          "workerIndex": 15,
                           "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 8039,
+                          "duration": 7565,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:54.885Z",
+                          "startTime": "2026-09-20T02:27:48.429Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -621,15 +681,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 25,
-                          "parallelIndex": 8,
+                          "workerIndex": 21,
+                          "parallelIndex": 2,
                           "status": "passed",
-                          "duration": 5352,
+                          "duration": 4807,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:06.120Z",
+                          "startTime": "2026-09-20T02:28:02.343Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -666,12 +726,12 @@
                           "workerIndex": 6,
                           "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 3066,
+                          "duration": 5434,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:47.805Z",
+                          "startTime": "2026-09-20T02:27:39.819Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -686,15 +746,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 15,
-                          "parallelIndex": 0,
+                          "workerIndex": 16,
+                          "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 5927,
+                          "duration": 6249,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:54.838Z",
+                          "startTime": "2026-09-20T02:27:48.506Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -709,15 +769,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 26,
-                          "parallelIndex": 1,
+                          "workerIndex": 23,
+                          "parallelIndex": 6,
                           "status": "passed",
-                          "duration": 3231,
+                          "duration": 3408,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:07.086Z",
+                          "startTime": "2026-09-20T02:28:03.954Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -754,12 +814,12 @@
                           "workerIndex": 7,
                           "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 2271,
+                          "duration": 4606,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:47.819Z",
+                          "startTime": "2026-09-20T02:27:39.792Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -774,15 +834,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 17,
-                          "parallelIndex": 7,
+                          "workerIndex": 11,
+                          "parallelIndex": 8,
                           "status": "passed",
-                          "duration": 6081,
+                          "duration": 2796,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:55.437Z",
+                          "startTime": "2026-09-20T02:27:53.545Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -797,15 +857,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 27,
-                          "parallelIndex": 7,
+                          "workerIndex": 24,
+                          "parallelIndex": 8,
                           "status": "passed",
-                          "duration": 2283,
+                          "duration": 2508,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:07.381Z",
+                          "startTime": "2026-09-20T02:28:03.972Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -828,7 +888,7 @@
               "specs": [
                 {
                   "title": "Script tagı içeren girdi güvenli işlenmeli ve normal istek 201 ile tamamlanmalı",
-                  "ok": true,
+                  "ok": false,
                   "tags": [],
                   "tests": [
                     {
@@ -841,18 +901,48 @@
                         {
                           "workerIndex": 8,
                           "parallelIndex": 8,
-                          "status": "passed",
-                          "duration": 4369,
-                          "errors": [],
+                          "status": "failed",
+                          "duration": 5486,
+                          "error": {
+                            "message": "Error: apiRequestContext.post: read ECONNRESET\nCall log:\n\u001b[2m  - → POST http://localhost:3000/api/basvuru\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 216\u001b[22m\n",
+                            "stack": "Error: apiRequestContext.post: read ECONNRESET\nCall log:\n\u001b[2m  - → POST http://localhost:3000/api/basvuru\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 216\u001b[22m\n\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:271:47",
+                            "location": {
+                              "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
+                              "column": 47,
+                              "line": 271
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 269 |\u001b[39m\n \u001b[90m 270 |\u001b[39m       \u001b[90m// 2. POST /api/basvuru isteği at ve 201 Created döndüğünü doğrula\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 271 |\u001b[39m       \u001b[36mconst\u001b[39m postResponse \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mrequest\u001b[33m.\u001b[39mpost(\u001b[32m'http://localhost:3000/api/basvuru'\u001b[39m\u001b[33m,\u001b[39m {\n \u001b[90m     |\u001b[39m                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 272 |\u001b[39m         data\u001b[33m:\u001b[39m xssPayload\n \u001b[90m 273 |\u001b[39m       })\u001b[33m;\u001b[39m\n \u001b[90m 274 |\u001b[39m       expect(postResponse\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
+                                "column": 47,
+                                "line": 271
+                              },
+                              "message": "Error: apiRequestContext.post: read ECONNRESET\nCall log:\n\u001b[2m  - → POST http://localhost:3000/api/basvuru\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.7827.55 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 216\u001b[22m\n\n\n  269 |\n  270 |       // 2. POST /api/basvuru isteği at ve 201 Created döndüğünü doğrula\n> 271 |       const postResponse = await page.request.post('http://localhost:3000/api/basvuru', {\n      |                                               ^\n  272 |         data: xssPayload\n  273 |       });\n  274 |       expect(postResponse.status()).toBe(201);\n    at C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js:271:47"
+                            }
+                          ],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:47.865Z",
+                          "startTime": "2026-09-20T02:27:39.824Z",
                           "annotations": [],
-                          "attachments": []
+                          "attachments": [
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\test-results\\tests-app-CV-Analiz-Platfo-932b6--istek-201-ile-tamamlanmalı-chromium\\error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "C:\\Users\\Barış\\Desktop\\cv-analiz-platformu\\tests\\app.spec.js",
+                            "column": 47,
+                            "line": 271
+                          }
                         }
                       ],
-                      "status": "expected"
+                      "status": "unexpected"
                     },
                     {
                       "timeout": 30000,
@@ -862,15 +952,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 18,
-                          "parallelIndex": 3,
+                          "workerIndex": 14,
+                          "parallelIndex": 9,
                           "status": "passed",
-                          "duration": 7346,
+                          "duration": 16331,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:56.948Z",
+                          "startTime": "2026-09-20T02:27:54.710Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -885,15 +975,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 28,
-                          "parallelIndex": 3,
+                          "workerIndex": 17,
+                          "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 6691,
+                          "duration": 3206,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:09.768Z",
+                          "startTime": "2026-09-20T02:28:04.577Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -930,12 +1020,12 @@
                           "workerIndex": 9,
                           "parallelIndex": 9,
                           "status": "passed",
-                          "duration": 7917,
+                          "duration": 7354,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:47.843Z",
+                          "startTime": "2026-09-20T02:27:39.833Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -950,15 +1040,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 19,
-                          "parallelIndex": 9,
+                          "workerIndex": 11,
+                          "parallelIndex": 8,
                           "status": "passed",
-                          "duration": 11972,
+                          "duration": 5986,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:57.049Z",
+                          "startTime": "2026-09-20T02:27:56.357Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -973,15 +1063,15 @@
                       "projectName": "webkit",
                       "results": [
                         {
-                          "workerIndex": 27,
-                          "parallelIndex": 7,
+                          "workerIndex": 20,
+                          "parallelIndex": 3,
                           "status": "passed",
-                          "duration": 11681,
+                          "duration": 7154,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:09.772Z",
+                          "startTime": "2026-09-20T02:28:05.639Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -1018,12 +1108,12 @@
                           "workerIndex": 7,
                           "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 4192,
+                          "duration": 3164,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:50.307Z",
+                          "startTime": "2026-09-20T02:27:44.604Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -1038,15 +1128,15 @@
                       "projectName": "firefox",
                       "results": [
                         {
-                          "workerIndex": 10,
-                          "parallelIndex": 4,
+                          "workerIndex": 16,
+                          "parallelIndex": 7,
                           "status": "passed",
-                          "duration": 4709,
+                          "duration": 4344,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:35:59.731Z",
+                          "startTime": "2026-09-20T02:27:56.525Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -1062,14 +1152,14 @@
                       "results": [
                         {
                           "workerIndex": 24,
-                          "parallelIndex": 5,
+                          "parallelIndex": 8,
                           "status": "passed",
-                          "duration": 5732,
+                          "duration": 3593,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2026-08-21T20:36:10.200Z",
+                          "startTime": "2026-09-20T02:28:06.667Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -1091,11 +1181,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-08-21T20:35:47.116Z",
-    "duration": 34424.663,
-    "expected": 33,
+    "startTime": "2026-09-20T02:27:39.211Z",
+    "duration": 33687.427,
+    "expected": 30,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 3,
     "flaky": 0
   }
 }

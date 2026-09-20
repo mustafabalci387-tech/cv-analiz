@@ -43,6 +43,8 @@ let aktifSayfa = 1;
 let aktifArama = "";
 let aktifFiltre = "all";
 let mevcutAdaylar = [];
+let scoreChart = null;
+let kriterChart = null;
 
 // HTML Entity kalıntılarını temizleyen yardımcı
 function htmlEntityDecode(str) {
@@ -106,16 +108,24 @@ const showError = (msg) => showToast(msg, "error");
 function sidebarAc() {
   appSidebar?.classList.remove("-translate-x-full");
   sidebarOverlay?.classList.remove("hidden");
+  document.body.classList.add("overflow-hidden");
 }
 
 function sidebarKapat() {
   appSidebar?.classList.add("-translate-x-full");
   sidebarOverlay?.classList.add("hidden");
+  document.body.classList.remove("overflow-hidden");
+  document.body.style.overflow = "";
 }
 
 $("sidebar-toggle-btn")?.addEventListener("click", sidebarAc);
 $("sidebar-close-btn")?.addEventListener("click", sidebarKapat);
 sidebarOverlay?.addEventListener("click", sidebarKapat);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && appSidebar && !appSidebar.classList.contains("-translate-x-full")) {
+    sidebarKapat();
+  }
+});
 
 // ====== Sol Menü Filtreleri ======
 function adayListesineKaydir() {
@@ -532,7 +542,7 @@ async function basvurulariYukle(sayfa = 1, arama, filtre) {
 
 function adayKartiOlustur(aday, index, filtre) {
   const div = document.createElement("div");
-  div.className = "p-4 rounded-xl bg-slate-800/60 border border-slate-700/50 hover:border-indigo-500/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3";
+  div.className = "w-full max-w-full overflow-hidden p-4 rounded-xl bg-slate-800/60 border border-slate-700/50 hover:border-indigo-500/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3";
 
   const score = aday.uygunlukSkoru || 0;
   const scoreInfo = getScoreInfo(score);
@@ -549,22 +559,22 @@ function adayKartiOlustur(aday, index, filtre) {
   const restoreBtnHtml = (isAdmin && isArchived) ? `<button type="button" class="btn-restore px-2.5 py-1.5 rounded-xl bg-cyan-600/20 hover:bg-cyan-600 text-cyan-300 hover:text-white border border-cyan-500/30 text-xs transition-all cursor-pointer" title="Geri Yükle">↺</button>` : "";
 
   div.innerHTML = `
-    <div class="flex items-center gap-3">
-      <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/90 border border-slate-700/60 hover:border-indigo-500/40 text-[11px] font-semibold text-slate-300 hover:text-white transition-all cursor-pointer select-none">
+    <div class="flex items-center gap-3 min-w-0 flex-1">
+      <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/90 border border-slate-700/60 hover:border-indigo-500/40 text-[11px] font-semibold text-slate-300 hover:text-white transition-all cursor-pointer select-none flex-shrink-0">
         <input type="checkbox" class="compare-checkbox w-3.5 h-3.5 rounded accent-indigo-600 cursor-pointer" data-id="${aday._id}" ${isChecked ? 'checked' : ''} />
         <span>Kıyasla</span>
       </label>
       <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-300 font-bold flex items-center justify-center text-sm flex-shrink-0">${basHarf}</div>
-      <div>
+      <div class="min-w-0 flex-1">
         <div class="flex items-center gap-2 flex-wrap">
-          <h5 class="text-sm font-bold text-white card-candidate-name"></h5>
+          <h5 class="text-sm font-bold text-white card-candidate-name truncate max-w-full"></h5>
           ${top5BadgeHtml}${sirketBadgeHtml}${archiveBadgeHtml}${riskBadgeHtml}
         </div>
-        <p class="text-xs text-slate-400 mt-0.5 card-candidate-kriter"></p>
+        <p class="text-xs text-slate-400 mt-0.5 card-candidate-kriter break-words line-clamp-2"></p>
       </div>
     </div>
 
-    <div class="flex items-center gap-2 self-end sm:self-auto">
+    <div class="flex items-center gap-2 self-end sm:self-auto flex-shrink-0">
       <div class="px-3 py-1 rounded-xl text-xs font-bold ${scoreInfo.bg}">%${score}</div>
       <button type="button" class="btn-detail px-3 py-1.5 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 text-xs font-semibold transition-all cursor-pointer">Detaylar</button>
       <button type="button" class="btn-mail px-2.5 py-1.5 rounded-xl bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-xs transition-all cursor-pointer" title="E-posta ile Paylaş">✉</button>
@@ -779,20 +789,71 @@ panelNextBtn?.addEventListener("click", () => {
   basvurulariYukle(aktifSayfa + 1, aktifArama, aktifFiltre);
 });
 
-$("panel-delete-all-btn")?.addEventListener("click", async () => {
-  if (!confirm("Tüm aday kayıtlarını silmek istediğinize emin misiniz?")) return;
+// ====== Toplu Aday Silme (Admin: Kalıcı / Şirket: Arşiv) ======
+async function tumAdaylariSil() {
+  const isAdmin = !!(localStorage.getItem("adminToken") || (typeof aktifKullanici !== "undefined" && aktifKullanici?.rol === "admin"));
+  const onayMesaji = isAdmin
+    ? "DİKKAT: Arşivlenmiş olanlar dahil TÜM aday verileri kalıcı olarak silinecektir. Onaylıyor musunuz?"
+    : "Tüm aday kayıtlarını silmek istediğinize emin misiniz?";
+
+  if (!confirm(onayMesaji)) return;
+
   try {
     const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    const res = await fetch("/api/basvurular", { method: "DELETE", headers });
-    if (!res.ok) throw new Error("Toplu silme başarısız.");
-    showToast("Tüm başvurular başarıyla silindi.", "success");
+    const headers = { "Content-Type": "application/json" };
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+
+    const url = isAdmin ? "/api/basvurular?hardDelete=true" : "/api/basvurular";
+    const res = await fetch(url, { method: "DELETE", headers });
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.hata || errData.message || "Toplu silme başarısız.");
+    }
+
+    // 1. Liste görünümünü temizle ve boş durum mesajını göster
+    if (panelList) panelList.innerHTML = "";
+    if (panelEmpty) panelEmpty.classList.remove("hidden");
+    if (panelSkeleton) panelSkeleton.classList.add("hidden");
+    if (panelError) panelError.classList.add("hidden");
+
+    // 2. Sayaçları anında 0 olarak güncelle
+    const countIds = ["panel-count", "stat-total-count", "sidebar-stat-total", "stat-excellent-count", "sidebar-stat-high"];
+    countIds.forEach((id) => {
+      const el = $(id);
+      if (el) el.textContent = "0";
+    });
+    const avgScoreEl = $("stat-avg-score");
+    if (avgScoreEl) avgScoreEl.textContent = "%0";
+
+    // 3. Dashboard grafiklerini boş verilerle sıfırla
+    if (typeof scoreChart !== "undefined" && scoreChart) {
+      scoreChart.data.datasets[0].data = [0, 0, 0];
+      scoreChart.update();
+    }
+    if (typeof kriterChart !== "undefined" && kriterChart) {
+      kriterChart.data.labels = [];
+      kriterChart.data.datasets[0].data = [];
+      kriterChart.update();
+    }
+
+    mevcutAdaylar = [];
+    aktifSayfa = 1;
+
+    // Şirket listesi varsa güncelle
+    if (typeof adminSirketleriYukle === "function") adminSirketleriYukle();
+
+    // 4. Başarılı bildirim toast mesajı göster
+    showToast("Tüm adaylar ve arşiv kalıcı olarak temizlendi.", "success");
+
+    // Verileri tazele
     basvurulariYukle(1, "");
     dashboardGuncelle();
   } catch (e) {
-    showToast(e.message, "error");
+    showToast(e.message || "Silme işlemi sırasında hata oluştu.", "error");
   }
-});
+}
+
+$("panel-delete-all-btn")?.addEventListener("click", tumAdaylariSil);
 
 // ====== CSV Dışa Aktarma ======
 $("panel-csv-export-btn")?.addEventListener("click", async () => {
@@ -1154,9 +1215,6 @@ mailForm?.addEventListener("submit", async (e) => {
 });
 
 // ====== Dashboard & Grafikler ======
-let scoreChart = null;
-let kriterChart = null;
-
 async function dashboardGuncelle() {
   try {
     const token = localStorage.getItem("adminToken") || localStorage.getItem("userToken");
@@ -1258,6 +1316,10 @@ async function dashboardGuncelle() {
 
 // ====== Başlangıç / Boot ======
 document.addEventListener("DOMContentLoaded", () => {
+  // Sayfa açılışında olası body kaydırma kilitlerini sıfırla
+  document.body.classList.remove("overflow-hidden");
+  document.body.style.overflow = "";
+
   const oturumVar = (typeof oturumKontrol === "function") ? oturumKontrol() : false;
   if (oturumVar) {
     basvurulariYukle(1, "");
@@ -1292,3 +1354,4 @@ window.mulakatSorulariniKopyala = mulakatSorulariniKopyala;
 window.renderRiskler = renderRiskler;
 window.epostaSablonuHazirla = epostaSablonuHazirla;
 window.dosyaMetniniOku = dosyaMetniniOku;
+window.tumAdaylariSil = tumAdaylariSil;

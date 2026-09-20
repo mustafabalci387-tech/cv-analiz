@@ -8,8 +8,9 @@ let yedekModel = null;
 if (apiKey) {
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    birincilModel = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-    yedekModel = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // En güncel Gemini 3.8 Flash ve yedek model
+    birincilModel = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+    yedekModel = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
   } catch (err) {
     console.warn("Gemini API başlatılamadı:", err.message);
   }
@@ -134,9 +135,9 @@ function akilliYedekAnaliz(cvMetni, arananKriter) {
 
   const gucluYonler = eslesenKelimeler.length > 0
     ? [
-        `İlanda aranan "${eslesenKelimeler.slice(0, 3).join(", ")}" kriterleri CV ile doğrudan örtüşüyor.`,
-        "İlgili pozisyon için temel yetkinliklere ve teknik altyapıya sahip.",
-      ]
+      `İlanda aranan "${eslesenKelimeler.slice(0, 3).join(", ")}" kriterleri CV ile doğrudan örtüşüyor.`,
+      "İlgili pozisyon için temel yetkinliklere ve teknik altyapıya sahip.",
+    ]
     : ["Genel profil ve temel başvuru formatı eksiksiz sunuldu."];
 
   if (eslesenKelimeler.length > 3) {

@@ -21,7 +21,7 @@ router.delete(["/basvurular/:id", "/adaylar/:id", "/analizler/:id"], authKontrol
 router.all(["/basvurular/:id/restore", "/adaylar/:id/restore"], authKontrol, cvController.basvuruGeriYukle);
 
 // Tüm başvuruları silme
-router.delete(["/basvurular", "/adaylar", "/analizler"], authKontrol, cvController.tumBasvurulariSil);
+router.delete(["/basvurular", "/adaylar", "/analizler", "/adaylar/hepsini-sil", "/basvurular/hepsini-sil"], authKontrol, cvController.tumBasvurulariSil);
 
 // Aday analiz özetini e-posta ile ilet
 router.post("/mail-gonder", rateLimiterMiddleware, authKontrol, cvController.mailGonder);
